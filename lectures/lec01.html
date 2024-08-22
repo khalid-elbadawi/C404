@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.551">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introduction to Assembly Language - Lecture 1: Basic Concepts</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/lec01.html">Lectures</a></li><li class="breadcrumb-item"><a href="../lectures/lec01.html">Lecture 1: Basic Concepts</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Introduction to Assembly Language</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Lectures</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lectures/lec01.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Lecture 1: Basic Concepts</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-representation" id="toc-data-representation" class="nav-link active" data-scroll-target="#data-representation">Data Representation</a>
+  <ul class="collapse">
+  <li><a href="#integer-representations" id="toc-integer-representations" class="nav-link" data-scroll-target="#integer-representations">Integer Representations</a></li>
+  <li><a href="#character-represenations" id="toc-character-represenations" class="nav-link" data-scroll-target="#character-represenations">Character Represenations</a></li>
+  <li><a href="#floating-point-representations" id="toc-floating-point-representations" class="nav-link" data-scroll-target="#floating-point-representations">Floating-Point Representations</a></li>
+  <li><a href="#fixed-point-representations" id="toc-fixed-point-representations" class="nav-link" data-scroll-target="#fixed-point-representations">Fixed-point Representations</a></li>
+  </ul></li>
+  <li><a href="#intel-microprocessors" id="toc-intel-microprocessors" class="nav-link" data-scroll-target="#intel-microprocessors">Intel Microprocessors</a></li>
+  <li><a href="#ia-32-basic-execution-environment" id="toc-ia-32-basic-execution-environment" class="nav-link" data-scroll-target="#ia-32-basic-execution-environment">IA-32 Basic Execution Environment</a>
+  <ul class="collapse">
+  <li><a href="#modes-of-operation-in-ia-32" id="toc-modes-of-operation-in-ia-32" class="nav-link" data-scroll-target="#modes-of-operation-in-ia-32">Modes of Operation in IA-32</a></li>
+  <li><a href="#cpu-registers" id="toc-cpu-registers" class="nav-link" data-scroll-target="#cpu-registers">CPU Registers</a></li>
+  <li><a href="#address-space" id="toc-address-space" class="nav-link" data-scroll-target="#address-space">Address Space</a></li>
+  </ul></li>
+  <li><a href="#assembly-language" id="toc-assembly-language" class="nav-link" data-scroll-target="#assembly-language">Assembly Language</a>
+  <ul class="collapse">
+  <li><a href="#what-is-assembly-language" id="toc-what-is-assembly-language" class="nav-link" data-scroll-target="#what-is-assembly-language">What is Assembly Language</a></li>
+  <li><a href="#machine-language" id="toc-machine-language" class="nav-link" data-scroll-target="#machine-language">Machine Language</a></li>
+  <li><a href="#assembly-language-compared-to-high-level-language" id="toc-assembly-language-compared-to-high-level-language" class="nav-link" data-scroll-target="#assembly-language-compared-to-high-level-language">Assembly Language Compared to High-Level Language</a></li>
+  <li><a href="#is-assembly-language-portable" id="toc-is-assembly-language-portable" class="nav-link" data-scroll-target="#is-assembly-language-portable">Is Assembly Language Portable?</a></li>
+  <li><a href="#why-learning-assembly-language" id="toc-why-learning-assembly-language" class="nav-link" data-scroll-target="#why-learning-assembly-language">Why Learning Assembly Language</a></li>
+  <li><a href="#the-assembler" id="toc-the-assembler" class="nav-link" data-scroll-target="#the-assembler">The Assembler</a></li>
+  <li><a href="#programming-tools-that-you-need" id="toc-programming-tools-that-you-need" class="nav-link" data-scroll-target="#programming-tools-that-you-need">Programming Tools That You Need</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lec01.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="lec01.epub"><i class="bi bi-file"></i>ePub</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lectures/lec01.html">Lectures</a></li><li class="breadcrumb-item"><a href="../lectures/lec01.html">Lecture 1: Basic Concepts</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Lecture 1: Basic Concepts</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="data-representation" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="data-representation">Data Representation</h2>
+<section id="integer-representations" class="level3">
+<h3 class="anchored" data-anchor-id="integer-representations">Integer Representations</h3>
+<ul>
+<li>Revise the following representations:
+<ul>
+<li>Binary integers
+<ul>
+<li>Unsigned binary integers:
+<ul>
+<li>Translating unsigned binary integer to decimal</li>
+<li>Translating unsigned decimal to binary</li>
+</ul></li>
+<li>Signed binary integers:
+<ul>
+<li>1’s complement representation</li>
+<li>2’s complement representation</li>
+</ul></li>
+</ul></li>
+<li>Hexadecimal integers
+<ul>
+<li>Hexadecimal 2’s complement</li>
+<li>Translating binary integer to hexadecimal and vice versa.</li>
+<li>Translating hexadecimal integer to decimal and vice versa.</li>
+<li>Converting a hexadecimal integer t</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p><strong>Convert the following number</strong> <span class="math inline">\((1100101)_2\)</span> to decimal. <span class="math display">\[\begin{align*}
+     1100101_2 &amp;= 1\times2^0 + 0\times2^1 + 1\times2^2 + 0\times2^3 + 0\times2^4 + 1\times2^5 + 1\times2^6 \\
+     &amp;= 1+4+32+64=101_{10}
+\end{align*}\]</span></p></li>
+<li><p><strong>Convert the following number</strong> <span class="math inline">\((A13)_{16}\)</span> to decimal.</p>
+<span class="math display">\[\begin{align*}
+     A13_{16} &amp;= 3\times16^0 + 1\times16^1 + 10\times16^2 \\
+     &amp;= 3 + 16 + 2560 = 2579_{10}
+\end{align*}\]</span></li>
+<li><p><strong>Convert the following number</strong> <span class="math inline">\(-14_{10}\)</span> to one-word binary.</p>
+<span class="math display">\[\begin{align*}
+     14_{10} = 8 + 4 + 2 = 1110_2 &amp;= 0000\; 0000\; 0000\; 1110_2 \\
+     Neg &amp;= 1111\; 1111\; 1111\; 0001_2 \\
+     +1 &amp;= 1111\; 1111\; 1111\; 0010_2
+\end{align*}\]</span>
+<p><span class="math inline">\(\therefore -14_{10} = 1111\;1111\;1111\;0010_2\)</span></p></li>
+<li><p><strong>Convert the following number</strong> <span class="math inline">\(-14_{10}\)</span> to one-word hexadecimal</p>
+<p><span class="math inline">\(-14_{10}\)</span> = FFF2<sub>16</sub></p></li>
+</ol>
+</div>
+</div>
+<ul>
+<li><p>Binary-Coded Decimal (BCD) Numbers:</p>
+<ul>
+<li>Every decimal digit is represented by 4 binary bits, from <code>0000</code> to <code>1001</code>.</li>
+<li>Two representations: <strong>Unpacked BCD</strong> and <strong>packed BCD</strong>.</li>
+<li>In unpacked BCD, one decimal digit is encoded in each binary byte. While, in packed BCD, two decimal digits are encoded in each binary byte.</li>
+</ul>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Decimal Number</th>
+<th>Unpacked (in Hex)</th>
+<th>Packed (in Hex)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\((176)_{10}\)</span></td>
+<td><code>01 07 06</code></td>
+<td><code>01 76</code></td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Integer storage sizes</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Storage Name</th>
+<th style="text-align: center;">Size in BYTE</th>
+<th style="text-align: center;">size in BITS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>byte</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="even">
+<td><strong>word</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">16</td>
+</tr>
+<tr class="odd">
+<td><strong>doubleword</strong></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">32</td>
+</tr>
+<tr class="even">
+<td><strong>quadword</strong></td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">64</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</section>
+<section id="character-represenations" class="level3">
+<h3 class="anchored" data-anchor-id="character-represenations">Character Represenations</h3>
+<ul>
+<li><p>Characters are represented by using <strong>character set</strong>, which is one-to-one mapping of characters to integers.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Character set</th>
+<th>Character size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ASCII</td>
+<td>7 bits</td>
+</tr>
+<tr class="even">
+<td>ANSI</td>
+<td>8 bits</td>
+</tr>
+<tr class="odd">
+<td>UTF-8</td>
+<td>8 bits</td>
+</tr>
+<tr class="even">
+<td>UTF-16</td>
+<td>16 bits</td>
+</tr>
+<tr class="odd">
+<td>UTF-32</td>
+<td>32 bits</td>
+</tr>
+</tbody>
+</table>
+<p><strong>UTF</strong> stadnds for Unicode Transformation Format.</p></li>
+<li><p>ASCII Strings</p>
+<ul>
+<li>Strings are stored in memory as a succession of bytes containing ASCII codes. For example, <code>"ABC123"</code> is stored in memory as 41h, 42h, 43h, 31h, 32h, and 33h.</li>
+<li>A <strong>null-terminated string</strong> is a string of characters followed by a single byte containing zero (NULL). For example, the null-terminated string <code>"ABC123"</code> is stored in memory as 41h, 42h, 43h, 31h, 32h, 33h, and 00h.</li>
+</ul></li>
+</ul>
+</section>
+<section id="floating-point-representations" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="floating-point-representations">Floating-Point Representations</h3>
+<ul>
+<li><p>Real numbers are represented using the binary representation of IEEE 754 Standard.</p></li>
+<li><p>The representation in memory:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/ieee754.png" class="img-fluid figure-img"></p>
+<figcaption>Memory layout for floating point</figcaption>
+</figure>
+</div>
+<p>where <code>s</code> is the sign bit, <code>e</code> is the exponent, and <code>f</code> is the significand.</p>
+<p><span class="math inline">\(x = (-1)^s (1 + f) \times 2^m\)</span>, where <span class="math inline">\(m = e - bias\)</span></p></li>
+<li><p>Floating-point Types:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Size</th>
+<th>Exponent</th>
+<th>Fraction</th>
+<th>Bias</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Single-precision</td>
+<td>32</td>
+<td>8</td>
+<td>23</td>
+<td>127</td>
+</tr>
+<tr class="even">
+<td>Double-precision</td>
+<td>64</td>
+<td>11</td>
+<td>52</td>
+<td>1023</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Convert</strong> <span class="math inline">\(-11.375_{10}\)</span> to single-precision binary representation?</p>
+<p><span class="math inline">\(11_{10} = (1011)_2\)</span></p>
+<p><span class="math inline">\(0.375_{10} = (2^{-2} + 2^{-3}) = 0.25 + 0.125 = (.011)_2\)</span></p>
+
+<p><span class="math inline">\(\therefore 11.375_{10} = (1011.011)_2 = 1.011011 \times 2^{+3}\)</span></p>
+<p>Therefore,</p>
+<p><strong>s</strong> = 1 (sign is enabled)</p>
+<p><strong>e</strong> = 3 + 127 = 130 = (1000 0010)<sub>2</sub></p>
+<p><strong>f</strong> = (011011)<sub>2</sub></p>
+<p>The representation is: <span class="math inline">\(1100\,\,0001 \,\, 0011 \,\, 0110 \,\, 0000 \,\, 0000 \,\, 0000 \,\, 0000_2\)</span> = C1360000<sub>16</sub></p>
+</div>
+</div>
+<div class="no-row-height column-margin column-container"><div class="callout-margin-content">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/fractionconversion.png" class="img-fluid figure-img"></p>
+<figcaption>Conversion</figcaption>
+</figure>
+</div>
+</div></div></section>
+<section id="fixed-point-representations" class="level3">
+<h3 class="anchored" data-anchor-id="fixed-point-representations">Fixed-point Representations</h3>
+<ul>
+<li>Floating-point representation is NOT recommended to store money amount. In languages such as Java or C++, floating point values have certain rounding characteristics that make it difficult to compare them for equality. The common example to illustrate the problem is <code>0.1 + 0.2 != 0.3</code>.</li>
+<li>Some applications use BCD (such as BigInteger class in the Java class library).</li>
+</ul>
+</section>
+</section>
+<section id="intel-microprocessors" class="level2">
+<h2 class="anchored" data-anchor-id="intel-microprocessors">Intel Microprocessors</h2>
+<ul>
+<li><p>Conventionally, Intel microprocessors are known as <strong>x86 processors</strong>.</p></li>
+<li><p>x86 microprocessors are divided into three families: x86-16, x86-32 and x86-64.</p></li>
+<li><p>All Intel microprocessors are byte addressable.</p></li>
+<li><p>In 1974, Intel has announce 8080 CPU: 8-bit CPU (2Mhz) and 16-bit address bus (64KB).</p></li>
+<li><p>In 1978, 8086 CPU has been introduced with 16-bit CPU (16-bit registers and 16-bit external data bus) and 20-bit address bus with CPU speed ranging from 5MHz to 10MHz.</p>
+<ul>
+<li>Memory addresses start from 000000H to 0FFFFFH (1MB)</li>
+<li>The address space is divided into segments. A <strong><em>segment</em></strong> is a region of memory that begins on a paragraph boundary and extends for some number of bytes (&lt;= 64K).</li>
+<li>A <strong><em>paragraph</em></strong> is a measure of memory equal to 16 bytes.</li>
+<li>8086 CPUs have six 16-bit segment registers: CS, DS, SS,ES, GS, and FS. -The physical address is constructed by two registers: segment address : offset address.</li>
+</ul></li>
+<li><p>In 1982, Intel 286 introduced protected mode operation with four privilege levels. The address bus was 24-bit providing 16MB physical memory.</p></li>
+<li><p>The Intel 386 (1985) was the first 32-bit CPU (80386 CPUs) with 32-bit address bus (addressable up to 4G).</p>
+<ul>
+<li>80386 CPUs are backward compatible with 8086 CPUs and hence the term x86 family.</li>
+<li>In addition, it supports for :
+<ul>
+<li>A segmented–memory model and a flat memory model.</li>
+<li>Paging, with a fixed 4KB page size providing a method for virtual memory management.</li>
+<li>Support for 3-stage instruction pipeline (Fetch-Decode-Execute) .</li>
+</ul></li>
+</ul></li>
+<li><p>Intel 486 (1989) processors are all based on IA-32 architecture with additional support for parallel execution capabilities (ILP):</p>
+<ul>
+<li>It supports 5-stage instruction pipeline.</li>
+<li>It supports 8KB on-chip L1-cache (using Write-through policy)</li>
+<li>It has an integrated x87 FPU</li>
+</ul></li>
+<li><p>Intel Pentium Processor (1993), also known unofficially as P5 or Intel 586, marked a significant advancement in microarchitecture technology. It supports:</p>
+<ul>
+<li>Superscalar architecture, which allows to execute more than one instruction per clock cycle</li>
+<li>8KB L1 cache devoted for code and another 8KB L1 cache devoted for data.</li>
+<li>Introduced MMX technology, which uses the single-instruction, multiple data (SIMD) execution model with 64-bit registers.</li>
+</ul></li>
+<li><p>Intel P6 Family (1995-1999), which includes Intel Pentium Pro, Intel Pentium II and III, and Intel Celeron, was introduced.</p></li>
+<li><p>Intel 64 architecture was introduced in the Intel Pentium 4 Processor (Extreme Edition) in 2005.</p></li>
+<li><p>The 2010 Intel processor family (First Generation) spans Intel Core i7, i5 and i3 processors. In 2017, Intel Core i9 was introduced. The current generation is 14. Intel currently has several sub-families:</p>
+<ol type="1">
+<li>Intel Xeon Processors for data centers and workstations.</li>
+<li>Intel Core Ultra Processors for AI and immersive graphics.</li>
+<li>Intel Core Processors for laptops and desktops.</li>
+<li>Intel Atom Processors for mobile and IoT devices</li>
+</ol></li>
+</ul>
+</section>
+<section id="ia-32-basic-execution-environment" class="level2">
+<h2 class="anchored" data-anchor-id="ia-32-basic-execution-environment">IA-32 Basic Execution Environment</h2>
+<p>As an assembly programmer, you should know the execution environment either for IA-32 or Intel 64 processor.</p>
+<p>Any program running on an IA-32 processor is given a set of resources for executing instructions and for storing code, data and state information.</p>
+<p>The basic execution environment includes <strong><em>memory</em></strong> (the address space), <strong><em>general purpose data registers</em></strong>, <strong><em>segment registers</em></strong>, the <strong><em>flag register</em></strong>, and the <strong><em>instruction pointer register</em></strong>.</p>
+<section id="modes-of-operation-in-ia-32" class="level3">
+<h3 class="anchored" data-anchor-id="modes-of-operation-in-ia-32">Modes of Operation in IA-32</h3>
+<p>Modes of operation define the memory layout and how a program can address memory (using registers). It also determines which instructions are accessible.</p>
+<p>IA-32 processors have three primary modes of operation:</p>
+<ol type="1">
+<li><strong>Protected mode</strong>, in which programs are given separate memory areas named segments, and the processor prevents programs from referencing memory outside their assigned segments. This is the default mode.</li>
+<li><strong>Real–Adress mode</strong>, in which programs can access to system memory and hardware devices. OS prevents programmers to swtich to this mode.</li>
+<li><strong>System Management mode</strong>, in which it provides an OS with a mechanism for implementing functions such as power management and system security. These functions are usually implemented by computer manufacturers.</li>
+</ol>
+<p>A sub–mode, named <strong>virtual-8086</strong>, is a special case of protected mode, in which MS–DOS programs (real-mode software) can be executed in a safe environment.</p>
+<section id="modes-of-operations-in-intel-64" class="level4">
+<h4 class="anchored" data-anchor-id="modes-of-operations-in-intel-64">Modes of Operations in Intel 64</h4>
+<p>The Intel 64 architecture adds IA-32e mode, which has two sub-modes:</p>
+<ol type="1">
+<li><strong>compatibility mode</strong>, which permits legacy 16-bit and 32-bit applications to run without re-compilation under a 64-bit Operating System. Compatibility mode is similar to 32-bit protected mode.</li>
+<li><strong>64-bit mode</strong>, which enables a program to access 64-bit linear address space.</li>
+</ol>
+</section>
+</section>
+<section id="cpu-registers" class="level3">
+<h3 class="anchored" data-anchor-id="cpu-registers">CPU Registers</h3>
+<section id="segment-registers" class="level4">
+<h4 class="anchored" data-anchor-id="segment-registers">Segment Registers</h4>
+<ul>
+<li>The 8086, 8088 and and 80286 have exactly four segment registers specifically designated as holders of segment address.</li>
+<li>The 80386 and later CPUs have two more that can be used in real mode.</li>
+<li>The segment registers:
+<ul>
+<li><code>CS</code>, which stands for code segment</li>
+<li><code>DS</code>, which stadnds for data segment</li>
+<li><code>SS</code>, which stands for stack segment</li>
+<li><code>ES</code>, which stands for extra segment.</li>
+<li><code>FS</code> and <code>GS</code>. They are both additional “extra” segments.</li>
+</ul></li>
+<li><em>All segment registers are 16 bits in size, irrespective of the CPU architecture</em>.</li>
+<li>Segment registers was to allow 20 bits of address space to be addressed by two 16-bit registers (in the form of <code>segment address : offset address</code>).</li>
+<li>In IA-32 architecture, segment registers are used only by the operating system.</li>
+<li>The segment registers are not used in x64 architecture.</li>
+</ul>
+</section>
+<section id="general-purpose-registers-gprs" class="level4">
+<h4 class="anchored" data-anchor-id="general-purpose-registers-gprs">General-Purpose Registers (GPRs)</h4>
+<ul>
+<li><p>The 32-bit GPRs are <code>EAX</code>, <code>EBX</code>, <code>ECX</code>, <code>EDX</code>, <code>ESI</code>, <code>EDI</code>, <code>EBP</code>, and <code>ESP</code>.</p></li>
+<li><p>GPRs are primarily used for</p>
+<ul>
+<li>arithmetic and logical operations.</li>
+<li>address calculations.</li>
+<li>memory pointers</li>
+</ul></li>
+<li><p>Although all of these registers are available for general storage of operands, ESP register holds the stack pointer and as general rule should not be used for another purpose.</p>
+<p><img src="..\images/genregs.png" class="img-fluid" width="405"></p>
+<p><img src="..\images/genregs2.png" class="img-fluid" width="297"></p>
+<p><img src="..\images/genregs5.png" class="img-fluid" width="196"></p></li>
+<li><p>Some general-purpose registers have specialized uses:</p>
+<ul>
+<li><p><code>EAX</code> is used for multiplication and division instructions.</p></li>
+<li><p><code>ECX</code> is automatically used as loop counter.</p></li>
+<li><p><code>ESP</code> addresses data on the stack.</p></li>
+<li><p><code>ESI</code> and <code>EDI</code> are used by high–speed memory transfer instructions.</p></li>
+<li><p><code>EBP</code> is used by high–level languages to reference function parameters and local variables on the stack. It should not be used for ordinary arithmetic or data transfer.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="the-flag-register-eflags-register" class="level4">
+<h4 class="anchored" data-anchor-id="the-flag-register-eflags-register">The Flag Register (EFLAGS register)</h4>
+<p><img src="..\images/eflags.png" class="img-fluid" width="550"></p>
+<ul>
+<li><p><code>EFLAGS</code> consists of individual binary bits that control the CPU operation or reflect the status of last executed instruction</p></li>
+<li><p>Some instructions test and manipulate individual flags</p></li>
+<li><p>A flag is set when it equals 1; it is clear when it equals 0.</p></li>
+<li><p>Some of the flags in the <code>EFLAGS</code> register can be modified directly, using special-purpose instructions.</p></li>
+<li><p>The status flags (bits 0, 2, 4, 6, 7, and 11) of the EFLAGS register indicate the results of arithmetic instructions, such as the ADD, SUB, MUL, and DIV instructions. The functions of the status flags are as follows:</p>
+<table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 95%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CF (bit 0)</td>
+<td><strong>Carry flag</strong>. Set if an arithmetic operation generates a carry or a borrow out of the most-significant bit of the result; cleared otherwise. This flag indicates an overflow condition for unsigned-integer arithmetic. It is also used in multiple-precision arithmetic.</td>
+</tr>
+<tr class="even">
+<td>PF (bit 2)</td>
+<td><strong>Parity flag</strong>. Set if the least-significant byte of the result contains an even number of 1 bits; cleared otherwise.</td>
+</tr>
+<tr class="odd">
+<td>AF (bit 4)</td>
+<td>Adjust flag. Set if an arithmetic operation generates a carry or a borrow out of bit 3 of the result; cleared otherwise. This flag is used in binary-coded decimal (BCD) arithmetic.</td>
+</tr>
+<tr class="even">
+<td>ZF (bit 6)</td>
+<td><strong>Zero flag</strong>. Set if the result is zero; cleared otherwise.</td>
+</tr>
+<tr class="odd">
+<td>SF (bit 7)</td>
+<td><strong>Sign flag</strong>. Set equal to the most-significant bit of the result, which is the sign bit of a signed integer. (0 indicates a positive value and 1 indicates a negative value.)</td>
+</tr>
+<tr class="even">
+<td>OF (bit 11)</td>
+<td><strong>Overflow flag</strong>. Set if the integer result is too large a positive number or too small a negative number (excluding the sign-bit) to fit in the destination operand; cleared otherwise. This flag indicates an over flow condition for signed-integer (two’s complement) arithmetic.</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Of these status flags, only the CF flag can be modified directly, using the <code>STC</code>, <code>CLC</code>, and <code>CMC</code> instructions. Also the bit instructions (BT, BTS, BTR, and BTC) copy a specified bit into the CF flag.</p></li>
+</ul>
+</section>
+</section>
+<section id="address-space" class="level3">
+<h3 class="anchored" data-anchor-id="address-space">Address Space</h3>
+<ul>
+<li>The memory that the processor addresses on its bus is called <strong>physical memory</strong>.</li>
+<li>Physical memory is organized as a sequence of 8-bit bytes. Each memory byte is assigned a unique address, called a <strong><em>physical address</em></strong>. In IA-32 architecture, physical addresses range from zero to a maximum of 2<sup>32−1</sup> (or 2<sup>36−1</sup> when Physical Address Extension PAE is enabled).</li>
+<li>x86 memory has three major memory models, which are:
+<ul>
+<li>Real-mode flat model</li>
+<li>Real-mode segmented model</li>
+<li>32-bit protected-mode flat model</li>
+<li>64-bit long mode (will be discussed later in this course)</li>
+</ul></li>
+</ul>
+<section id="real-mode-flat-model" class="level4">
+<h4 class="anchored" data-anchor-id="real-mode-flat-model">Real-Mode Flat Model</h4>
+<ul>
+<li>In real-mode flat model, a program and all the data it works on must exist within a single 64KB block of memory.</li>
+<li>The segment registers are all set to point to the beginning of the 64KB block of memory (The OS sets them when it loads and runs the program).</li>
+</ul>
+</section>
+<section id="real-mode-segmented-model" class="level4">
+<h4 class="anchored" data-anchor-id="real-mode-segmented-model">Real-Mode Segmented Model</h4>
+<ul>
+<li>Your program can still see 1MB of memory available to the CPU in real mode. However, the 20-bit address is constructed by combining the 16-bit segment address with 16-bit offset address.</li>
+</ul>
+</section>
+<section id="bit-protected-mode-flat-model" class="level4">
+<h4 class="anchored" data-anchor-id="bit-protected-mode-flat-model">32-Bit Protected Mode Flat Model</h4>
+<ul>
+<li><p>In 32-bit protected mode, a program can address a linear address space of up to 4GB.</p>
+<p><img src="..\images/addspace_protected.png" class="img-fluid" width="400"></p></li>
+<li><p>Each address is 32-bit quantity including the EIP.</p></li>
+<li><p>The segment registers are still exist, but controlled by the operating system. You, as programmer, neither read nor change them directly. The segment registers define where your 4GB memory space exists in physical or virtual memory.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="assembly-language" class="level2">
+<h2 class="anchored" data-anchor-id="assembly-language">Assembly Language</h2>
+<section id="what-is-assembly-language" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-assembly-language">What is Assembly Language</h3>
+<ul>
+<li><p>Assembly Language is the oldest programming language, bears the closest resemblance to native machine language. Hence, assembly language is a <strong>low-level</strong> programming language.</p></li>
+<li><p>Assembly language for x86 (the focus of this course) means programming on microprocessors compatible with Intel and AMD processors running under Windows, Linux, Unix, etc.</p></li>
+</ul>
+</section>
+<section id="machine-language" class="level3">
+<h3 class="anchored" data-anchor-id="machine-language">Machine Language</h3>
+<ul>
+<li><p>A CPU can only execute machine instructions. These instructions are bit strings. The following is a short program written in machine language for the IBM PC:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Machine Instruction</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>10100001 00000000 00000000</code></td>
+<td>Move content of memory word 0 to AX</td>
+</tr>
+<tr class="even">
+<td><code>00000101 00000100 00000000</code></td>
+<td>Add 4 to AX</td>
+</tr>
+<tr class="odd">
+<td><code>10100011 00000000 00000000</code></td>
+<td>Move content of AX to memory word 0</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>A more convenient language to use is <strong>assembly language</strong>. It uses symbolic names to represent operations, registers, and/or memory location. If memory location 0 is symbolized by <code>A</code>, the preceding program can be expressed like this in assembly language:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span>A<span class="op">]</span>   <span class="co">; move content of A to AX</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">add</span>   <span class="kw">ax</span><span class="op">,</span> <span class="dv">4</span>     <span class="co">; add 4 to the content of AX</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="op">[</span>A<span class="op">],</span> <span class="kw">ax</span>   <span class="co">; move content of AX to A</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="assembly-language-compared-to-high-level-language" class="level3">
+<h3 class="anchored" data-anchor-id="assembly-language-compared-to-high-level-language">Assembly Language Compared to High-Level Language</h3>
+<p>The following assignment statement (C/C++):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="op">(</span>x <span class="op">+</span> <span class="dv">10</span><span class="op">)</span> <span class="op">*</span> <span class="dv">3</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>can be translated to Assembly language as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span>    <span class="co">; move content of x to EAX register</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">add</span>   <span class="kw">eax</span><span class="op">,</span> <span class="dv">10</span>     <span class="co">; Add 10 to EAX</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="dv">3</span>      <span class="co">; Let EBX = 3</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">imul</span>  <span class="kw">ebx</span>         <span class="co">; perform EAX = EAX * EBX</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span>    <span class="co">; store the result into Y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="is-assembly-language-portable" class="level3">
+<h3 class="anchored" data-anchor-id="is-assembly-language-portable">Is Assembly Language Portable?</h3>
+<ul>
+<li><p>A language whose source programs can be compiled and run on a wide variety of computer systems is said to be portable.</p>
+<ul>
+<li><p>Java is portable, compiled programs run nearly on any computer</p></li>
+<li><p>C++ is portable, can compile and run on any computer if standard library is used</p></li>
+</ul></li>
+<li><p>Assembly is <strong>NOT</strong> portable, because it is designed for a specific processor family and operating system.</p></li>
+</ul>
+</section>
+<section id="why-learning-assembly-language" class="level3">
+<h3 class="anchored" data-anchor-id="why-learning-assembly-language">Why Learning Assembly Language</h3>
+<ul>
+<li><p>Efficiency in terms of size and time, because assembly language is so close to machine language</p></li>
+<li><p>Writing system programs (Operating system, Embedded programming, device driver, etc)</p></li>
+</ul>
+</section>
+<section id="the-assembler" class="level3">
+<h3 class="anchored" data-anchor-id="the-assembler">The Assembler</h3>
+<ul>
+<li><p>Unfortunately, there is no standardization for x86 assembly language like other high-level languages, such as C and C++</p></li>
+<li><p>The assembly language mainly depends on</p>
+<ul>
+<li><p>the instruction set (ISA) of a microprocessor, and</p></li>
+<li><p>a utility program called <strong>assembler</strong>.</p></li>
+</ul></li>
+</ul>
+<!-- -->
+<ul>
+<li><p><strong>An assembler</strong>: is a utility program that converts source code programs from assembly language into machine language (known as object source file).</p></li>
+<li><p>There are many different assemblers out there for x86 architecture:</p>
+<ul>
+<li><p>MASM (Microsoft Macro Assembler)</p></li>
+<li><p>NASM (Netwide Assembler)</p></li>
+<li><p>TASM (Turbo Assembler)</p></li>
+<li><p>GAS (GNU Assembler)</p></li>
+<li><p>… and many more</p></li>
+</ul></li>
+<li><p>All x86 assemblers use radically different assembly language</p>
+<ul>
+<li><p>They agree on the instruction set (Like MOV, ADD, SUB, etc)</p></li>
+<li><p>They differ on how the registers are used and how the operands are addressed.</p></li>
+</ul></li>
+<li><p>This course will consider NASM assembler.</p></li>
+</ul>
+<section id="nasm-assembler" class="level4">
+<h4 class="anchored" data-anchor-id="nasm-assembler">NASM Assembler</h4>
+<ul>
+<li><p>The Netwide Assembler, NASM, is an IA-32 and Intel 64 assembler designed for portability and modularity</p></li>
+<li><p>NASM is a free cross-platform x86 assembler which supports all common x86 operating systems: Windows, Linux, MacOS X, Unix, etc.</p></li>
+<li><p>NASM provides a simple syntax that closely resembles Intel’s assembly language while offering compatibility with a variety of output formats, such as ELF, COFF, and Mach-O.</p></li>
+</ul>
+</section>
+</section>
+<section id="programming-tools-that-you-need" class="level3">
+<h3 class="anchored" data-anchor-id="programming-tools-that-you-need">Programming Tools That You Need</h3>
+<ul>
+<li><p>To develop an assembly program, you need</p>
+<ul>
+<li><p>an assembler, which we are going to use NASM</p></li>
+<li><p>an editor; there are several choices</p>
+<ul>
+<li><p>Visual Studio Code</p></li>
+<li><p>Notepad++</p></li>
+<li><p>VIM under Linux</p></li>
+</ul></li>
+<li><p><strong>A Linker</strong>: is a utility program that combines individual object files created by an assembler into a single executable program.</p></li>
+<li><p>(Optionally) a <strong>debugger</strong>, in case you need to debug your code.</p></li>
+</ul></li>
+</ul>
+<section id="building-process" class="level4">
+<h4 class="anchored" data-anchor-id="building-process">Building Process</h4>
+<p><img src="..\images/asmlink.png" class="img-fluid"></p>
+</section>
+<section id="object-file-format" class="level4">
+<h4 class="anchored" data-anchor-id="object-file-format">Object File Format</h4>
+<ul>
+<li>Compilers and assemblers create object files containing the generated machine code and data for a source file. Linkers combine multiple object files into one binary file (known as <strong>image</strong> file or executable file). Loaders take image files and load them into memory (in order to be executed).</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What goes into object file?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Header information,</p></li>
+<li><p>Relocation table,</p></li>
+<li><p>Symbols,</p></li>
+<li><p>Debugging information, and</p></li>
+<li><p>of course, Machine code</p></li>
+</ul>
+</div>
+</div>
+<ul>
+<li><p>There are many object file formats. Some you should know about include:</p>
+<ul>
+<li><p>COFF, primary for UNIX</p></li>
+<li><p>Win32 and Win64, primary for Windows OS</p></li>
+<li><p>ELF and ELF64, primary for Linux</p></li>
+<li><p>Macho32 and Macho64, primary for MacOS X</p></li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/khalid-elbadawi\.github\.io\/C404\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
