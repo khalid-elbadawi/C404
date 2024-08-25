@@ -275,7 +275,6 @@ window.Quarto = {
 <li>Hexadecimal 2’s complement</li>
 <li>Translating binary integer to hexadecimal and vice versa.</li>
 <li>Translating hexadecimal integer to decimal and vice versa.</li>
-<li>Converting a hexadecimal integer t</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -290,23 +289,24 @@ Example
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><p><strong>Convert the following number</strong> <span class="math inline">\((1100101)_2\)</span> to decimal. <span class="math display">\[\begin{align*}
+<li><p><strong>Convert the following number</strong> <span class="math inline">\((1100101)_2\)</span> <strong>to decimal</strong>.</p>
+<span class="math display">\[\begin{align*}
      1100101_2 &amp;= 1\times2^0 + 0\times2^1 + 1\times2^2 + 0\times2^3 + 0\times2^4 + 1\times2^5 + 1\times2^6 \\
      &amp;= 1+4+32+64=101_{10}
-\end{align*}\]</span></p></li>
-<li><p><strong>Convert the following number</strong> <span class="math inline">\((A13)_{16}\)</span> to decimal.</p>
+\end{align*}\]</span></li>
+<li><p><strong>Convert the following number</strong> <span class="math inline">\((A13)_{16}\)</span> <strong>to decimal</strong>.</p>
 <span class="math display">\[\begin{align*}
      A13_{16} &amp;= 3\times16^0 + 1\times16^1 + 10\times16^2 \\
      &amp;= 3 + 16 + 2560 = 2579_{10}
 \end{align*}\]</span></li>
-<li><p><strong>Convert the following number</strong> <span class="math inline">\(-14_{10}\)</span> to one-word binary.</p>
+<li><p><strong>Convert the following number</strong> <span class="math inline">\(-14_{10}\)</span> <strong>to one-word binary</strong>.</p>
 <span class="math display">\[\begin{align*}
      14_{10} = 8 + 4 + 2 = 1110_2 &amp;= 0000\; 0000\; 0000\; 1110_2 \\
      Neg &amp;= 1111\; 1111\; 1111\; 0001_2 \\
      +1 &amp;= 1111\; 1111\; 1111\; 0010_2
 \end{align*}\]</span>
 <p><span class="math inline">\(\therefore -14_{10} = 1111\;1111\;1111\;0010_2\)</span></p></li>
-<li><p><strong>Convert the following number</strong> <span class="math inline">\(-14_{10}\)</span> to one-word hexadecimal</p>
+<li><p><strong>Convert the following number</strong> <span class="math inline">\(-14_{10}\)</span> <strong>to one-word hexadecimal</strong></p>
 <p><span class="math inline">\(-14_{10}\)</span> = FFF2<sub>16</sub></p></li>
 </ol>
 </div>
@@ -462,7 +462,7 @@ Example
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Convert</strong> <span class="math inline">\(-11.375_{10}\)</span> to single-precision binary representation?</p>
+<p><strong>Convert</strong> <span class="math inline">\(-11.375_{10}\)</span> <strong>to single-precision binary representation?</strong></p>
 <p><span class="math inline">\(11_{10} = (1011)_2\)</span></p>
 <p><span class="math inline">\(0.375_{10} = (2^{-2} + 2^{-3}) = 0.25 + 0.125 = (.011)_2\)</span></p>
 
@@ -496,13 +496,13 @@ Example
 <li><p>Conventionally, Intel microprocessors are known as <strong>x86 processors</strong>.</p></li>
 <li><p>x86 microprocessors are divided into three families: x86-16, x86-32 and x86-64.</p></li>
 <li><p>All Intel microprocessors are byte addressable.</p></li>
-<li><p>In 1974, Intel has announce 8080 CPU: 8-bit CPU (2Mhz) and 16-bit address bus (64KB).</p></li>
+<li><p>In 1974, Intel has announced 8080 CPU: 8-bit CPU (2Mhz) and 16-bit address bus (64KB).</p></li>
 <li><p>In 1978, 8086 CPU has been introduced with 16-bit CPU (16-bit registers and 16-bit external data bus) and 20-bit address bus with CPU speed ranging from 5MHz to 10MHz.</p>
 <ul>
 <li>Memory addresses start from 000000H to 0FFFFFH (1MB)</li>
 <li>The address space is divided into segments. A <strong><em>segment</em></strong> is a region of memory that begins on a paragraph boundary and extends for some number of bytes (&lt;= 64K).</li>
 <li>A <strong><em>paragraph</em></strong> is a measure of memory equal to 16 bytes.</li>
-<li>8086 CPUs have six 16-bit segment registers: CS, DS, SS,ES, GS, and FS. -The physical address is constructed by two registers: segment address : offset address.</li>
+<li>8086 CPUs have four 16-bit segment registers: CS, DS, SS, and ES. -The physical address is constructed by two registers: segment address : offset address.</li>
 </ul></li>
 <li><p>In 1982, Intel 286 introduced protected mode operation with four privilege levels. The address bus was 24-bit providing 16MB physical memory.</p></li>
 <li><p>The Intel 386 (1985) was the first 32-bit CPU (80386 CPUs) with 32-bit address bus (addressable up to 4G).</p>
