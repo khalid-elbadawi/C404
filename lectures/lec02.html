@@ -262,15 +262,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>A <strong>macro</strong> is “shorthand” for a sequence of other statements.</p></li>
 <li><p>By default, assembly is not case-sensitive.</p></li>
 <li><p>Any statement has up to four fields, separated by at least one white space:</p>
-<pre data-code-line-numbers=""><code>
- [label:]     instruction   [operand(s)]   [;comment]
-
- [label:]     directive     [initializer]  [, initializer] ...</code></pre></li>
+<pre data-code-line-numbers=""><code>[label:]     instruction   [operand(s)]   [;comment]</code></pre></li>
 </ul>
 <p>The four fields are displayed in the following diagram:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="..\images/statementlayout.png" class="img-fluid figure-img" width="599"></p>
+<p><img src="..\images/statementlayout.png" class="img-fluid figure-img" width="500"></p>
 <figcaption>The layout of source lines. Blue rectangle for label; Red rectangle for either instruction or directive; Orange rectangle for operands or arguments; Green rectangle for comment</figcaption>
 </figure>
 </div>
@@ -279,7 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="comments">Comments</h3>
 <ul>
 <li><p>A comment always starts with a semicolon character <code>;</code> and ends with newline character, as shown as red rectangles in the following diagram:</p>
-<p><img src="..\images/comments.png" class="img-fluid" width="574"></p></li>
+<p><img src="..\images/comments.png" class="img-fluid" width="500"></p></li>
 <li><p>At the top of every program, you should add a comment block that contains:</p>
 <ul>
 <li><p>The name of the source code file,</p></li>
@@ -314,7 +311,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>The <code>.text</code> section: contains the actual machines instructions (i.e., the code) that make up your program</li>
 </ul></li>
 <li><p>In the following diagram, the data section is enclosed by the GREEN rectangle and code (or text) section is enclosed by the RED rectangle:</p>
-<p><img src="..\images/sections.png" class="img-fluid" width="574"></p></li>
+<p><img src="..\images/sections.png" class="img-fluid" width="500"></p></li>
 </ul>
 </section>
 <section id="label-field---user-identifier" class="level3">
@@ -879,8 +876,8 @@ Syntax
 <table class="table">
 <caption>Instruction Operand Notation, 32-bit Mode.</caption>
 <colgroup>
-<col style="width: 30%">
-<col style="width: 69%">
+<col style="width: 31%">
+<col style="width: 68%">
 </colgroup>
 <thead>
 <tr class="header">
