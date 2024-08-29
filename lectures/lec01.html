@@ -73,6 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -166,6 +167,29 @@ window.Quarto = {
         <li>
     <a class="dropdown-item" href="../lectures/lec01.html">
  <span class="dropdown-text">Lecture 1: Basic Concepts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lec02.html">
+ <span class="dropdown-text">Lecture 2: Assembly Language Fundamentals</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-exercises" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Exercises</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-exercises">    
+        <li>
+    <a class="dropdown-item" href="../exercises/inclass01.html">
+ <span class="dropdown-text">Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../exercises/inclass02.html">
+ <span class="dropdown-text">Exercise 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../exercises/inclass03.html">
+ <span class="dropdown-text">Exercise 3</span></a>
   </li>  
     </ul>
   </li>
@@ -715,7 +739,7 @@ Example
 </tbody>
 </table></li>
 <li><p>A more convenient language to use is <strong>assembly language</strong>. It uses symbolic names to represent operations, registers, and/or memory location. If memory location 0 is symbolized by <code>A</code>, the preceding program can be expressed like this in assembly language:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span>A<span class="op">]</span>   <span class="co">; move content of A to AX</span></span>
+<div class="sourceCode" id="cb1" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span>A<span class="op">]</span>   <span class="co">; move content of A to AX</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">add</span>   <span class="kw">ax</span><span class="op">,</span> <span class="dv">4</span>     <span class="co">; add 4 to the content of AX</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="op">[</span>A<span class="op">],</span> <span class="kw">ax</span>   <span class="co">; move content of AX to A</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
@@ -723,9 +747,9 @@ Example
 <section id="assembly-language-compared-to-high-level-language" class="level3">
 <h3 class="anchored" data-anchor-id="assembly-language-compared-to-high-level-language">Assembly Language Compared to High-Level Language</h3>
 <p>The following assignment statement (C/C++):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="op">(</span>x <span class="op">+</span> <span class="dv">10</span><span class="op">)</span> <span class="op">*</span> <span class="dv">3</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="op">(</span>x <span class="op">+</span> <span class="dv">10</span><span class="op">)</span> <span class="op">*</span> <span class="dv">3</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>can be translated to Assembly language as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span>    <span class="co">; move content of x to EAX register</span></span>
+<div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span>    <span class="co">; move content of x to EAX register</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">add</span>   <span class="kw">eax</span><span class="op">,</span> <span class="dv">10</span>     <span class="co">; Add 10 to EAX</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="dv">3</span>      <span class="co">; Let EBX = 3</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">imul</span>  <span class="kw">ebx</span>         <span class="co">; perform EAX = EAX * EBX</span></span>
@@ -1260,4 +1284,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
 </body></html>

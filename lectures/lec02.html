@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -39,6 +73,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,6 +139,29 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../lectures/lec01.html">
  <span class="dropdown-text">Lecture 1: Basic Concepts</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lec02.html">
+ <span class="dropdown-text">Lecture 2: Assembly Language Fundamentals</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-exercises" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Exercises</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-exercises">    
+        <li>
+    <a class="dropdown-item" href="../exercises/inclass01.html">
+ <span class="dropdown-text">Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../exercises/inclass02.html">
+ <span class="dropdown-text">Exercise 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../exercises/inclass03.html">
+ <span class="dropdown-text">Exercise 3</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -118,8 +176,43 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lec02.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="lec02.epub"><i class="bi bi-file"></i>ePub</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#an-assembly-program" id="toc-an-assembly-program" class="nav-link active" data-scroll-target="#an-assembly-program">An Assembly Program</a>
+  <ul class="collapse">
+  <li><a href="#assembly-statements" id="toc-assembly-statements" class="nav-link" data-scroll-target="#assembly-statements">Assembly Statements</a></li>
+  <li><a href="#comments" id="toc-comments" class="nav-link" data-scroll-target="#comments">Comments</a></li>
+  <li><a href="#program-sections" id="toc-program-sections" class="nav-link" data-scroll-target="#program-sections">Program Sections</a></li>
+  <li><a href="#label-field---user-identifier" id="toc-label-field---user-identifier" class="nav-link" data-scroll-target="#label-field---user-identifier">Label field - User Identifier</a></li>
+  <li><a href="#reserved-words" id="toc-reserved-words" class="nav-link" data-scroll-target="#reserved-words">Reserved Words</a></li>
+  <li><a href="#literals" id="toc-literals" class="nav-link" data-scroll-target="#literals">Literals</a></li>
+  <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a></li>
+  </ul></li>
+  <li><a href="#defining-data" id="toc-defining-data" class="nav-link" data-scroll-target="#defining-data">Defining Data</a>
+  <ul class="collapse">
+  <li><a href="#intrinsic-data-types" id="toc-intrinsic-data-types" class="nav-link" data-scroll-target="#intrinsic-data-types">Intrinsic Data Types</a></li>
+  <li><a href="#defining-initialized-data-using-dx" id="toc-defining-initialized-data-using-dx" class="nav-link" data-scroll-target="#defining-initialized-data-using-dx">Defining Initialized Data (using D<em>x</em>)</a></li>
+  <li><a href="#defining-uninitialized-data-using-resx" id="toc-defining-uninitialized-data-using-resx" class="nav-link" data-scroll-target="#defining-uninitialized-data-using-resx">Defining Uninitialized Data (using RESx)</a></li>
+  <li><a href="#defining-constants" id="toc-defining-constants" class="nav-link" data-scroll-target="#defining-constants">Defining Constants</a></li>
+  <li><a href="#constant-integer-expression" id="toc-constant-integer-expression" class="nav-link" data-scroll-target="#constant-integer-expression">Constant Integer Expression</a></li>
+  </ul></li>
+  <li><a href="#addressing-modes" id="toc-addressing-modes" class="nav-link" data-scroll-target="#addressing-modes">Addressing Modes</a>
+  <ul class="collapse">
+  <li><a href="#direct-memory-addressing-mode" id="toc-direct-memory-addressing-mode" class="nav-link" data-scroll-target="#direct-memory-addressing-mode">Direct Memory Addressing Mode</a></li>
+  <li><a href="#addressing-mode-and-machine-instruction" id="toc-addressing-mode-and-machine-instruction" class="nav-link" data-scroll-target="#addressing-mode-and-machine-instruction">Addressing mode and Machine Instruction</a></li>
+  </ul></li>
+  <li><a href="#data-transfer-instructions" id="toc-data-transfer-instructions" class="nav-link" data-scroll-target="#data-transfer-instructions">Data Transfer Instructions</a>
+  <ul class="collapse">
+  <li><a href="#mov-instruction" id="toc-mov-instruction" class="nav-link" data-scroll-target="#mov-instruction"><code>MOV</code> Instruction</a></li>
+  <li><a href="#movsx-instruction" id="toc-movsx-instruction" class="nav-link" data-scroll-target="#movsx-instruction"><code>MOVSX</code> Instruction</a></li>
+  <li><a href="#movzx-instruction" id="toc-movzx-instruction" class="nav-link" data-scroll-target="#movzx-instruction"><code>MOVZX</code> Instruction</a></li>
+  <li><a href="#xchg-instruction" id="toc-xchg-instruction" class="nav-link" data-scroll-target="#xchg-instruction"><code>XCHG</code> Instruction</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lec02.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="lec02.epub"><i class="bi bi-file"></i>ePub</a></li></ul></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -142,8 +235,974 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="an-assembly-program" class="level2">
+<h2 class="anchored" data-anchor-id="an-assembly-program">An Assembly Program</h2>
+<p>Let us consider the following program:</p>
+<div class="sourceCode" id="cb1" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">;   Adding two numbers</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="kw">global</span> _main</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      <span class="kw">section</span> <span class="fu">.data</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>sum   <span class="dt">dd</span>      <span class="dv">0</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="kw">section</span> <span class="fu">.code</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">_main:</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">5</span>      <span class="co">; let eax = 5</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">6</span>      <span class="co">; add 6 to eax</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      <span class="kw">mov</span>     <span class="op">[</span>sum<span class="op">],</span> <span class="kw">eax</span>  <span class="co">; store result into sum</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="cf">ret</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="assembly-statements" class="level3">
+<h3 class="anchored" data-anchor-id="assembly-statements">Assembly Statements</h3>
+<ul>
+<li><p>Assembly program consists of statements. There are three types of statements: instructions, directives, and macros.</p></li>
+<li><p>An <strong>instruction</strong> is translated by the assembler into one or more bytes of object code (machine code), which will be executed at run time.</p></li>
+<li><p>A <strong>directive</strong> tells the assembler to perform some special tasks, such as allocating memory space for a variable or creating a procedure.</p></li>
+<li><p>A <strong>macro</strong> is “shorthand” for a sequence of other statements.</p></li>
+<li><p>By default, assembly is not case-sensitive.</p></li>
+<li><p>Any statement has up to four fields, separated by at least one white space:</p>
+<pre data-code-line-numbers=""><code>
+ [label:]     instruction   [operand(s)]   [;comment]
+
+ [label:]     directive     [initializer]  [, initializer] ...</code></pre></li>
+</ul>
+<p>The four fields are displayed in the following diagram:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="..\images/statementlayout.png" class="img-fluid figure-img" width="599"></p>
+<figcaption>The layout of source lines. Blue rectangle for label; Red rectangle for either instruction or directive; Orange rectangle for operands or arguments; Green rectangle for comment</figcaption>
+</figure>
+</div>
+</section>
+<section id="comments" class="level3">
+<h3 class="anchored" data-anchor-id="comments">Comments</h3>
+<ul>
+<li><p>A comment always starts with a semicolon character <code>;</code> and ends with newline character, as shown as red rectangles in the following diagram:</p>
+<p><img src="..\images/comments.png" class="img-fluid" width="574"></p></li>
+<li><p>At the top of every program, you should add a comment block that contains:</p>
+<ul>
+<li><p>The name of the source code file,</p></li>
+<li><p>The date you created the file,</p></li>
+<li><p>The date you last modified the file,</p></li>
+<li><p>The name of the person who wrote it,</p></li>
+<li><p>The name and version of the assembler used,</p></li>
+<li><p>An overview description of the what the program or library does.</p></li>
+<li><p>A copy of the commands used to build the file</p></li>
+<li><p>Here is an example:</p>
+<div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">; -----------------------------------------------------------------</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">; Source name   : addtwo.asm</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">; Version       : 1.0</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">; Created date  : 10/4/2020</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">; Last modified : 22/8/2024</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">; Author        : Khalid Elbadawi</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">; Compiling     : nasm -fwin32 addtwo.asm (NASM version 2.15)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">; Description   : Store the result of 5 + 6 </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">; -----------------------------------------------------------------</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+</ul>
+</section>
+<section id="program-sections" class="level3">
+<h3 class="anchored" data-anchor-id="program-sections">Program Sections</h3>
+<ul>
+<li><p>Generally, programs written in assembly language are divided into <strong>sections</strong>, which represent <strong>memory</strong> <strong>segments</strong>.</p></li>
+<li><p>Sections are defined by the assembler directive.</p></li>
+<li><p>In NASM, sections are created by using <code>section</code> keyword followed by the section name, such as <code>.data</code>, <code>.bss</code>, or <code>.text</code></p>
+<ul>
+<li>The <code>.data</code> section: contains data definitions of initialized data items</li>
+<li>The <code>.bss</code> section: contains data definitions of uninitialized data items</li>
+<li>The <code>.text</code> section: contains the actual machines instructions (i.e., the code) that make up your program</li>
+</ul></li>
+<li><p>In the following diagram, the data section is enclosed by the GREEN rectangle and code (or text) section is enclosed by the RED rectangle:</p>
+<p><img src="..\images/sections.png" class="img-fluid" width="574"></p></li>
+</ul>
+</section>
+<section id="label-field---user-identifier" class="level3">
+<h3 class="anchored" data-anchor-id="label-field---user-identifier">Label field - User Identifier</h3>
+<ul>
+<li><p>A label field is a programmer-chosen <strong>identifier</strong>. It might identify a variable, a constant, a procedure or an instruction label.</p></li>
+<li><p>Rules for choosing an identifier are (in NASM):</p>
+<ul>
+<li><p>Must not exceed more than 247 characters</p></li>
+<li><p>Must start with a letter, underscore or ?.</p></li>
+<li><p>Subsequent characters may also be digits, @, <code>#</code>, <code>$</code>, or dot.</p></li>
+<li><p>Must not be a reserved word</p></li>
+</ul></li>
+<li><p>In general, it’s good idea to use descriptive names for identifiers.</p></li>
+<li><p>Labels, in NASM, are case sensitive.</p></li>
+</ul>
+</section>
+<section id="reserved-words" class="level3">
+<h3 class="anchored" data-anchor-id="reserved-words">Reserved Words</h3>
+<ul>
+<li><p>There are different types of reserved words:</p>
+<ol type="1">
+<li>Instruction mnemonics (the Instruction Set), such as <code>ADD</code>, <code>SUB</code>, <code>MOV.</code></li>
+<li>Register names, such as <code>EAX</code>, <code>AX</code>, <code>AL</code>, <code>ch</code></li>
+<li>Directives, such as <code>DB</code>, <code>DWORD</code>.</li>
+<li>Operand attributes, such <code>FAR</code>, <code>NEAR</code>, <code>BYTE.</code></li>
+<li>Operators used in constant expressions.</li>
+</ol></li>
+<li><p>Reserved words are NOT case sensitives</p></li>
+</ul>
+</section>
+<section id="literals" class="level3">
+<h3 class="anchored" data-anchor-id="literals">Literals</h3>
+<section id="integer-literals" class="level4">
+<h4 class="anchored" data-anchor-id="integer-literals">Integer Literals</h4>
+<div class="callout callout-style-simple callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Syntax
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>[{+|-}] digits [radix]</code></p>
+</div>
+</div>
+<p>where <em>radix</em> can be</p>
+<ol type="1">
+<li><code>h</code> (hexadecimal),</li>
+<li><code>o</code> or <code>q</code> (octal),</li>
+<li><code>d</code> (decimal), and</li>
+<li><code>b</code> (binary)</li>
+</ol>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="table">
+<thead>
+<tr class="header">
+<th>Integer constants</th>
+<th>Base</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>198</code></td>
+<td>decimal</td>
+</tr>
+<tr class="even">
+<td><code>0200</code></td>
+<td>decimal</td>
+</tr>
+<tr class="odd">
+<td><code>-2d</code></td>
+<td>decimal</td>
+</tr>
+<tr class="even">
+<td><code>+101b</code></td>
+<td>binary</td>
+</tr>
+<tr class="odd">
+<td><code>1100_0001b</code></td>
+<td>binary</td>
+</tr>
+<tr class="even">
+<td><code>107o</code></td>
+<td>octal</td>
+</tr>
+<tr class="odd">
+<td><code>107q</code></td>
+<td>still octal (more readable)</td>
+</tr>
+<tr class="even">
+<td><code>23bh</code></td>
+<td>hexadecimal</td>
+</tr>
+<tr class="odd">
+<td><code>23Bh</code></td>
+<td>hexadecimal</td>
+</tr>
+<tr class="even">
+<td><code>0ah</code></td>
+<td>hexadecimal</td>
+</tr>
+<tr class="odd">
+<td><code>0xC8</code></td>
+<td>hexadecimal (C syntax)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="character-or-string-literals" class="level4">
+<h4 class="anchored" data-anchor-id="character-or-string-literals">Character or String Literals</h4>
+<ul>
+<li><p>Characters and character string must be enclosed in single quotes, double quotes or back quotes.</p>
+<ul>
+<li><p><code>"A"</code> or <code>"Hello"</code></p></li>
+<li><p><code>'A'</code> or <code>'Hello'</code></p></li>
+<li><p><code>`A`</code> or <code>`Hello`</code></p></li>
+</ul></li>
+<li><p>Characters are stored in contiguous memory and translated into their ASCII codes by the assemblers, so there is no difference between using <code>"A"</code> and <code>41h</code> in an assembly program.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Character/String Literal</th>
+<th>Value in Hex</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>'m'</code></td>
+<td>6Dh</td>
+</tr>
+<tr class="even">
+<td><code>"School"</code></td>
+<td>53h, 63h, 68h, 6Fh, 6Fh, 5Ch</td>
+</tr>
+<tr class="odd">
+<td><code>"Joe"</code></td>
+<td>4Ah, 6Fh, 65h</td>
+</tr>
+<tr class="even">
+<td><code>"A Bank."</code></td>
+<td>41h, 30h, 42h, 61h, 6Eh, 6Bh, 2Eh</td>
+</tr>
+<tr class="odd">
+<td><code>"Joe's"</code></td>
+<td>4Ah, 6Fh, 65h, 27h, 73h</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</section>
+</section>
+<section id="instructions" class="level3">
+<h3 class="anchored" data-anchor-id="instructions">Instructions</h3>
+<ul>
+<li><p>An instruction consists of an <em>instruction mnemonic</em> followed by zero, one, two, or three <em>operands</em>.</p></li>
+<li><p>An <strong>instruction mnemonic</strong> is a short word that identifies an instruction, such as <code>mov</code>, <code>add</code>, and <code>sub</code>.</p></li>
+<li><p>An <strong>instruction operand</strong> can be used for input or output for the instruction. For example, consider the following instruction:</p>
+<div class="sourceCode" id="cb4" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">add</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span>    <span class="co">; x is a label for memory location (variable) </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p><code>add</code> is the instruction mnemonic</p></li>
+<li><p><code>eax</code> is the first operand. This operand acts as an input and output</p></li>
+<li><p><code>[x]</code> is the second operand. This operand acts as an input.</p></li>
+<li><p>The semantic of this instruction is as follows. Add the content of <code>x</code> to <code>eax</code> and store the result into <code>eax</code> (i.e., <code>eax = eax + [x]</code>)</p></li>
+<li><p>There is a natural ordering of operands. When instructions have multiple operands, the first one is typically called the <strong>destination operand</strong>. The second operand is usually called the <strong>source operand</strong>.</p></li>
+</ul></li>
+<li><p>Instruction operand can be:</p>
+<ul>
+<li><p>Explicit, in which the operand appears in the instruction statement (see the example above)</p></li>
+<li><p>Implicit, in which the operand does not appear in the statement. For example, consider the following integer multiplication instruction:</p>
+<div class="sourceCode" id="cb5" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">imul</span>    <span class="kw">ebx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The operand <code>ebx</code> represents the multiplier. The multiplicand is the register <code>EAX</code> and the product is stored in two registers: <code>EDX</code> and <code>EAX</code>. We are going to explain this instruction in much detail in future lectures.</p></li>
+</ul></li>
+<li><p>Generally, the instructions we are going to study in this course fall under general–purpose Instructions, which perform basic <strong><em>data movement</em></strong>, <strong><em>arithmetic</em></strong>, <strong><em>logic</em></strong>, <strong><em>program flow</em></strong>, and <strong><em>string operations</em></strong> that programmer commonly use to write application and system software. In this course we are going to focus on:</p>
+<ol type="1">
+<li>Data movement/transfer instructions,</li>
+<li>Arithmetic and Logic instructions,</li>
+<li>Control transfer instructions, and</li>
+<li>Flag control instructions</li>
+</ol></li>
+</ul>
+</section>
+</section>
+<section id="defining-data" class="level2">
+<h2 class="anchored" data-anchor-id="defining-data">Defining Data</h2>
+<section id="intrinsic-data-types" class="level3">
+<h3 class="anchored" data-anchor-id="intrinsic-data-types">Intrinsic Data Types</h3>
+<p>In assembly language, data types are expressed in terms of their <em>sizes</em> (byte, word, doubleword, etc).</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Size</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Byte</td>
+<td><strong>B</strong>YTE or HWORD</td>
+<td>8 bits</td>
+</tr>
+<tr class="even">
+<td>Word (two-byte)</td>
+<td><strong>W</strong>ORD</td>
+<td>16 bits</td>
+</tr>
+<tr class="odd">
+<td>Double word (2-word)</td>
+<td><strong>D</strong>WORD</td>
+<td>32 bits</td>
+</tr>
+<tr class="even">
+<td>Quad word (4-word)</td>
+<td><strong>Q</strong>WORD</td>
+<td>64 bits</td>
+</tr>
+<tr class="odd">
+<td>Ten-Byte (5-word)</td>
+<td><strong>T</strong>BYTE or TWORD</td>
+<td>80 bits</td>
+</tr>
+<tr class="even">
+<td>Double-quad word (8-word)</td>
+<td><strong>O</strong>WORD or DQWORD</td>
+<td>128 bits</td>
+</tr>
+<tr class="odd">
+<td>Quad-quad word (16-word)</td>
+<td><strong>Y</strong>WORD</td>
+<td>256 bits</td>
+</tr>
+<tr class="even">
+<td>32-Word</td>
+<td><strong>Z</strong>WORD</td>
+<td>512 bits</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="defining-initialized-data-using-dx" class="level3">
+<h3 class="anchored" data-anchor-id="defining-initialized-data-using-dx">Defining Initialized Data (using D<em>x</em>)</h3>
+<ul>
+<li><p>A <strong><em>data definition with initialization</em></strong> sets aside storage in memory (in data segment) for a variable, with an optional label. The syntax:</p>
+<div class="callout callout-style-simple callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Syntax
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>[name:]      directive       initializer [, initializer]</code></p>
+</div>
+</div></li>
+<li><p><strong>name</strong> is an identifier to label the allocated memory. <u>The label is always attached to the first memory location.</u></p></li>
+<li><p><strong>directive</strong> is a pseudo-instruction (not real x86 instruction and are used in the instruction field) that can be:</p>
+<table class="table">
+<caption>Data Definition in the form of <strong>D</strong><em>x</em></caption>
+<thead>
+<tr class="header">
+<th>Directive</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>DB</code></td>
+<td>Define (i.e., Allocate) BYTE</td>
+</tr>
+<tr class="even">
+<td><code>DW</code></td>
+<td>Define WORD</td>
+</tr>
+<tr class="odd">
+<td><code>DD</code></td>
+<td>Define DWORD</td>
+</tr>
+<tr class="even">
+<td><code>DQ</code></td>
+<td>Define QWORD</td>
+</tr>
+<tr class="odd">
+<td><code>DT</code></td>
+<td>Define TBYTE</td>
+</tr>
+<tr class="even">
+<td><code>DO</code></td>
+<td>Define OWORD</td>
+</tr>
+<tr class="odd">
+<td><code>DY</code></td>
+<td>Define YWORD</td>
+</tr>
+<tr class="even">
+<td><code>DZ</code></td>
+<td>Define ZWORD</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><strong>Initializer</strong> is used to initialize the allocated memory. Additional initializers, if any, are separated by commas.</p></li>
+<li><p>Example</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Examples of Data Definition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb6" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">letter:</span>   <span class="dt">db</span>    <span class="st">'A'</span>   <span class="co">; value is 41h</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>resp      <span class="dt">db</span>    <span class="st">'Y'</span>   <span class="co">; default user response</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">num1:</span>     <span class="dt">db</span>    <span class="op">-</span><span class="dv">91</span>   <span class="co">; value is A5h</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>num2      <span class="dt">dw</span>    <span class="op">-</span><span class="dv">1</span>    <span class="co">; value is FFFFh</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sum:</span>      <span class="dt">dd</span>    <span class="dv">0</span>     <span class="co">; value is 0h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></li>
+</ul>
+<section id="little-endian-vs.-big-endian" class="level4">
+<h4 class="anchored" data-anchor-id="little-endian-vs.-big-endian">Little Endian vs.&nbsp;Big Endian</h4>
+<p>Consider the following definition</p>
+<div class="sourceCode" id="cb7" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">num:</span>     <span class="dt">dw</span>    <span class="bn">1234h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>All x86 microprocessors are byte addressable. This means that each memory address can store only a single byte.</p></li>
+<li><p>Therefore, in the above definition, the assembler will allocate two bytes for <code>num</code>. But, the question that may arise: how a CPU can store the initial value into 2-byte memory?</p></li>
+<li><p>There are two ways to store <code>1234h</code> in memory:</p>
+<ul>
+<li><p><strong>Little Endian</strong>, in which the least significant byte is stored at the smallest memory address</p></li>
+<li><p><strong>Big Endian</strong>, in which the most significant byte is stored at the smallest memory address.</p></li>
+<li><p>The following diagram illustrates the difference:</p>
+<p><img src="..\images/endianess.png" class="img-fluid" width="400"></p></li>
+<li><p><u>x86 microprocessors follow Little Endianness</u>.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="multiple-initializers" class="level4">
+<h4 class="anchored" data-anchor-id="multiple-initializers">Multiple Initializers</h4>
+<ul>
+<li><p>The pseudo-instruction <strong>D</strong><em>x</em> can take multiple initializers.</p></li>
+<li><p>If multiple initializers are used, the memory space is allocated large enough to hold these values.</p></li>
+<li><p>Remember, the label is always attached to the first memory location (i.e., first byte).</p></li>
+<li><p>Examples: In the comments, the first byte is located at the smallest memory address.</p>
+<div class="sourceCode" id="cb8" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>    <span class="dt">db</span>    <span class="bn">55h</span><span class="op">,</span> <span class="bn">56h</span><span class="op">,</span> <span class="bn">57h</span>   <span class="co">; 0x55 0x56 0x57</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">db</span>    <span class="st">'a'</span><span class="op">,</span> <span class="bn">55h</span>        <span class="co">; 0x61 0x55</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">db</span>    <span class="st">'ab'</span><span class="op">,</span> <span class="dv">13</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">0</span> <span class="co">; 0x61 0x62 0x0D 0x0A 0x00</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">dw</span>    <span class="bn">1234h</span><span class="op">,</span> <span class="bn">5678h</span>    <span class="co">; 0x34 0x12 0x78 0x56</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">dw</span>    <span class="bn">12h</span><span class="op">,</span> <span class="bn">34h</span>        <span class="co">; 0x12 0x00 0x34 0x00</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">dw</span>    <span class="st">'ab'</span>            <span class="co">; 0x61 0x62</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">dw</span>    <span class="st">'abc'</span>           <span class="co">; 0x61 0x62 0x63 0x00</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">dd</span>    <span class="bn">0x12345678</span>      <span class="co">; 0x78 0x56 0x34 0x12</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>   <span class="co">;db    300             ; invalid </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>In data definitions, the labels are optional and pseudo-instructions are executed by the assembler in sequential. Therefore, the following definition:</p>
+<div class="sourceCode" id="cb9" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>list    <span class="dt">db</span>    <span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>can be written as</p>
+<div class="sourceCode" id="cb10" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>list    <span class="dt">db</span>    <span class="dv">10</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>        <span class="dt">db</span>    <span class="dv">20</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">db</span>    <span class="dv">30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="dup-operator" class="level4">
+<h4 class="anchored" data-anchor-id="dup-operator">DUP Operator</h4>
+<ul>
+<li><p>The syntax of DUP operator:</p>
+<div class="callout callout-style-simple callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Syntax
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb11" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>[name<span class="op">]</span>    <span class="kw">Dx</span>   <span class="op">&lt;</span>counter<span class="op">&gt;</span> DUP <span class="op">(</span>initializer<span class="op">-</span>list<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></li>
+<li><p>The <code>DUP</code> operator duplicates the initializer-list specified number of times</p></li>
+<li><p><code>counter</code> is an constant 32-bit integer expression.</p></li>
+<li><p><code>DUP</code> operator is useful when allocating space for an array.</p></li>
+<li><p>Examples:</p>
+<div class="sourceCode" id="cb12" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>    <span class="dt">db</span>  <span class="dv">3</span> dup<span class="op">(</span><span class="dv">0</span><span class="op">)</span>      <span class="co">; db  0, 0, 0, 0, 0</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">dw</span>  <span class="dv">8</span> dup<span class="op">(</span><span class="dv">1</span><span class="op">)</span>      <span class="co">; dw  1, 1, 1, 1, 1, 1, 1, 1</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">db</span>  <span class="dv">4</span> dup<span class="op">(</span><span class="st">'ABC'</span><span class="op">)</span>  <span class="co">; db  'ABC', 'ABC', 'ABC', 'ABC' </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+</section>
+<section id="defining-uninitialized-data-using-resx" class="level3">
+<h3 class="anchored" data-anchor-id="defining-uninitialized-data-using-resx">Defining Uninitialized Data (using RESx)</h3>
+<ul>
+<li><p>The <code>RESx</code> directive is quite similar to the <code>Dx</code> directive, but always specifices the number of elements.</p></li>
+<li><p>The <code>RESx</code> directive defines uninitialized storage space inside the BSS segment.</p></li>
+<li><p>The syntax:</p>
+<div class="callout callout-style-simple callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Syntax
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>[name:]      RESx       &lt;counter&gt;</code></p>
+</div>
+</div>
+<ul>
+<li><code>counter</code> is the number of <code>x</code> to be reserved. It must be a constant expression.</li>
+</ul></li>
+<li><p>Examples:</p>
+<div class="sourceCode" id="cb13" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">buffer:</span>   <span class="dt">resb</span>    <span class="dv">64</span>    <span class="co">; reserve 64 bytes</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">list:</span>     <span class="dt">resd</span>    <span class="dv">100</span>   <span class="co">; reserve 100 32-bit integers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="defining-constants" class="level3">
+<h3 class="anchored" data-anchor-id="defining-constants">Defining Constants</h3>
+<ul>
+<li><p>NASM provides a directive, named <code>EQU</code>, to define a symbolic constant.</p></li>
+<li><p>The syntax is</p>
+<div class="callout callout-style-simple callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Syntax
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb14" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>name    <span class="dt">EQU</span>   <span class="op">&lt;</span>expression<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></li>
+<li><p>Examples:</p>
+<div class="sourceCode" id="cb15" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ESC_KEY   <span class="dt">equ</span>   <span class="dv">27</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>COUNT     <span class="dt">equ</span>   <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the code section:</p>
+<div class="sourceCode" id="cb16" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> COUNT    <span class="co">; good style</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="dv">100</span>      <span class="co">; bad style</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">al</span><span class="op">,</span> ESC_KEY   <span class="co">; good style</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">al</span><span class="op">,</span> <span class="dv">27</span>        <span class="co">; bad style</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="constant-integer-expression" class="level3">
+<h3 class="anchored" data-anchor-id="constant-integer-expression">Constant Integer Expression</h3>
+<ul>
+<li>NASM assembler (and also MASM) supports what is called <strong>constant integer expression</strong> that <em>must</em> evaluate to a 32-bit integer.</li>
+</ul>
+<table class="table">
+<caption>Assembler Operators</caption>
+<colgroup>
+<col style="width: 26%">
+<col style="width: 47%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Name</th>
+<th>Precedence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>()</code></td>
+<td>Parantheses</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><code>+</code>, <code>-</code>, <code>~</code>, <code>!</code></td>
+<td>Unary plus, negative, negation, logical not</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><code>*</code>, <code>/</code>, <code>//</code>, <code>%</code>, <code>%%</code></td>
+<td>multiplication, unsigned division, signed division, unsigned modulus, signed modulus</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td><code>+</code>, <code>-</code></td>
+<td>Addition and subtraction</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;&lt;</code>, <code>&gt;&gt;</code></td>
+<td>Shift to left or right (always unsigned)</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td><code>&amp;</code></td>
+<td>Bitwise AND</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td><code>^</code></td>
+<td>Bitwise XOR</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td><code>|</code></td>
+<td>Bitwise OR</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Constant Integer Expression will always be evaluated by the assembler.</li>
+</ul>
+<section id="the-current-location-and-section-location" class="level4">
+<h4 class="anchored" data-anchor-id="the-current-location-and-section-location">The Current Location ($) and Section Location ($$)</h4>
+<ul>
+<li><p>One of the most important symbols of all, shown as <code>$</code>, is called the <strong><em>current location</em></strong>.</p></li>
+<li><p>The assembler handles the current location and section location expressions as follows</p>
+<ul>
+<li><p>When the assembler first encounters a section/segment statement, the current location counter (<code>$</code>) and the section location (<code>$$</code>) are set to the beginning of the current section.</p></li>
+<li><p>When encountering instructions or pseudo-instructions (such as <code>Dx</code> or <code>RESx</code>), the assembler increments the location counter for each byte written to the object file (i.e, after generating the object code). So, you can tell how far into the section you are by using (<code>$ - $$</code>).</p></li>
+</ul></li>
+<li><p>In the following code, the current location expression is used to calculate the string length. The calculation is performed by the assembler.</p>
+<div class="sourceCode" id="cb17" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">myStr:</span>    <span class="dt">db</span>    <span class="st">"This is a long string, containing"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>          <span class="dt">db</span>    <span class="st">"any number of characters."</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>STRLEN    <span class="dt">equ</span>   <span class="op">($</span> <span class="op">-</span> myStr<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="addressing-modes" class="level2">
+<h2 class="anchored" data-anchor-id="addressing-modes">Addressing Modes</h2>
+<ul>
+<li><p>We mentioned that a CPU instruction can have zero, one, two, or three operands.</p>
+<p>For exmaple:</p>
+<div class="sourceCode" id="cb18" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>   <span class="kw">eax</span><span class="op">,</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The instruction <code>add</code> takes two operands. The first operand is a CPU register, and the second operand is a constant integer.</p></li>
+<li><p>In assembly language, the way an operand is specified is known as <strong>addressing mode</strong>.</p></li>
+<li><p>Generally, the addressing modes used by Intel architectures are:</p>
+<ol type="1">
+<li><strong>Immediate addressing mode</strong>: when an operand is a constant expression</li>
+<li><strong>Register addressing mode</strong>: when an operand is a CPU register</li>
+<li><strong>Memory addressing modes</strong>, in which we have
+<ul>
+<li><p><strong>Direct memory addressing mode</strong>: when an operand is constant reference to memory location.</p></li>
+<li><p><strong>Indirect memory addressing modes</strong>: when an operand is reference to memory location and this reference is determined during the running-time.</p></li>
+</ul></li>
+</ol>
+<ul>
+<li><p>The following table is taken from Intel manuals that describes the standard operand types:</p>
+<table class="table">
+<caption>Instruction Operand Notation, 32-bit Mode.</caption>
+<colgroup>
+<col style="width: 30%">
+<col style="width: 69%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>reg</td>
+<td>Any general-purpose register</td>
+</tr>
+<tr class="even">
+<td>reg8</td>
+<td>8-bit general-purpose register: AH, AL, BH, BL, CH, CL, DH, DL</td>
+</tr>
+<tr class="odd">
+<td>reg16</td>
+<td>16-bit general-purpose register: AX, BX, CX, DX, SI, DI, SP, BP</td>
+</tr>
+<tr class="even">
+<td>reg32</td>
+<td>32-bit general-purpose register: EAX, EBX, ECX, EDX, ESI, EDI, ESP, EBP</td>
+</tr>
+<tr class="odd">
+<td>sreg</td>
+<td>16-bit segment register: CS, DS, SS, ES, FS, GS</td>
+</tr>
+<tr class="even">
+<td>imm</td>
+<td>8-, 16-, or 32-bit immediate value</td>
+</tr>
+<tr class="odd">
+<td>imm8</td>
+<td>8-bit immediate byte value</td>
+</tr>
+<tr class="even">
+<td>imm16</td>
+<td>16-bit immediate word value</td>
+</tr>
+<tr class="odd">
+<td>imm32</td>
+<td>32-bit immediate doubleword value</td>
+</tr>
+<tr class="even">
+<td>mem</td>
+<td>An 8-, 16-, or 32-bit memory operand</td>
+</tr>
+<tr class="odd">
+<td>reg/mem8</td>
+<td>8-bit operand, which can be an 8-bit general register or memory byte</td>
+</tr>
+<tr class="even">
+<td>reg/mem16</td>
+<td>16-bit operand, which can be an 16-bit general register or memory word</td>
+</tr>
+<tr class="odd">
+<td>reg/mem32</td>
+<td>32-bit operand, which can be an 32-bit general register or memory doubleword</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+</ul>
+<section id="direct-memory-addressing-mode" class="level3">
+<h3 class="anchored" data-anchor-id="direct-memory-addressing-mode">Direct Memory Addressing Mode</h3>
+<ul>
+<li><p>A <strong><em>direct memory operand</em></strong> is an operand identifier that refers to a specific offset within the data segment.</p></li>
+<li><p>The offset address <strong><em>must</em></strong> be specified inside <em>square brackets</em> <code>[]</code>.</p>
+<div class="sourceCode" id="cb19" data-code-lin-numbers="8" data-source-line-numbers="8" data-code-line-numbers="8"><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.bss</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum:</span>    <span class="dt">resd</span>      <span class="dv">1</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.text</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">_main:</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">5</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">6</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>sum<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="addressing-mode-and-machine-instruction" class="level3">
+<h3 class="anchored" data-anchor-id="addressing-mode-and-machine-instruction">Addressing mode and Machine Instruction</h3>
+<p>Examine the following instruction statements. Assume the variable <code>x</code> is already defined.</p>
+<div class="sourceCode" id="cb20" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span> <span class="kw">eax</span><span class="op">,</span> <span class="bn">123h</span>       <span class="co">; B8 23010000</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="bn">123h</span>       <span class="co">; BB 23010000</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="kw">ebx</span>          <span class="co">; 8BC3</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="kw">eax</span>          <span class="co">; 8BD8</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="dt">WORD</span> <span class="op">[</span>x<span class="op">],</span> <span class="bn">123h</span>  <span class="co">; C705  00000000  23010000</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="op">[</span>x<span class="op">],</span> <span class="kw">eax</span>          <span class="co">; A3 00000000</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">ah</span><span class="op">,</span> <span class="dv">4</span>             <span class="co">; B4 04</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">al</span><span class="op">,</span> <span class="dv">13</span>            <span class="co">; B0 0D   </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you read the object file using <em>Hexdump</em> tool, we will get:</p>
+<p><img src="..\images/object_code.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="data-transfer-instructions" class="level2">
+<h2 class="anchored" data-anchor-id="data-transfer-instructions">Data Transfer Instructions</h2>
+<ul>
+<li><p>Data transfer instructions are</p>
+<ul>
+<li><p><code>MOV</code>, <code>XCHG</code>, <code>MOVSX</code>, <code>MOVZX</code> : to move (as copy) data from source operand to destination operand.</p></li>
+<li><p><code>PUSH</code>, <code>POP</code>, <code>PUSHA</code>, <code>POPA</code>, <code>PUSHAD</code>, <code>POPAD</code>: to move data between an operand and run-time stack.</p></li>
+<li><p><code>CBW</code>, <code>CWD</code>, <code>CDQ</code>, <code>CWDE</code> : to sign-extend an operand</p></li>
+</ul></li>
+<li><p>In this lecture, we will cover <code>MOV</code>, <code>XCHG</code>, <code>MOVSX</code>, and <code>MOVZX</code> . The remaining instructions will be covered in future lectures.</p></li>
+</ul>
+<section id="mov-instruction" class="level3">
+<h3 class="anchored" data-anchor-id="mov-instruction"><code>MOV</code> Instruction</h3>
+<div class="callout callout-style-simple callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Syntax
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb21" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>The destination operand’s content changes, but the source operand is unchanged. Right to Left data transfer is similar to the assignment statement in C++ or Java:</p>
+<pre data-code-line-numbers=""><code>    destination = source;</code></pre>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rules
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Both operands must be of the same size.</p></li>
+<li><p>Both operands cannot be memory operands.</p></li>
+<li><p>The instruction pointer (IP, EIP, RIP) cannot be a destination operand.</p></li>
+</ul>
+</div>
+</div>
+<p>Accordingly, here is a list of valid <code>MOV</code> instruction formats:</p>
+<pre data-code-line-numbers=""><code>    mov   reg, reg
+    mov   reg, mem
+    mov   reg, imm
+    mov   mem, reg
+    mov   mem, imm    ; you must specify the size (see next warning)</code></pre>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>NASM, by its design, does not store the type of variables you declared.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb24" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>var     <span class="dt">dw</span>    <span class="dv">4</span>     <span class="co">; var is 16-bit variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The following lines are all <strong>valid</strong>:</p>
+<div class="sourceCode" id="cb25" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>var<span class="op">]</span>  <span class="co">; transfer 4 bytes starting from offset var</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span>var<span class="op">]</span>   <span class="co">; transfer 2 bytes starting from offset var</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">ah</span><span class="op">,</span> <span class="op">[</span>var<span class="op">]</span>   <span class="co">; transfer 1 byte from offset var</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<section id="example-1" class="level4">
+<h4 class="anchored" data-anchor-id="example-1">Example</h4>
+<div class="sourceCode" id="cb26" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">;  adding three numbers</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.data</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>arr     <span class="dt">dd</span>      <span class="dv">4</span><span class="op">,</span> <span class="dv">28</span><span class="op">,</span> <span class="dv">35</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.text</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">_main:</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>arr<span class="op">]</span>      <span class="co">; move the value 4 to eax</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>arr <span class="op">+</span> <span class="dv">4</span><span class="op">]</span>  <span class="co">; add the value 28 to eax</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>arr <span class="op">+</span> <span class="dv">8</span><span class="op">]</span>  <span class="co">; add the value 35 to eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Invalid MOV statements
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb27" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="dv">4</span><span class="op">,</span> <span class="kw">eax</span>      <span class="co">; dest cannot be imm</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">[</span>x<span class="op">],</span> <span class="op">[</span>y<span class="op">]</span>    <span class="co">; both operands cannot be memory</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   x<span class="op">,</span> <span class="kw">eax</span>      <span class="co">; dest cannot be imm</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">[</span>x<span class="op">],</span> <span class="dv">10</span>     <span class="co">; unknown data types (or size)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="memory-to-memory" class="level4">
+<h4 class="anchored" data-anchor-id="memory-to-memory">Memory to Memory</h4>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout="[ 40, 60 ]">
+<div class="quarto-layout-row">
+<div id="first-column" class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: flex-start;">
+<p>A single MOV instruction cannot be used to move data directly from one memory location to another.</p>
+<div class="sourceCode" id="cb28" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">; assign x to y (i.e., y = x)</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="second-column" class="quarto-layout-cell" style="flex-basis: 60.0%;justify-content: center;">
+<p><img src="..\images/mem2mem.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="immediate-to-memory" class="level4">
+<h4 class="anchored" data-anchor-id="immediate-to-memory">Immediate to Memory</h4>
+<p>In assembly language, the size of integer literals can be 8, 16, or 32 bits. Therefore, in the following instruction:</p>
+<div class="sourceCode" id="cb29" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">mov</span>   <span class="kw">ax</span><span class="op">,</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>the size of the source operand is unknown. However, the assembler can infer the size of immediate operand by the size of other operand (<code>ax</code>). Thus, the assembler translates the source operand as <code>imm16</code>.</p>
+<p>The problem arises when the size of the other operand is also unknown; typically when we move data from <code>imm</code> to <code>mem</code>. In this case, you must tell the assembler the amount of bytes to be transferred from the source to destination by specifying the data type of at least one operand (see Intrinsic Data Types).</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb30" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="dt">DWORD</span> <span class="op">[</span>x<span class="op">],</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Here, the size of the first operand is doubleword. The size of the second operand will be inferred from the first one.</p>
+</section>
+</section>
+<section id="movsx-instruction" class="level3">
+<h3 class="anchored" data-anchor-id="movsx-instruction"><code>MOVSX</code> Instruction</h3>
+<ul>
+<li><p>Can we transfer data from a smaller size to a larger size?</p></li>
+<li><p>The answer is: Yes. But, you must be cautious. Consider the following example; let us assume that we need to transfer data from mem16 to reg32 (<code>ECX</code>).</p>
+<div class="sourceCode" id="cb31" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">section</span> <span class="fu">.data</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>v1    <span class="dt">dw</span>      <span class="op">-</span><span class="dv">16</span>       <span class="co">; FFF0h</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>v2    <span class="dt">dw</span>      <span class="dv">16</span>        <span class="co">; 0010h</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>      <span class="kw">section</span> <span class="fu">.text</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">mov</span>     <span class="kw">ecx</span><span class="op">,</span> <span class="op">[</span>v1<span class="op">]</span> <span class="co">; WRONG. ecx=0010 FFF0h</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>      <span class="kw">mov</span>     <span class="kw">ecx</span><span class="op">,</span> <span class="dv">0</span>    <span class="co">; 0000 0000h</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>      <span class="kw">mov</span>     <span class="kw">cx</span><span class="op">,</span> <span class="op">[</span>v1<span class="op">]</span>  <span class="co">; 0000 FFF0h</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>      <span class="kw">mov</span>     <span class="kw">ecx</span><span class="op">,</span> <span class="dv">0</span><span class="er">FFFFFFFFh</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>      <span class="kw">mov</span>     <span class="kw">cx</span><span class="op">,</span> <span class="op">[</span>v2<span class="op">]</span><span class="co">; FFFF 0010h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><code>MOVSX</code> instruction (move with sign-extension) copies the content of a source operand into a destination operand with sign-extends to 16 or 32 bits.</p></li>
+<li><p>This instruction is only used with signed integers and there are three variants:</p>
+<pre data-code-line-numbers=""><code>      movsx     reg32, reg/mem8
+      movsx     reg32, reg/mem16
+      movsx     reg16, reg/mem8</code></pre></li>
+<li><p>The following code corrects the above code:</p>
+<div class="sourceCode" id="cb33" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">movsx</span>     <span class="kw">ecx</span><span class="op">,</span> <span class="dt">WORD</span> <span class="op">[</span>v1<span class="op">]</span>  <span class="co">; ecx = FFFF FFF0h = -16</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>      <span class="kw">movsx</span>     <span class="kw">edx</span><span class="op">,</span> <span class="dt">WORD</span> <span class="op">[</span>v2<span class="op">]</span>  <span class="co">; edx = 0000 0010h = 16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="movzx-instruction" class="level3">
+<h3 class="anchored" data-anchor-id="movzx-instruction"><code>MOVZX</code> Instruction</h3>
+<ul>
+<li><code>MOVZX</code> is similar to <code>MOVSX</code>, but with zero-extend. It is only used with <em>unsigned</em> integers</li>
+</ul>
+</section>
+<section id="xchg-instruction" class="level3">
+<h3 class="anchored" data-anchor-id="xchg-instruction"><code>XCHG</code> Instruction</h3>
+<div class="callout callout-style-simple callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Syntax
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb34" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">XCHG</span>    <span class="op">&lt;</span>operand1<span class="op">&gt;</span> <span class="op">,</span> <span class="op">&lt;</span>operand2<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>The XCHG (exchange data) instruction exchanges the contents of two operands.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rules
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Both operands must be of the same size.</p></li>
+<li><p>Both operands cannot be memory operands.</p></li>
+<li><p>Immediate operands are not allowed.</p></li>
+<li><p>The instruction pointer (IP, EIP, RIP) cannot be a destination operand.</p></li>
+</ul>
+</div>
+</div>
+<p>Accordingly, this instruction has three formats:</p>
+<pre data-code-line-numbers=""><code>        XCHG    reg, reg
+        XCHG    reg, mem
+        XCHG    mem, reg</code></pre>
+<p>Example: What is the value of <code>AX</code> and <code>BX</code> after executing the following code:</p>
+<div class="sourceCode" id="cb36" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ax</span><span class="op">,</span> <span class="dv">0</span><span class="er">A100h</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">bx</span><span class="op">,</span> <span class="bn">0005h</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">xchg</span>    <span class="kw">ah</span><span class="op">,</span> <span class="kw">bl</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="..\images/xchg.png" class="img-fluid" style="width:55.0%"></p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -560,4 +1619,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
 </body></html>
