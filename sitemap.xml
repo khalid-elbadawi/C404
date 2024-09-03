@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec02.html</loc>
-    <lastmod>2024-08-29T10:45:39.996Z</lastmod>
+    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec03.html</loc>
+    <lastmod>2024-09-03T20:11:40.277Z</lastmod>
   </url>
   <url>
-    <loc>https://khalid-elbadawi.github.io/C404/index.html</loc>
-    <lastmod>2024-08-29T10:22:16.368Z</lastmod>
-  </url>
-  <url>
-    <loc>https://khalid-elbadawi.github.io/C404/exercises/inclass02.html</loc>
-    <lastmod>2024-08-29T06:56:57.955Z</lastmod>
-  </url>
-  <url>
-    <loc>https://khalid-elbadawi.github.io/C404/exercises/inclass01.html</loc>
-    <lastmod>2024-08-29T06:44:41.537Z</lastmod>
+    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec01.html</loc>
+    <lastmod>2024-08-25T10:43:58.267Z</lastmod>
   </url>
   <url>
     <loc>https://khalid-elbadawi.github.io/C404/exercises/inclass03.html</loc>
     <lastmod>2024-08-29T07:19:20.327Z</lastmod>
   </url>
   <url>
-    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec01.html</loc>
-    <lastmod>2024-08-25T10:43:58.267Z</lastmod>
+    <loc>https://khalid-elbadawi.github.io/C404/exercises/inclass01.html</loc>
+    <lastmod>2024-08-29T06:44:41.537Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/exercises/inclass02.html</loc>
+    <lastmod>2024-08-29T06:56:57.955Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/index.html</loc>
+    <lastmod>2024-09-03T20:02:14.185Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec02.html</loc>
+    <lastmod>2024-08-29T10:45:39.996Z</lastmod>
   </url>
 </urlset>
