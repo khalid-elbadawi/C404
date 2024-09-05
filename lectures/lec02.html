@@ -705,14 +705,14 @@ Syntax
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb11" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>[name<span class="op">]</span>    <span class="kw">Dx</span>   <span class="op">&lt;</span>counter<span class="op">&gt;</span> DUP <span class="op">(</span>initializer<span class="op">-</span>list<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>[name<span class="op">:]</span>    <span class="kw">Dx</span>   <span class="op">&lt;</span>counter<span class="op">&gt;</span> DUP <span class="op">(</span>initializer<span class="op">-</span>list<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div></li>
 <li><p>The <code>DUP</code> operator duplicates the initializer-list specified number of times</p></li>
 <li><p><code>counter</code> is an constant 32-bit integer expression.</p></li>
 <li><p><code>DUP</code> operator is useful when allocating space for an array.</p></li>
 <li><p>Examples:</p>
-<div class="sourceCode" id="cb12" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>    <span class="dt">db</span>  <span class="dv">3</span> dup<span class="op">(</span><span class="dv">0</span><span class="op">)</span>      <span class="co">; db  0, 0, 0, 0, 0</span></span>
+<div class="sourceCode" id="cb12" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>    <span class="dt">db</span>  <span class="dv">3</span> dup<span class="op">(</span><span class="dv">0</span><span class="op">)</span>      <span class="co">; db  0, 0, 0</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">dw</span>  <span class="dv">8</span> dup<span class="op">(</span><span class="dv">1</span><span class="op">)</span>      <span class="co">; dw  1, 1, 1, 1, 1, 1, 1, 1</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">db</span>  <span class="dv">4</span> dup<span class="op">(</span><span class="st">'ABC'</span><span class="op">)</span>  <span class="co">; db  'ABC', 'ABC', 'ABC', 'ABC' </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
@@ -721,7 +721,7 @@ Syntax
 <section id="defining-uninitialized-data-using-resx" class="level3">
 <h3 class="anchored" data-anchor-id="defining-uninitialized-data-using-resx">Defining Uninitialized Data (using RESx)</h3>
 <ul>
-<li><p>The <code>RESx</code> directive is quite similar to the <code>Dx</code> directive, but always specifices the number of elements.</p></li>
+<li><p>The <code>RESx</code> directive is quite similar to the <code>Dx</code> directive, but always specifies the number of elements.</p></li>
 <li><p>The <code>RESx</code> directive defines uninitialized storage space inside the BSS segment.</p></li>
 <li><p>The syntax:</p>
 <div class="callout callout-style-simple callout-important no-icon callout-titled">
@@ -782,9 +782,9 @@ Syntax
 <table class="caption-top table">
 <caption>Assembler Operators</caption>
 <colgroup>
-<col style="width: 21%">
-<col style="width: 68%">
-<col style="width: 9%">
+<col style="width: 19%">
+<col style="width: 61%">
+<col style="width: 19%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -796,7 +796,7 @@ Syntax
 <tbody>
 <tr class="odd">
 <td><code>()</code></td>
-<td>Parantheses</td>
+<td>Parentheses</td>
 <td>1</td>
 </tr>
 <tr class="even">
@@ -849,7 +849,7 @@ Syntax
 <li><p>When encountering instructions or pseudo-instructions (such as <code>Dx</code> or <code>RESx</code>), the assembler increments the location counter for each byte written to the object file (i.e, after generating the object code). So, you can tell how far into the section you are by using (<code>$ - $$</code>).</p></li>
 </ul></li>
 <li><p>In the following code, the current location expression is used to calculate the string length. The calculation is performed by the assembler.</p>
-<div class="sourceCode" id="cb17" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">myStr:</span>    <span class="dt">db</span>    <span class="st">"This is a long string, containing"</span></span>
+<div class="sourceCode" id="cb17" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">myStr:</span>    <span class="dt">db</span>    <span class="st">"This is a long string, containing "</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>          <span class="dt">db</span>    <span class="st">"any number of characters."</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>STRLEN    <span class="dt">equ</span>   <span class="op">($</span> <span class="op">-</span> myStr<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
@@ -879,8 +879,8 @@ Syntax
 <table class="caption-top table">
 <caption>Instruction Operand Notation, 32-bit Mode.</caption>
 <colgroup>
-<col style="width: 12%">
-<col style="width: 87%">
+<col style="width: 19%">
+<col style="width: 80%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -948,7 +948,7 @@ Syntax
 <section id="direct-memory-addressing-mode" class="level3">
 <h3 class="anchored" data-anchor-id="direct-memory-addressing-mode">Direct Memory Addressing Mode</h3>
 <ul>
-<li><p>A <strong><em>direct memory operand</em></strong> is an operand identifier that refers to a specific offset within the data segment.</p></li>
+<li><p>A <strong><em>direct memory operand</em></strong> is an operand identifier that refers to a specific <strong><em>offset</em></strong> within the data segment.</p></li>
 <li><p>The offset address <strong><em>must</em></strong> be specified inside <em>square brackets</em> <code>[]</code>.</p>
 <div class="sourceCode" id="cb19" data-code-lin-numbers="8" data-source-line-numbers="8" data-code-line-numbers="8"><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.bss</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum:</span>    <span class="dt">resd</span>      <span class="dv">1</span></span>
@@ -963,21 +963,21 @@ Syntax
 <section id="addressing-mode-and-machine-instruction" class="level3">
 <h3 class="anchored" data-anchor-id="addressing-mode-and-machine-instruction">Addressing mode and Machine Instruction</h3>
 <p>Examine the following instruction statements. Assume the variable <code>x</code> is already defined.</p>
-<div class="sourceCode" id="cb20" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span> <span class="kw">eax</span><span class="op">,</span> <span class="bn">123h</span>       <span class="co">; B8 23010000</span></span>
+<div class="sourceCode" id="cb20" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span> <span class="kw">eax</span><span class="op">,</span> <span class="bn">123h</span>         <span class="co">; B8 23010000</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="bn">123h</span>       <span class="co">; BB 23010000</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="kw">ebx</span>          <span class="co">; 8BC3</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="kw">ebx</span>        <span class="co">; 8BC3</span></span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="kw">eax</span>          <span class="co">; 8BD8</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="kw">eax</span>        <span class="co">; 8BD8</span></span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="dt">WORD</span> <span class="op">[</span>x<span class="op">],</span> <span class="bn">123h</span>  <span class="co">; C705  00000000  23010000</span></span>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="op">[</span>x<span class="op">],</span> <span class="kw">eax</span>          <span class="co">; A3 00000000</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="op">[</span>x<span class="op">],</span> <span class="kw">eax</span>        <span class="co">; A3 00000000</span></span>
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">ah</span><span class="op">,</span> <span class="dv">4</span>             <span class="co">; B4 04</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">ah</span><span class="op">,</span> <span class="dv">4</span>           <span class="co">; B4 04</span></span>
 <span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">al</span><span class="op">,</span> <span class="dv">13</span>            <span class="co">; B0 0D   </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">al</span><span class="op">,</span> <span class="dv">13</span>          <span class="co">; B0 0D   </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you read the object file using <em>Hexdump</em> tool, we will get:</p>
 <p><img src="..\images/object_code.png" class="img-fluid"></p>
 </section>

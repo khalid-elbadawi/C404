@@ -510,10 +510,11 @@ Example
 <li><p>In 1974, Intel has announced 8080 CPU: 8-bit CPU (2Mhz) and 16-bit address bus (64KB).</p></li>
 <li><p>In 1978, 8086 CPU has been introduced with 16-bit CPU (16-bit registers and 16-bit external data bus) and 20-bit address bus with CPU speed ranging from 5MHz to 10MHz.</p>
 <ul>
-<li>Memory addresses start from 000000H to 0FFFFFH (1MB)</li>
+<li>Memory addresses start from 00000H to 0FFFFFH (1MB)</li>
 <li>The address space is divided into segments. A <strong><em>segment</em></strong> is a region of memory that begins on a paragraph boundary and extends for some number of bytes (&lt;= 64K).</li>
 <li>A <strong><em>paragraph</em></strong> is a measure of memory equal to 16 bytes.</li>
-<li>8086 CPUs have four 16-bit segment registers: CS, DS, SS, and ES. -The physical address is constructed by two registers: segment address : offset address.</li>
+<li>8086 CPUs have four 16-bit segment registers: CS, DS, SS, and ES.</li>
+<li>The physical address is constructed by two registers: <code>segment address:offset address</code>.</li>
 </ul></li>
 <li><p>In 1982, Intel 286 introduced protected mode operation with four privilege levels. The address bus was 24-bit providing 16MB physical memory.</p></li>
 <li><p>The Intel 386 (1985) was the first 32-bit CPU (80386 CPUs) with 32-bit address bus (addressable up to 4G).</p>
@@ -560,7 +561,7 @@ Example
 <p>IA-32 processors have three primary modes of operation:</p>
 <ol type="1">
 <li><strong>Protected mode</strong>, in which programs are given separate memory areas named segments, and the processor prevents programs from referencing memory outside their assigned segments. This is the default mode.</li>
-<li><strong>Real–Adress mode</strong>, in which programs can access to system memory and hardware devices. OS prevents programmers to swtich to this mode.</li>
+<li><strong>Real–Adress mode</strong>, in which programs can access to system memory and hardware devices. OS prevents programmers to switch to this mode.</li>
 <li><strong>System Management mode</strong>, in which it provides an OS with a mechanism for implementing functions such as power management and system security. These functions are usually implemented by computer manufacturers.</li>
 </ol>
 <p>A sub–mode, named <strong>virtual-8086</strong>, is a special case of protected mode, in which MS–DOS programs (real-mode software) can be executed in a safe environment.</p>
@@ -626,11 +627,11 @@ Example
 <li><p>Some instructions test and manipulate individual flags</p></li>
 <li><p>A flag is set when it equals 1; it is clear when it equals 0.</p></li>
 <li><p>Some of the flags in the <code>EFLAGS</code> register can be modified directly, using special-purpose instructions.</p></li>
-<li><p>The status flags (bits 0, 2, 4, 6, 7, and 11) of the EFLAGS register indicate the results of arithmetic instructions, such as the ADD, SUB, MUL, and DIV instructions. The functions of the status flags are as follows:</p>
+<li><p>The <strong>status flags</strong> (bits 0, 2, 4, 6, 7, and 11) of the EFLAGS register indicate the results of arithmetic and logical instructions, such as the AND, OR, ADD, SUB, MUL, and DIV instructions. The functions of the status flags are as follows:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 24%">
-<col style="width: 76%">
+<col style="width: 25%">
+<col style="width: 75%">
 </colgroup>
 <thead>
 <tr class="header">
