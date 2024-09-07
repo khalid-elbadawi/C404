@@ -31,6 +31,10 @@
 }
 
 /* other quarto variables */
+:root {
+  --quarto-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
 code span.al {
   color: #ef2929;
   font-style: inherit;
