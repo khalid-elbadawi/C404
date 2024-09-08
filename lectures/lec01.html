@@ -554,7 +554,7 @@ Example
 <h2 class="anchored" data-anchor-id="ia-32-basic-execution-environment">IA-32 Basic Execution Environment</h2>
 <p>As an assembly programmer, you should know the execution environment either for IA-32 or Intel 64 processor.</p>
 <p>Any program running on an IA-32 processor is given a set of resources for executing instructions and for storing code, data and state information.</p>
-<p>The basic execution environment includes <strong><em>memory</em></strong> (the address space), <strong><em>general purpose data registers</em></strong>, <strong><em>segment registers</em></strong>, the <strong><em>flag register</em></strong>, and the <strong><em>instruction pointer register</em></strong>.</p>
+<p>The basic execution environment includes <strong><em>memory</em></strong> (the address space), <strong><em>general purpose data registers</em></strong>, <strong><em>segment registers</em></strong>, the <strong><em>flags register</em></strong>, and the <strong><em>instruction pointer register</em></strong>.</p>
 <section id="modes-of-operation-in-ia-32" class="level3">
 <h3 class="anchored" data-anchor-id="modes-of-operation-in-ia-32">Modes of Operation in IA-32</h3>
 <p>Modes of operation define the memory layout and how a program can address memory (using registers). It also determines which instructions are accessible.</p>
@@ -619,8 +619,8 @@ Example
 </ul></li>
 </ul>
 </section>
-<section id="the-flag-register-eflags-register" class="level4">
-<h4 class="anchored" data-anchor-id="the-flag-register-eflags-register">The Flag Register (EFLAGS register)</h4>
+<section id="the-flags-register-eflags-register" class="level4">
+<h4 class="anchored" data-anchor-id="the-flags-register-eflags-register">The Flags Register (EFLAGS register)</h4>
 <p><img src="..\images/eflags.png" class="img-fluid" width="550"></p>
 <ul>
 <li><p><code>EFLAGS</code> consists of individual binary bits that control the CPU operation or reflect the status of last executed instruction</p></li>
@@ -630,8 +630,8 @@ Example
 <li><p>The <strong>status flags</strong> (bits 0, 2, 4, 6, 7, and 11) of the EFLAGS register indicate the results of arithmetic and logical instructions, such as the AND, OR, ADD, SUB, MUL, and DIV instructions. The functions of the status flags are as follows:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 73%">
+<col style="width: 27%">
+<col style="width: 72%">
 </colgroup>
 <thead>
 <tr class="header">
