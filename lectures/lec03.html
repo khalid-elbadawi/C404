@@ -280,8 +280,8 @@ window.Quarto = {
 4.4 Indirect Addressing
 4.5 JMP and Loop
 -->
-<section id="objectives" class="level3">
-<h3 class="anchored" data-anchor-id="objectives">Objectives:</h3>
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives:</h2>
 <ul>
 <li>In this lecture, we focus on <strong><em>binary</em></strong> arithmetic and logic instructions that operate on 8-, 16-, and 32-bit numeric data encoded as signed or unsigned binary integers. The instructions include
 <ul>
@@ -483,8 +483,8 @@ Syntax
 <li><p><u>The status flags can be used to activate conditional branching instructions</u> (will be discussed in next lecture).</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 79%">
+<col style="width: 23%">
+<col style="width: 76%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1052,8 +1052,8 @@ Syntax
 <li><p>The following table describes the operation of each instruction</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 80%">
+<col style="width: 23%">
+<col style="width: 76%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1124,8 +1124,8 @@ Rules
 <li><p>For example, suppose we have the bit string <span class="math inline">\(1110\,0110\)</span> and we want to clear bit 2 (change it to 0). We can use mask <span class="math inline">\(1111\,1011_2\)</span> as follows:</p></li>
 </ul>
 <pre data-code-line-numbers=""><code>``` nasm
-        mov     AL, 1110-0110b      ; bit string
-        and     AL, 1111-1011b      ; AL=1110-0010
+        mov     AL, 1110_0110b      ; bit string
+        and     AL, 1111_1011b      ; AL=1110 0010
 ```</code></pre>
 </section>
 <section id="setting-bits" class="level4">
@@ -1134,7 +1134,7 @@ Rules
 <li><p>The OR instruction allows us to set 1 or more bits in an operand without affecting any other bits.</p></li>
 <li><p>To set a bit (or more), use OR with a mask that has 1 in the position which is to be set. All other positions in the mask contain 0.</p></li>
 <li><p>The following code:</p>
-<div class="sourceCode" id="cb43" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">or</span>      <span class="kw">AL</span><span class="op">,</span> <span class="dv">0000</span><span class="op">-</span><span class="bn">0100b</span>    <span class="co">; set bit 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb43" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">or</span>      <span class="kw">AL</span><span class="op">,</span> <span class="bn">0000_0100b</span>    <span class="co">; set bit 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>will set bit at position 2 to 1 and leave other bits unchanged.</p></li>
 </ul>
 </section>
@@ -1158,11 +1158,11 @@ Rules
 <ul>
 <li><p>To test a bit, use AND with a mask that has 1 in the position which is to be tested. All other positions in the mask contain 0.</p></li>
 <li><p>Example, suppose we have the bit string <span class="math inline">\(1110\,0110\)</span> and we want to test bit 5 (check its value). We can use mask <span class="math inline">\(0010\;0000_2\)</span> and the AND:</p>
-<div class="sourceCode" id="cb44" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">AL</span><span class="op">,</span> <span class="dv">1110</span><span class="op">-</span><span class="bn">0110b</span>    <span class="co">; our bit string</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span>     <span class="kw">AL</span><span class="op">,</span> <span class="dv">0010</span><span class="op">-</span><span class="bn">0000b</span>    <span class="co">; The result = 0010 0000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb44" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">1110_0110b</span>    <span class="co">; our bit string</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">0010_0000b</span>    <span class="co">; The result = 0010 0000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Since bit 5 was set, the result is a nonzero value. However, suppose we want to test bit 4. We use mask <span class="math inline">\(0001\;0000\)</span> and the AND operation:</p>
-<div class="sourceCode" id="cb45" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">AL</span><span class="op">,</span> <span class="dv">1110</span><span class="op">-</span><span class="bn">0110b</span>    <span class="co">; our bit string</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span>     <span class="kw">AL</span><span class="op">,</span> <span class="dv">0001</span><span class="op">-</span><span class="bn">0000b</span>    <span class="co">; The result = 0000 0000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb45" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">1110_0110b</span>    <span class="co">; our bit string</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">0001_0000b</span>    <span class="co">; The result = 0000 0000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Since bit 4 was not set, the result is a zero value.</p></li>
 <li><p>So after the AND, we need to test the result; if the result is nonzero, the bit is set, otherwise it is not.</p></li>
 </ul>
