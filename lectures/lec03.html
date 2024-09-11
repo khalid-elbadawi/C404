@@ -483,8 +483,8 @@ Syntax
 <li><p><u>The status flags can be used to activate conditional branching instructions</u> (will be discussed in next lecture).</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 76%">
+<col style="width: 14%">
+<col style="width: 85%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -634,8 +634,8 @@ Remember
 <li><p>Here is a summary of previous instructions:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 43%">
-<col style="width: 56%">
+<col style="width: 42%">
+<col style="width: 57%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1052,8 +1052,8 @@ Syntax
 <li><p>The following table describes the operation of each instruction</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 76%">
+<col style="width: 12%">
+<col style="width: 87%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1121,12 +1121,10 @@ Rules
 <ul>
 <li><p>The AND instruction allows us to clear 1 or more bits in an operand without affecting other bits. This technique is called <strong>bit masking</strong>.</p></li>
 <li><p>To clear a bit (or more), use AND with a <strong>mask</strong> that has a 0 in the position which is to be cleared. All other positions in the mask contain 1.</p></li>
-<li><p>For example, suppose we have the bit string <span class="math inline">\(1110\,0110\)</span> and we want to clear bit 2 (change it to 0). We can use mask <span class="math inline">\(1111\,1011_2\)</span> as follows:</p></li>
+<li><p>For example, suppose we have the bit string <span class="math inline">\(1110\,0110\)</span> and we want to clear bit 2 (change it to 0). We can use mask <span class="math inline">\(1111\,1011_2\)</span> as follows:</p>
+<div class="sourceCode" id="cb42" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">1110_0110b</span>      <span class="co">; bit string</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">1111_1011b</span>      <span class="co">; AL=1110 0010</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
-<pre data-code-line-numbers=""><code>``` nasm
-        mov     AL, 1110_0110b      ; bit string
-        and     AL, 1111_1011b      ; AL=1110 0010
-```</code></pre>
 </section>
 <section id="setting-bits" class="level4">
 <h4 class="anchored" data-anchor-id="setting-bits">Setting Bits</h4>
