@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec04.html</loc>
-    <lastmod>2024-09-14T11:46:11.021Z</lastmod>
+    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec05.html</loc>
+    <lastmod>2024-09-24T18:14:26.422Z</lastmod>
   </url>
   <url>
-    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec02.html</loc>
-    <lastmod>2024-09-10T15:32:14.763Z</lastmod>
-  </url>
-  <url>
-    <loc>https://khalid-elbadawi.github.io/C404/index.html</loc>
-    <lastmod>2024-09-03T20:02:14.185Z</lastmod>
-  </url>
-  <url>
-    <loc>https://khalid-elbadawi.github.io/C404/exercises/inclass02.html</loc>
-    <lastmod>2024-08-29T06:56:57.955Z</lastmod>
-  </url>
-  <url>
-    <loc>https://khalid-elbadawi.github.io/C404/exercises/inclass01.html</loc>
-    <lastmod>2024-08-29T06:44:41.537Z</lastmod>
-  </url>
-  <url>
-    <loc>https://khalid-elbadawi.github.io/C404/exercises/inclass03.html</loc>
-    <lastmod>2024-08-29T07:19:20.327Z</lastmod>
+    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec03.html</loc>
+    <lastmod>2024-09-11T08:58:27.204Z</lastmod>
   </url>
   <url>
     <loc>https://khalid-elbadawi.github.io/C404/lectures/lec01.html</loc>
     <lastmod>2024-09-09T21:30:12.820Z</lastmod>
   </url>
   <url>
-    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec03.html</loc>
-    <lastmod>2024-09-11T08:58:27.204Z</lastmod>
+    <loc>https://khalid-elbadawi.github.io/C404/exercises/inclass03.html</loc>
+    <lastmod>2024-08-29T07:19:20.327Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/exercises/inclass01.html</loc>
+    <lastmod>2024-08-29T06:44:41.537Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/exercises/inclass02.html</loc>
+    <lastmod>2024-08-29T06:56:57.955Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/index.html</loc>
+    <lastmod>2024-09-03T20:02:14.185Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec02.html</loc>
+    <lastmod>2024-09-10T15:32:14.763Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec04.html</loc>
+    <lastmod>2024-09-17T12:45:31.258Z</lastmod>
   </url>
 </urlset>
