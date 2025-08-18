@@ -2,10 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://khalid-elbadawi.github.io/C404/exercises/tutor01.html</loc>
-    <lastmod>2025-08-17T10:49:30.652Z</lastmod>
+    <lastmod>2025-08-18T04:48:42.203Z</lastmod>
   </url>
   <url>
     <loc>https://khalid-elbadawi.github.io/C404/lectures/lec01.html</loc>
     <lastmod>2025-08-14T03:51:32.557Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec02.html</loc>
+    <lastmod>2024-10-15T15:16:30.249Z</lastmod>
   </url>
 </urlset>
