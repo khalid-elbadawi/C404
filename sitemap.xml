@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://khalid-elbadawi.github.io/C404/exercises/tutor01.html</loc>
-    <lastmod>2025-08-18T04:48:42.203Z</lastmod>
+    <loc>https://khalid-elbadawi.github.io/C404/exercises/tutor02.html</loc>
+    <lastmod>2025-09-03T09:01:21.999Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/lectures/lec03.html</loc>
+    <lastmod>2024-10-16T09:44:19.853Z</lastmod>
   </url>
   <url>
     <loc>https://khalid-elbadawi.github.io/C404/lectures/lec01.html</loc>
     <lastmod>2025-08-14T03:51:32.557Z</lastmod>
   </url>
   <url>
+    <loc>https://khalid-elbadawi.github.io/C404/index.html</loc>
+    <lastmod>2024-09-03T20:02:14.185Z</lastmod>
+  </url>
+  <url>
     <loc>https://khalid-elbadawi.github.io/C404/lectures/lec02.html</loc>
-    <lastmod>2024-10-15T15:16:30.249Z</lastmod>
+    <lastmod>2025-08-31T05:27:25.606Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/exercises/tutor01.html</loc>
+    <lastmod>2025-09-03T08:56:50.286Z</lastmod>
   </url>
 </urlset>

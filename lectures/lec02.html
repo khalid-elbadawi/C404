@@ -129,7 +129,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.qmd"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -145,6 +145,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../lectures/lec02.html">
  <span class="dropdown-text">Lecture 2: Assembly Language Fundamentals</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lec03.html">
+ <span class="dropdown-text">Lecture 3: Binary Arithmetic, Logic and Addressing</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -155,6 +159,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="../exercises/tutor01.html">
  <span class="dropdown-text">Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../exercises/tutor02.html">
+ <span class="dropdown-text">Exercise 2</span></a>
   </li>  
     </ul>
   </li>
@@ -776,9 +784,9 @@ Syntax
 <table class="caption-top table">
 <caption>Assembler Operators</caption>
 <colgroup>
-<col style="width: 21%">
-<col style="width: 56%">
-<col style="width: 21%">
+<col style="width: 23%">
+<col style="width: 52%">
+<col style="width: 23%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -873,8 +881,8 @@ Syntax
 <table class="caption-top table">
 <caption>Instruction Operand Notation, 32-bit Mode.</caption>
 <colgroup>
-<col style="width: 23%">
-<col style="width: 76%">
+<col style="width: 25%">
+<col style="width: 75%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -957,7 +965,7 @@ Syntax
 <section id="addressing-mode-and-machine-instruction" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="addressing-mode-and-machine-instruction"><span class="header-section-number">3.2</span> Addressing mode and Machine Instruction</h3>
 <p>Examine the following instruction statements. Assume the variable <code>x</code> is already defined.</p>
-<div class="sourceCode" id="cb20" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span> <span class="kw">eax</span><span class="op">,</span> <span class="bn">123h</span>         <span class="co">; B8 23010000</span></span>
+<div class="sourceCode" id="cb20" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="bn">123h</span>       <span class="co">; B8 23010000</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="bn">123h</span>       <span class="co">; BB 23010000</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -972,7 +980,7 @@ Syntax
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">ah</span><span class="op">,</span> <span class="dv">4</span>           <span class="co">; B4 04</span></span>
 <span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>   <span class="kw">al</span><span class="op">,</span> <span class="dv">13</span>          <span class="co">; B0 0D   </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If you read the object file using <em>Hexdump</em> tool, we will get:</p>
+<p>If you read the object file using <em>Hexdump</em> tool, you will get:</p>
 <p><img src="..\images/object_code.png" class="img-fluid"></p>
 </section>
 </section>
