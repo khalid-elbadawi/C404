@@ -220,14 +220,14 @@ window.Quarto = {
   <li><a href="#inc-and-dec-instructions" id="toc-inc-and-dec-instructions" class="nav-link" data-scroll-target="#inc-and-dec-instructions"><span class="header-section-number">2.1</span> <code>INC</code> and <code>DEC</code> Instructions</a></li>
   <li><a href="#add-and-sub-instructions" id="toc-add-and-sub-instructions" class="nav-link" data-scroll-target="#add-and-sub-instructions"><span class="header-section-number">2.2</span> <code>ADD</code> and <code>SUB</code> Instructions</a></li>
   <li><a href="#neg-instruction" id="toc-neg-instruction" class="nav-link" data-scroll-target="#neg-instruction"><span class="header-section-number">2.3</span> <code>NEG</code> Instruction</a></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">2.4</span> Example</a></li>
+  <li><a href="#example-basic-arithmetic-operations" id="toc-example-basic-arithmetic-operations" class="nav-link" data-scroll-target="#example-basic-arithmetic-operations"><span class="header-section-number">2.4</span> Example: Basic Arithmetic Operations</a></li>
   <li><a href="#implementing-arithmetic-expressions" id="toc-implementing-arithmetic-expressions" class="nav-link" data-scroll-target="#implementing-arithmetic-expressions"><span class="header-section-number">2.5</span> Implementing Arithmetic Expressions</a></li>
   <li><a href="#flags-affected-by-arithmetic-instructions" id="toc-flags-affected-by-arithmetic-instructions" class="nav-link" data-scroll-target="#flags-affected-by-arithmetic-instructions"><span class="header-section-number">2.6</span> Flags Affected by Arithmetic Instructions</a></li>
   <li><a href="#which-instructions-affect-flags" id="toc-which-instructions-affect-flags" class="nav-link" data-scroll-target="#which-instructions-affect-flags"><span class="header-section-number">2.7</span> Which Instructions Affect Flags</a></li>
   </ul></li>
   <li><a href="#multiplication-and-division" id="toc-multiplication-and-division" class="nav-link" data-scroll-target="#multiplication-and-division"><span class="header-section-number">3</span> Multiplication and Division</a>
   <ul class="collapse">
-  <li><a href="#terms" id="toc-terms" class="nav-link" data-scroll-target="#terms"><span class="header-section-number">3.1</span> Terms</a></li>
+  <li><a href="#terminology" id="toc-terminology" class="nav-link" data-scroll-target="#terminology"><span class="header-section-number">3.1</span> Terminology</a></li>
   <li><a href="#mul-instruction" id="toc-mul-instruction" class="nav-link" data-scroll-target="#mul-instruction"><span class="header-section-number">3.2</span> <code>MUL</code> Instruction</a></li>
   <li><a href="#imul-instruction" id="toc-imul-instruction" class="nav-link" data-scroll-target="#imul-instruction"><span class="header-section-number">3.3</span> <code>IMUL</code> Instruction</a></li>
   <li><a href="#div-instruction" id="toc-div-instruction" class="nav-link" data-scroll-target="#div-instruction"><span class="header-section-number">3.4</span> <code>DIV</code> Instruction</a></li>
@@ -235,11 +235,11 @@ window.Quarto = {
   </ul></li>
   <li><a href="#logic-instructions" id="toc-logic-instructions" class="nav-link" data-scroll-target="#logic-instructions"><span class="header-section-number">4</span> Logic Instructions</a>
   <ul class="collapse">
-  <li><a href="#implementations" id="toc-implementations" class="nav-link" data-scroll-target="#implementations"><span class="header-section-number">4.1</span> Implementations</a></li>
+  <li><a href="#practical-implementations" id="toc-practical-implementations" class="nav-link" data-scroll-target="#practical-implementations"><span class="header-section-number">4.1</span> Practical Implementations</a></li>
   </ul></li>
   <li><a href="#indirect-addressing-modes" id="toc-indirect-addressing-modes" class="nav-link" data-scroll-target="#indirect-addressing-modes"><span class="header-section-number">5</span> Indirect Addressing Modes</a>
   <ul class="collapse">
-  <li><a href="#displacement-addressing-mode" id="toc-displacement-addressing-mode" class="nav-link" data-scroll-target="#displacement-addressing-mode"><span class="header-section-number">5.1</span> Displacement Addressing Mode</a></li>
+  <li><a href="#displacement-direct-memory-addressing-mode" id="toc-displacement-direct-memory-addressing-mode" class="nav-link" data-scroll-target="#displacement-direct-memory-addressing-mode"><span class="header-section-number">5.1</span> Displacement (Direct Memory) Addressing Mode</a></li>
   <li><a href="#base-addressing-mode" id="toc-base-addressing-mode" class="nav-link" data-scroll-target="#base-addressing-mode"><span class="header-section-number">5.2</span> Base Addressing Mode</a></li>
   <li><a href="#base-displacement-addressing-mode" id="toc-base-displacement-addressing-mode" class="nav-link" data-scroll-target="#base-displacement-addressing-mode"><span class="header-section-number">5.3</span> Base + Displacement Addressing Mode</a></li>
   <li><a href="#index-addressing-mode" id="toc-index-addressing-mode" class="nav-link" data-scroll-target="#index-addressing-mode"><span class="header-section-number">5.4</span> Index Addressing Mode</a></li>
@@ -288,7 +288,7 @@ window.Quarto = {
 <li>Multiplication and division</li>
 <li>Bitwise Boolean AND, OR, XOR and NOT</li>
 </ul></li>
-<li>Indirect addressing modes.</li>
+<li>Introduction to <strong><em>indirect addressing modes</em></strong>.</li>
 </ul>
 </section>
 <section id="addition-and-subtraction" class="level2" data-number="2">
@@ -311,10 +311,25 @@ Syntax
 </div>
 <ul>
 <li><p><code>INC</code> (increment) and <code>DEC</code> (decrement) instructions add 1 and subtract 1 from an operand, respectively.</p></li>
-<li><p>The operand must be either a memory or register. The format is</p></li>
+<li><p>The operand must be either a memory location or register. The format is</p></li>
 </ul>
 <div class="sourceCode" id="cb2" data-code-line-numbers=""><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>        inc   reg/mem</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        dec   reg/mem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="example" class="level4" data-number="2.1.1">
+<h4 data-number="2.1.1" class="anchored" data-anchor-id="example"><span class="header-section-number">2.1.1</span> Example:</h4>
+<div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>var1    <span class="dt">dd</span>      <span class="dv">10</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.text</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">5</span>    <span class="co">; EAX &lt;-- 5</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     <span class="kw">eax</span>       <span class="co">; EAX = 6</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     <span class="kw">eax</span>       <span class="co">; EAX = 7</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">dec</span>     <span class="kw">eax</span>       <span class="co">; EAX = 8</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     var1      <span class="co">; ERROR: var1 is label</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     <span class="op">[</span>var1<span class="op">]</span>    <span class="co">; ERROR: size is unknown</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span> <span class="dt">DWORD</span> <span class="op">[</span>var1<span class="op">]</span>  <span class="co">; var1 = 11</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 </section>
 <section id="add-and-sub-instructions" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="add-and-sub-instructions"><span class="header-section-number">2.2</span> <code>ADD</code> and <code>SUB</code> Instructions</h3>
@@ -328,8 +343,8 @@ Syntax
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">ADD</span>   <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>      <span class="kw">SUB</span>   <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">ADD</span>   <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>      <span class="kw">SUB</span>   <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <ul>
@@ -354,11 +369,11 @@ Rules
 </div>
 </div>
 <p>The following operand types are permitted for these instructions (both for ADD and SUB):</p>
-<div class="sourceCode" id="cb4" data-code-line-numbers=""><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>      add   reg, reg</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>      add   reg, mem</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>      add   reg, imm</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      add   mem, reg</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      add   mem, imm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5" data-code-line-numbers=""><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>      add   reg, reg</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>      add   reg, mem</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      add   reg, imm</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      add   mem, reg</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      add   mem, imm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="neg-instruction" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="neg-instruction"><span class="header-section-number">2.3</span> <code>NEG</code> Instruction</h3>
@@ -372,117 +387,118 @@ Syntax
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb5" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">NEG</span>   <span class="op">&lt;</span>operand<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">NEG</span>   <span class="op">&lt;</span>operand<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <ul>
 <li><p>The <code>NEG</code> (negate) instruction reverses the sign of an operand by converting the number to its two’s complement. The following operands are permitted:</p>
-<div class="sourceCode" id="cb6" data-code-line-numbers=""><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>      neg   reg/mem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb7" data-code-line-numbers=""><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>      neg   reg/mem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Intel implements NEG instruction by subtracting the operand from zero (i.e., <code>&lt;operand&gt; = 0 - &lt;operand&gt;</code>)</p></li>
 </ul>
 </section>
-<section id="example" class="level3" data-number="2.4">
-<h3 data-number="2.4" class="anchored" data-anchor-id="example"><span class="header-section-number">2.4</span> Example</h3>
-<div class="sourceCode" id="cb7" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.data</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>var1    <span class="dt">dd</span>      <span class="bn">1000h</span>         <span class="co">; 4096</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>var2    <span class="dt">dd</span>      <span class="bn">2000h</span>         <span class="co">; 8192</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.text</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>var1<span class="op">]</span>   <span class="co">; EAX = 1000h</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     <span class="kw">eax</span>           <span class="co">; EAX = 1001h</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">dec</span>     <span class="dt">DWORD</span> <span class="op">[</span>var2<span class="op">]</span>  <span class="co">; VAR2 = 1FFFh</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>var2<span class="op">]</span>   <span class="co">; EAX = 1001h + 1FFFh = 3001h</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>     <span class="op">[</span>var2<span class="op">],</span> <span class="kw">eax</span>   <span class="co">; [VAR2] = 1FFFh - 1001h = 0FFEh</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">neg</span>     <span class="op">[</span>var1<span class="op">]</span>        <span class="co">; [VAR1] = FFFF F000h (-4096) </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="example-basic-arithmetic-operations" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="example-basic-arithmetic-operations"><span class="header-section-number">2.4</span> Example: Basic Arithmetic Operations</h3>
+<div class="sourceCode" id="cb8" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.data</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>var1    <span class="dt">dd</span>      <span class="bn">1000h</span>         <span class="co">; 4096</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>var2    <span class="dt">dd</span>      <span class="bn">2000h</span>         <span class="co">; 8192</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.text</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>var1<span class="op">]</span>   <span class="co">; EAX = 1000h</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     <span class="kw">eax</span>           <span class="co">; EAX = 1001h</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">dec</span>     <span class="dt">DWORD</span> <span class="op">[</span>var2<span class="op">]</span>  <span class="co">; VAR2 = 1FFFh</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>var2<span class="op">]</span>   <span class="co">; EAX = 1001h + 1FFFh = 3001h</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>     <span class="op">[</span>var2<span class="op">],</span> <span class="kw">eax</span>   <span class="co">; [VAR2] = 1FFFh - 1001h = 0FFEh</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">neg</span>     <span class="op">[</span>var1<span class="op">]</span>        <span class="co">; [VAR1] = FFFF F000h (-4096) </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="implementing-arithmetic-expressions" class="level3" data-number="2.5">
 <h3 data-number="2.5" class="anchored" data-anchor-id="implementing-arithmetic-expressions"><span class="header-section-number">2.5</span> Implementing Arithmetic Expressions</h3>
-<p>In the following examples, we are going to learn how to translate high-level expressions into assembly instructions:</p>
+<p>In the following examples, we learn how to translate high-level expressions into assembly instructions:</p>
 <div id="exm-1" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1</strong></span> &nbsp;</p>
-<div class="sourceCode" id="cb8" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>        b <span class="op">=</span> a<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>        b <span class="op">=</span> a<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>Solution</em>:</p>
-<div class="sourceCode" id="cb9" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span>        <span class="co">; EAX = a</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>b<span class="op">],</span> <span class="kw">eax</span>        <span class="co">; b = EAX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span>        <span class="co">; EAX &lt;-- a</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>b<span class="op">],</span> <span class="kw">eax</span>        <span class="co">; b &lt;-- EAX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="exm-2" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2</strong></span> &nbsp;</p>
-<div class="sourceCode" id="cb10" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>        b <span class="op">=</span> a <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>        b <span class="op">=</span> a <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>Solution</em>:</p>
-<div class="sourceCode" id="cb11" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span>        <span class="co">; EAX = a</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     <span class="kw">eax</span>             <span class="co">; EAX ++</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>b<span class="op">],</span> <span class="kw">eax</span>        <span class="co">; b = EAX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><em>Another solution</em>:</p>
-<div class="sourceCode" id="cb12" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">1</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>b<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The following solution is not acceptable because it changes the value of variable <code>a</code>:</p>
-<div class="sourceCode" id="cb13" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="op">[</span>a<span class="op">],</span> <span class="dv">1</span>          <span class="co">; ERROR: don't change the variable a</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span></span>
+<div class="sourceCode" id="cb12" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span>        <span class="co">; EAX &lt;-- a</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     <span class="kw">eax</span>             <span class="co">; EAX ++</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>b<span class="op">],</span> <span class="kw">eax</span>        <span class="co">; b &lt;-- EAX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Alternative solution</em>:</p>
+<div class="sourceCode" id="cb13" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">1</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>b<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Incorrect solutions (avoid these)</em>:</p>
+<p>The following solution is not acceptable because it changes the value of variable <code>a</code>:</p>
+<div class="sourceCode" id="cb14" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="op">[</span>a<span class="op">],</span> <span class="dv">1</span>          <span class="co">; ERROR: don't change the variable a</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>b<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The following solution has syntax error: memory to memory operands</p>
-<div class="sourceCode" id="cb14" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>b<span class="op">],</span> <span class="op">[</span>a<span class="op">]</span>        <span class="co">; ERROR: memory to memory operands</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="op">[</span>b<span class="op">],</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>b<span class="op">],</span> <span class="op">[</span>a<span class="op">]</span>        <span class="co">; ERROR: memory to memory operands</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="op">[</span>b<span class="op">],</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="exm-3" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3</strong></span> &nbsp;</p>
-<div class="sourceCode" id="cb15" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>      c <span class="op">=</span> b <span class="op">-</span> a<span class="co">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>      c <span class="op">=</span> b <span class="op">-</span> a<span class="co">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>Solution</em>:</p>
-<div class="sourceCode" id="cb16" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span>        <span class="co">; EAX = a</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebx</span><span class="op">,</span> <span class="op">[</span>b<span class="op">]</span>        <span class="co">; EBX = b</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>     <span class="kw">ebx</span><span class="op">,</span> <span class="kw">eax</span>        <span class="co">; EBX -= EAX</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>c<span class="op">],</span> <span class="kw">ebx</span>        <span class="co">; c = EBX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span>        <span class="co">; EAX &lt;-- a</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebx</span><span class="op">,</span> <span class="op">[</span>b<span class="op">]</span>        <span class="co">; EBX &lt;-- b</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>     <span class="kw">ebx</span><span class="op">,</span> <span class="kw">eax</span>        <span class="co">; EBX = EBX - EAX</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>c<span class="op">],</span> <span class="kw">ebx</span>        <span class="co">; c &lt;-- EBX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><em>Another solution</em>:</p>
-<div class="sourceCode" id="cb17" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>b<span class="op">]</span>        <span class="co">; EAX = b</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span>        <span class="co">; EAX = EAX - a</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>c<span class="op">],</span> <span class="kw">eax</span>        <span class="co">; c = EAX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>b<span class="op">]</span>        <span class="co">; EAX &lt;-- b</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span>        <span class="co">; EAX = EAX - a</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>c<span class="op">],</span> <span class="kw">eax</span>        <span class="co">; c &lt;-- EAX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="exm-4" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4</strong></span> &nbsp;</p>
-<div class="sourceCode" id="cb18" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>      y <span class="op">=</span> <span class="dv">5</span> <span class="op">-</span> y<span class="co">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>      y <span class="op">=</span> <span class="dv">5</span> <span class="op">-</span> y<span class="co">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>Solution</em>:</p>
-<div class="sourceCode" id="cb19" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">5</span>          <span class="co">; EAX = 5</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>y<span class="op">]</span>        <span class="co">; EAX = EAX - y</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span>        <span class="co">; y = EAX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">5</span>          <span class="co">; EAX &lt;-- 5</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>y<span class="op">]</span>        <span class="co">; EAX = EAX - y</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span>        <span class="co">; y &lt;-- EAX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><em>Another solution</em>:</p>
-<div class="sourceCode" id="cb20" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">neg</span>     <span class="op">[</span>y<span class="op">]</span>             <span class="co">; y = -y</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="op">[</span>y<span class="op">],</span> <span class="dv">5</span>          <span class="co">; y += 5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">neg</span>     <span class="op">[</span>y<span class="op">]</span>             <span class="co">; y = -y</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="op">[</span>y<span class="op">],</span> <span class="dv">5</span>          <span class="co">; y = y + 5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="exm-5" class="theorem example">
 <p><span class="theorem-title"><strong>Example 5</strong></span> &nbsp;</p>
-<div class="sourceCode" id="cb21" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>      c <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> <span class="op">(</span>a <span class="op">+</span> b<span class="op">)</span> <span class="op">+</span> <span class="dv">10</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>      c <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> <span class="op">(</span>a <span class="op">+</span> b<span class="op">)</span> <span class="op">+</span> <span class="dv">10</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>Solution</em>:</p>
-<div class="sourceCode" id="cb22" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>        <span class="co">; evaluate (a + b)</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>b<span class="op">]</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">; 2 * (a + b)</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="kw">eax</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">; 2 * (a + b) + 10</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">10</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">; c = &lt;expr&gt;</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>c<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>        <span class="co">; evaluate (a + b)</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>b<span class="op">]</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">; 2 * (a + b)</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="kw">eax</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">; 2 * (a + b) + 10</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">10</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">; c = &lt;expr&gt;</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>c<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="flags-affected-by-arithmetic-instructions" class="level3" data-number="2.6">
 <h3 data-number="2.6" class="anchored" data-anchor-id="flags-affected-by-arithmetic-instructions"><span class="header-section-number">2.6</span> Flags Affected by Arithmetic Instructions</h3>
 <ul>
-<li><p>When a CPU executes arithmetic instructions, it consequently updates the status flags. (see lecture 1)</p></li>
-<li><p>Status flags provide information whether the output is</p>
+<li><p>When a CPU executes arithmetic instructions, it consequently updates the status flags. (see lecture 1 for flag details)</p></li>
+<li><p>Status flags provide information about whether the output is</p>
 <ul>
 <li><p>Positive or negative</p></li>
 <li><p>zero or not zero</p></li>
 <li><p>too large or too small to fit into the destination operand</p></li>
-<li><p>the parity of least significant byte</p></li>
+<li><p>the parity of the least significant byte</p></li>
 </ul></li>
 <li><p><u>The status flags can be used to activate conditional branching instructions</u> (will be discussed in next lecture).</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 14%">
-<col style="width: 85%">
+<col style="width: 23%">
+<col style="width: 76%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -513,7 +529,7 @@ Syntax
 </tr>
 <tr class="even">
 <td>AF</td>
-<td>there a 1 bit carried out of position 3 in the least significant byte of the output</td>
+<td>there is a 1 bit carried out of position 3 in the least significant byte of the output</td>
 </tr>
 </tbody>
 </table></li>
@@ -584,7 +600,7 @@ Remember
 </section>
 <section id="how-the-alu-calculates-the-overflow-flag" class="level4" data-number="2.6.3">
 <h4 data-number="2.6.3" class="anchored" data-anchor-id="how-the-alu-calculates-the-overflow-flag"><span class="header-section-number">2.6.3</span> How the ALU calculates the Overflow flag</h4>
-<p>This material is optional reading.</p>
+<p><u>This material is optional reading.</u></p>
 <ul>
 <li><p>The value that carries out of the MSB is exclusive ORed with the carry into the MSB of the result.</p></li>
 <li><p>The value that borrows out of the MSB is exclusive ORed with the borrow into the MSB of the result.</p></li>
@@ -628,12 +644,12 @@ Remember
 <section id="which-instructions-affect-flags" class="level3" data-number="2.7">
 <h3 data-number="2.7" class="anchored" data-anchor-id="which-instructions-affect-flags"><span class="header-section-number">2.7</span> Which Instructions Affect Flags</h3>
 <ul>
-<li><p>In general, each time the processor executes an instruction, the flags are altered to reflect the result. However, some instructions don’t affect any of the flags, affect only some of them, or may leave them undefined.</p></li>
+<li><p>In general, each time the processor executes an instruction, the flags are altered to reflect the result. However, some instructions (1) don’t affect any of the flags, (2) affect only some of them, or (3) may leave them undefined.</p></li>
 <li><p>Here is a summary of previous instructions:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 42%">
-<col style="width: 57%">
+<col style="width: 43%">
+<col style="width: 56%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -665,11 +681,11 @@ Remember
 </section>
 <section id="multiplication-and-division" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="multiplication-and-division"><span class="header-section-number">3</span> Multiplication and Division</h2>
-<section id="terms" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="terms"><span class="header-section-number">3.1</span> Terms</h3>
+<section id="terminology" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="terminology"><span class="header-section-number">3.1</span> Terminology</h3>
 <ul>
 <li><p>When multiplying two numbers, the first number is <strong>multiplicand</strong>, the second number is <strong>multiplier</strong> and the result is <strong>product</strong>.</p></li>
-<li><p>If the size of multiplicand is n-bit and the size of multiplier is m-bit, then the size of product is at most (n+m)-bit.</p></li>
+<li><p>If the size of multiplicand is n-bit and the size of multiplier is m-bit, then the size of the product is at most (n+m)-bit.</p></li>
 <li><p>When dividing two numbers, the first number is <strong>dividend</strong>, the second number is <strong>divisor</strong>, and the result is <strong>quotient</strong>. So, the dividend is the number that is divided by the divisor. The number left behind after the division is called the <strong>remainder</strong>.</p></li>
 </ul>
 </section>
@@ -685,7 +701,7 @@ Syntax
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb23" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">MUL</span>     <span class="op">&lt;</span>multiplier<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">MUL</span>     <span class="op">&lt;</span>multiplier<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <ul>
@@ -732,6 +748,20 @@ Syntax
 <h4 data-number="3.2.2" class="anchored" data-anchor-id="example-1"><span class="header-section-number">3.2.2</span> Example</h4>
 <p><img src="..\images/mul.png" class="img-fluid" style="width:80.0%"></p>
 </section>
+<section id="example-2" class="level4" data-number="3.2.3">
+<h4 data-number="3.2.3" class="anchored" data-anchor-id="example-2"><span class="header-section-number">3.2.3</span> Example</h4>
+<div class="sourceCode" id="cb25" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>       <span class="kw">al</span><span class="op">,</span> <span class="dv">12</span>      <span class="co">; multiplicand</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>       <span class="kw">bl</span><span class="op">,</span> <span class="dv">5</span>       <span class="co">; multiplier</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mul</span>       <span class="kw">bl</span>          <span class="co">; AX = 12 x 5 = 60 = 003Ch</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>          <span class="co">; since the multiplier is reg8, the product is AX</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>       <span class="kw">ax</span><span class="op">,</span> <span class="dv">1000</span>    <span class="co">; multiplicand</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>       <span class="kw">cx</span><span class="op">,</span> <span class="dv">2000</span>    <span class="co">; multiplier</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mul</span>       <span class="kw">cx</span>          <span class="co">; DX:AX = 1000 x 2000 = 2,000,000</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                                <span class="co">; DX = 001Eh, AX = 8480h</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>          <span class="co">; since the multiplier is reg16, the product is stored in</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>          <span class="co">; two registers DX:AX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 </section>
 <section id="imul-instruction" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="imul-instruction"><span class="header-section-number">3.3</span> <code>IMUL</code> Instruction</h3>
@@ -745,11 +775,15 @@ Syntax
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb24" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">IMUL</span>      <span class="op">&lt;</span>source<span class="op">&gt;</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">IMUL</span>      <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">IMUL</span>      <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source1<span class="op">&gt;,</span> <span class="op">&lt;</span>source2<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">IMUL</span>      <span class="op">&lt;</span>source<span class="op">&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">IMUL</span>      <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">IMUL</span>      <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source1<span class="op">&gt;,</span> <span class="op">&lt;</span>source2<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<ul>
+<li><p>This is the <em>signed</em> version of multiplication.</p></li>
+<li><p><code>IMUL</code> instruction can take either one operand, two operands, or three operands.</p></li>
+</ul>
 <section id="single-operand-form" class="level4" data-number="3.3.1">
 <h4 data-number="3.3.1" class="anchored" data-anchor-id="single-operand-form"><span class="header-section-number">3.3.1</span> Single-Operand Form</h4>
 <ul>
@@ -762,26 +796,26 @@ Syntax
 <li><p>The destination operand is multiplied by the source operand. The product is truncated and stored in the destination operand.</p></li>
 <li><p>The destination operand must be register (either <code>reg16</code> or <code>reg32</code> only)</p></li>
 <li><p>The valid formats are</p>
-<div class="sourceCode" id="cb25" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg16<span class="op">,</span> reg<span class="op">/</span>mem16</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg16<span class="op">,</span> imm8</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg16<span class="op">,</span> imm16</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg32<span class="op">,</span> reg<span class="op">/</span>mem32</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg32<span class="op">,</span> imm8</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg32<span class="op">,</span> imm32</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb27" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg16<span class="op">,</span> reg<span class="op">/</span>mem16</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg16<span class="op">,</span> imm8</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg16<span class="op">,</span> imm16</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg32<span class="op">,</span> reg<span class="op">/</span>mem32</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg32<span class="op">,</span> imm8</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg32<span class="op">,</span> imm32</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 </section>
 <section id="three-operand-form" class="level4" data-number="3.3.3">
 <h4 data-number="3.3.3" class="anchored" data-anchor-id="three-operand-form"><span class="header-section-number">3.3.3</span> Three-Operand Form</h4>
 <ul>
-<li><p>The first source operand is multiplied by the second operand. The product is truncated and stored in the destination operand</p></li>
-<li><p>The destination operand must be register (either <code>reg16</code> or <code>reg32</code>). The first operand must be a register or memory with same size as the destination operand. The second operand must be immediate operand</p></li>
+<li><p>The first source operand is multiplied by the second source operand. The product is truncated and stored in the destination operand</p></li>
+<li><p>The destination operand must be register (either <code>reg16</code> or <code>reg32</code>). The first source operand must be a register or memory with same size as the destination operand. The second source operand must be immediate operand</p></li>
 <li><p>The valid formats are:</p>
-<div class="sourceCode" id="cb26" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg16<span class="op">,</span> reg<span class="op">/</span>mem16<span class="op">,</span> imm8</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg16<span class="op">,</span> reg<span class="op">/</span>mem16<span class="op">,</span> imm16</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg32<span class="op">,</span> reg<span class="op">/</span>mem32<span class="op">,</span> imm8</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg32<span class="op">,</span> reg<span class="op">/</span>mem32<span class="op">,</span> imm32</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb28" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg16<span class="op">,</span> reg<span class="op">/</span>mem16<span class="op">,</span> imm8</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg16<span class="op">,</span> reg<span class="op">/</span>mem16<span class="op">,</span> imm16</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg32<span class="op">,</span> reg<span class="op">/</span>mem32<span class="op">,</span> imm8</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>      <span class="kw">IMUL</span>    reg32<span class="op">,</span> reg<span class="op">/</span>mem32<span class="op">,</span> imm32</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 </section>
 <section id="flags-affected-1" class="level4" data-number="3.3.4">
@@ -809,38 +843,39 @@ Remember
 <h4 data-number="3.3.5" class="anchored" data-anchor-id="examples"><span class="header-section-number">3.3.5</span> Examples</h4>
 <div id="exm-21" class="theorem example">
 <p><span class="theorem-title"><strong>Example 6</strong></span> &nbsp;</p>
-<div class="sourceCode" id="cb27" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.data</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>varW    <span class="dt">dw</span>    <span class="dv">4</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>varDW   <span class="dt">dd</span>    <span class="dv">4</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.text</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">-</span><span class="dv">16</span>       <span class="co">; AX = -16</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">bx</span><span class="op">,</span> <span class="dv">2</span>         <span class="co">; BX = 2</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">bx</span><span class="op">,</span> <span class="kw">ax</span>        <span class="co">; BX = -32</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">bx</span><span class="op">,</span> <span class="dv">2</span>         <span class="co">; BX = -64</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">bx</span><span class="op">,</span> <span class="op">[</span>varW<span class="op">]</span>    <span class="co">; BX = -256</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">-</span><span class="dv">16</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebx</span><span class="op">,</span> <span class="dv">2</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">ebx</span><span class="op">,</span> <span class="kw">eax</span>      <span class="co">; EBX = -32</span></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">ebx</span><span class="op">,</span> <span class="dv">2</span>        <span class="co">; EBX = -64</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">ebx</span><span class="op">,</span> <span class="op">[</span>varDW<span class="op">]</span>  <span class="co">; EBX = -256</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.data</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>varW    <span class="dt">dw</span>    <span class="dv">4</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>varDW   <span class="dt">dd</span>    <span class="dv">4</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.text</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">-</span><span class="dv">16</span>       <span class="co">; AX = -16</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">bx</span><span class="op">,</span> <span class="dv">2</span>         <span class="co">; BX = 2</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">bx</span><span class="op">,</span> <span class="kw">ax</span>        <span class="co">; BX = -32</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">bx</span><span class="op">,</span> <span class="dv">2</span>         <span class="co">; BX = -64</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">bx</span><span class="op">,</span> <span class="op">[</span>varW<span class="op">]</span>    <span class="co">; BX = -256</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">-</span><span class="dv">16</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebx</span><span class="op">,</span> <span class="dv">2</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">ebx</span><span class="op">,</span> <span class="kw">eax</span>      <span class="co">; EBX = -32</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">ebx</span><span class="op">,</span> <span class="dv">2</span>        <span class="co">; EBX = -64</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">ebx</span><span class="op">,</span> <span class="op">[</span>varDW<span class="op">]</span>  <span class="co">; EBX = -256</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="exm-22" class="theorem example">
 <p><span class="theorem-title"><strong>Example 7</strong></span> Translate <code>y = x * 7</code> to Assembly, assuming that <code>x</code> and <code>y</code> are declared as singed integer.</p>
-<div class="sourceCode" id="cb28" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>  <span class="kw">eax</span><span class="op">,</span> <span class="dv">7</span>          <span class="co">; eax = eax * 7 </span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Or</p>
-<div class="sourceCode" id="cb29" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="dv">7</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>   <span class="kw">ebx</span>            <span class="co">; eax = eax * ebx</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Or</p>
-<div class="sourceCode" id="cb30" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>  <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">],</span> <span class="dv">7</span> </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Solution 1:</p>
+<div class="sourceCode" id="cb30" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>  <span class="kw">eax</span><span class="op">,</span> <span class="dv">7</span>          <span class="co">; eax = eax * 7 </span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Solution 2:</p>
+<div class="sourceCode" id="cb31" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="dv">7</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>   <span class="kw">ebx</span>            <span class="co">; eax = eax * ebx</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Solution 3:</p>
+<div class="sourceCode" id="cb32" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>  <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">],</span> <span class="dv">7</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -856,7 +891,7 @@ Syntax
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb31" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">DIV</span>     <span class="op">&lt;</span>divisor<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">DIV</span>     <span class="op">&lt;</span>divisor<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <ul>
@@ -909,9 +944,9 @@ Remember
 </div>
 <div class="callout-body-container callout-body">
 <p>If you did not set the upper half of the dividend, don’t forget to clear it using one of the following instructions:</p>
-<div class="sourceCode" id="cb32" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">xor</span>   <span class="kw">ax</span><span class="op">,</span> <span class="kw">ax</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">ah</span><span class="op">,</span> <span class="dv">0</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>   <span class="kw">edx</span><span class="op">,</span> <span class="kw">edx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">xor</span>   <span class="kw">ax</span><span class="op">,</span> <span class="kw">ax</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">ah</span><span class="op">,</span> <span class="dv">0</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>   <span class="kw">edx</span><span class="op">,</span> <span class="kw">edx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div></li>
 </ul>
@@ -926,7 +961,7 @@ Remember
 <li><p>This is the signed version of division</p></li>
 <li><p>It has the same syntax as <code>DIV</code></p></li>
 <li><p>If <span class="math inline">\(q = a / b\)</span> where <span class="math inline">\(q\)</span> is the quotient, <span class="math inline">\(a\)</span> is the dividend, and <span class="math inline">\(b\)</span> is divisor, then <span class="math inline">\(a = q*b + r\)</span></p></li>
-<li><p>The sign of the remainder is always the same as the sign of the dividend</p></li>
+<li><p>The sign of the remainder is <strong>always</strong> the same as the sign of the dividend</p></li>
 <li><p>If the divisor is <span class="math inline">\(0\)</span>, an interrupt called <code>#DE</code> is generated to terminate the program.</p></li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -964,63 +999,63 @@ Remember
 </ul>
 <div id="exm-23" class="theorem example">
 <p><span class="theorem-title"><strong>Example 8</strong></span> &nbsp;</p>
-<div class="sourceCode" id="cb33" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">al</span><span class="op">,</span> <span class="dv">125</span>     <span class="co">; dividend = AL = 125</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cbw</span>                 <span class="co">; AH = 0</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">bl</span><span class="op">,</span> <span class="dv">2</span>       <span class="co">; BL = 2</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">div</span>     <span class="kw">bl</span>          <span class="co">; AL =125/2=62=3Dh, AH = 01h</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">al</span><span class="op">,</span> <span class="op">-</span><span class="dv">125</span>    <span class="co">; AL = -125 = 83h</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cbw</span>                 <span class="co">; AX = FF83h</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">bl</span><span class="op">,</span> <span class="dv">2</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">idiv</span>    <span class="kw">bl</span>          <span class="co">; AL = -125/2 = -62 = 0C2h, AH = -1 = 0FFh</span></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">dx</span><span class="op">,</span> <span class="dv">0</span>       <span class="co">; clear dividend, high</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ax</span><span class="op">,</span> <span class="bn">8003h</span>   <span class="co">; dividend, low</span></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">cx</span><span class="op">,</span> <span class="bn">100h</span>    <span class="co">; divisor</span></span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">div</span>     <span class="kw">cx</span>          <span class="co">; AX = 0080h, DX = 0003h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">al</span><span class="op">,</span> <span class="dv">125</span>     <span class="co">; dividend = AL = 125</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cbw</span>                 <span class="co">; AH = 0</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">bl</span><span class="op">,</span> <span class="dv">2</span>       <span class="co">; BL = 2</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">div</span>     <span class="kw">bl</span>          <span class="co">; AL =125/2=62=3Dh, AH = 01h</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">al</span><span class="op">,</span> <span class="op">-</span><span class="dv">125</span>    <span class="co">; AL = -125 = 83h</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cbw</span>                 <span class="co">; AX = FF83h</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">bl</span><span class="op">,</span> <span class="dv">2</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">idiv</span>    <span class="kw">bl</span>          <span class="co">; AL = -125/2 = -62 = 0C2h, AH = -1 = 0FFh</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">dx</span><span class="op">,</span> <span class="dv">0</span>       <span class="co">; clear dividend, high</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ax</span><span class="op">,</span> <span class="bn">8003h</span>   <span class="co">; dividend, low</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">cx</span><span class="op">,</span> <span class="bn">100h</span>    <span class="co">; divisor</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">div</span>     <span class="kw">cx</span>          <span class="co">; AX = 0080h, DX = 0003h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In the remaining examples, we are going to translate from high-level language to assembly language. All variables are 32-bit signed integers</p>
 <div id="exm-24" class="theorem example">
 <p><span class="theorem-title"><strong>Example 9</strong></span> &nbsp;</p>
-<div class="sourceCode" id="cb34" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>      f <span class="op">=</span> <span class="dv">9</span><span class="op">/</span><span class="dv">5</span><span class="op">*</span>c <span class="op">+</span> <span class="dv">32</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb35" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>c<span class="op">]</span>    <span class="co">; EAX = c</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">eax</span><span class="op">,</span> <span class="dv">9</span>      <span class="co">; EAX = 9 * c</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebx</span><span class="op">,</span> <span class="dv">5</span>      <span class="co">; EBX = 5 (divisor)</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cdq</span>                 <span class="co">; Sign-extend EAX to EDX</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">idiv</span>    <span class="kw">ebx</span>         <span class="co">; EAX = EAX / EBX</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>f<span class="op">],</span> <span class="kw">eax</span>    <span class="co">; f = EAX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>      f <span class="op">=</span> <span class="dv">9</span><span class="op">/</span><span class="dv">5</span><span class="op">*</span>c <span class="op">+</span> <span class="dv">32</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>c<span class="op">]</span>    <span class="co">; EAX = c</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>    <span class="kw">eax</span><span class="op">,</span> <span class="dv">9</span>      <span class="co">; EAX = 9 * c</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebx</span><span class="op">,</span> <span class="dv">5</span>      <span class="co">; EBX = 5 (divisor)</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cdq</span>                 <span class="co">; Sign-extend EAX to EDX</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">idiv</span>    <span class="kw">ebx</span>         <span class="co">; EAX = EAX / EBX</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="op">[</span>f<span class="op">],</span> <span class="kw">eax</span>    <span class="co">; f = EAX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="exm-25" class="theorem example">
 <p><span class="theorem-title"><strong>Example 10</strong></span> &nbsp;</p>
-<div class="sourceCode" id="cb36" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>      v4 <span class="op">=</span> <span class="op">(</span>v1 <span class="op">*</span> <span class="dv">5</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span>v2 <span class="op">-</span> <span class="dv">3</span><span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb37" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>v1<span class="op">]</span>     <span class="co">; EAX = v1</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>  <span class="kw">eax</span><span class="op">,</span> <span class="dv">5</span>        <span class="co">; EAX = EAX * 5</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="op">[</span>v2<span class="op">]</span>     <span class="co">; EBX = v2</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="dv">3</span>        <span class="co">; EBX = v2 - 3</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cdq</span>                 <span class="co">; Sign-extend EAX to EDX</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">idiv</span>  <span class="kw">ebx</span>           <span class="co">; EAX = EAX / EDX</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">[</span>v4<span class="op">],</span> <span class="kw">eax</span>     <span class="co">; v4 = EAX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>      v4 <span class="op">=</span> <span class="op">(</span>v1 <span class="op">*</span> <span class="dv">5</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span>v2 <span class="op">-</span> <span class="dv">3</span><span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb39" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>v1<span class="op">]</span>     <span class="co">; EAX = v1</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>  <span class="kw">eax</span><span class="op">,</span> <span class="dv">5</span>        <span class="co">; EAX = EAX * 5</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="op">[</span>v2<span class="op">]</span>     <span class="co">; EBX = v2</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="dv">3</span>        <span class="co">; EBX = v2 - 3</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cdq</span>                 <span class="co">; Sign-extend EAX to EDX</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">idiv</span>  <span class="kw">ebx</span>           <span class="co">; EAX = EAX / EDX</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">[</span>v4<span class="op">],</span> <span class="kw">eax</span>     <span class="co">; v4 = EAX</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="exm-26" class="theorem example">
 <p><span class="theorem-title"><strong>Example 11</strong></span> &nbsp;</p>
-<div class="sourceCode" id="cb38" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>      v4 <span class="op">=</span> <span class="op">-</span>v1 <span class="op">*</span> <span class="dv">5</span><span class="op">/(-</span>v2 <span class="op">%</span> v3<span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb39" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>v1<span class="op">]</span>     <span class="co">; EAX = v1</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">neg</span>   <span class="kw">eax</span>           <span class="co">; EAX = -v1</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>  <span class="kw">ecx</span><span class="op">,</span> <span class="kw">eax</span><span class="op">,</span> <span class="dv">5</span>   <span class="co">; ECX = -v1 * 5</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>v2<span class="op">]</span>     <span class="co">; EAX = v2</span></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">neg</span>   <span class="kw">eax</span>           <span class="co">; EAX = -v2</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="op">[</span>v3<span class="op">]</span>     <span class="co">; EBX = v3</span></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cdq</span>                 <span class="co">; sign-extend EAX to EDX</span></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">idiv</span>  <span class="kw">ebx</span>           <span class="co">; EAX = EAX / EBX, Rem = EDX</span></span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="kw">ecx</span>      <span class="co">; Set EAX = ECX (enumerator)</span></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="kw">edx</span>      <span class="co">; Set EBX = EDX (denominator)</span></span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cdq</span></span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">idiv</span>  <span class="kw">ebx</span>           <span class="co">; EAX = EAX / EBX</span></span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">[</span>v4<span class="op">],</span> <span class="kw">eax</span>     <span class="co">; v4 = EAX</span></span>
-<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>      v4 <span class="op">=</span> <span class="op">-</span>v1 <span class="op">*</span> <span class="dv">5</span><span class="op">/(-</span>v2 <span class="op">%</span> v3<span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>v1<span class="op">]</span>     <span class="co">; EAX = v1</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">neg</span>   <span class="kw">eax</span>           <span class="co">; EAX = -v1</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>  <span class="kw">ecx</span><span class="op">,</span> <span class="kw">eax</span><span class="op">,</span> <span class="dv">5</span>   <span class="co">; ECX = -v1 * 5</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>v2<span class="op">]</span>     <span class="co">; EAX = v2</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">neg</span>   <span class="kw">eax</span>           <span class="co">; EAX = -v2</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="op">[</span>v3<span class="op">]</span>     <span class="co">; EBX = v3</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cdq</span>                 <span class="co">; sign-extend EAX to EDX</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">idiv</span>  <span class="kw">ebx</span>           <span class="co">; EAX = EAX / EBX, Rem = EDX</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="kw">ecx</span>      <span class="co">; Set EAX = ECX (enumerator)</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="kw">edx</span>      <span class="co">; Set EBX = EDX (denominator)</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cdq</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">idiv</span>  <span class="kw">ebx</span>           <span class="co">; EAX = EAX / EBX</span></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="op">[</span>v4<span class="op">],</span> <span class="kw">eax</span>     <span class="co">; v4 = EAX</span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -1028,7 +1063,7 @@ Remember
 <section id="logic-instructions" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="logic-instructions"><span class="header-section-number">4</span> Logic Instructions</h2>
 <ul>
-<li>The Intel instruction set contains the AND, OR, XOR, NOT, and many more instructions , which directly implement boolean operations on binary bits.</li>
+<li>The Intel instruction set contains the AND, OR, XOR, NOT, and many more instructions that directly implement Boolean operations on binary bits.</li>
 </ul>
 <div class="callout callout-style-simple callout-important no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1040,18 +1075,18 @@ Syntax
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb40" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span>     <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">OR</span>      <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">XOR</span>     <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">NOT</span>     <span class="op">&lt;</span>destination<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb42" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span>     <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">OR</span>      <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">XOR</span>     <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">NOT</span>     <span class="op">&lt;</span>destination<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <ul>
 <li><p>The following table describes the operation of each instruction</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 12%">
-<col style="width: 87%">
+<col style="width: 23%">
+<col style="width: 76%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1112,25 +1147,25 @@ Rules
 <li><p>The state of AF is undefined.</p></li>
 </ul>
 </section>
-<section id="implementations" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="implementations"><span class="header-section-number">4.1</span> Implementations</h3>
+<section id="practical-implementations" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="practical-implementations"><span class="header-section-number">4.1</span> Practical Implementations</h3>
 <section id="clearingmasking-bits" class="level4" data-number="4.1.1">
 <h4 data-number="4.1.1" class="anchored" data-anchor-id="clearingmasking-bits"><span class="header-section-number">4.1.1</span> Clearing/Masking Bits</h4>
 <ul>
-<li><p>The AND instruction allows us to clear 1 or more bits in an operand without affecting other bits. This technique is called <strong>bit masking</strong>.</p></li>
-<li><p>To clear a bit (or more), use AND with a <strong>mask</strong> that has a 0 in the position which is to be cleared. All other positions in the mask contain 1.</p></li>
+<li><p>The AND instruction allows us to clear one or more bits in an operand without affecting other bits. This technique is called <strong>bit masking</strong>.</p></li>
+<li><p>To clear a bit (or more), use AND with a <strong>mask</strong> that has a 0 in the position that is to be cleared. All other positions in the mask contain 1.</p></li>
 <li><p>For example, suppose we have the bit string <span class="math inline">\(1110\,0110\)</span> and we want to clear bit 2 (change it to 0). We can use mask <span class="math inline">\(1111\,1011_2\)</span> as follows:</p>
-<div class="sourceCode" id="cb42" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">1110_0110b</span>      <span class="co">; bit string</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">1111_1011b</span>      <span class="co">; AL=1110 0010</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb44" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">1110_0110b</span>      <span class="co">; bit string</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">1111_1011b</span>      <span class="co">; AL=1110 0010</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 </section>
 <section id="setting-bits" class="level4" data-number="4.1.2">
 <h4 data-number="4.1.2" class="anchored" data-anchor-id="setting-bits"><span class="header-section-number">4.1.2</span> Setting Bits</h4>
 <ul>
-<li><p>The OR instruction allows us to set 1 or more bits in an operand without affecting any other bits.</p></li>
+<li><p>The OR instruction allows us to set one or more bits in an operand without affecting any other bits.</p></li>
 <li><p>To set a bit (or more), use OR with a mask that has 1 in the position which is to be set. All other positions in the mask contain 0.</p></li>
 <li><p>The following code:</p>
-<div class="sourceCode" id="cb43" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">or</span>      <span class="kw">AL</span><span class="op">,</span> <span class="bn">0000_0100b</span>    <span class="co">; set bit 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb45" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">or</span>      <span class="kw">AL</span><span class="op">,</span> <span class="bn">0000_0100b</span>    <span class="co">; set bit 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>will set bit at position 2 to 1 and leave other bits unchanged.</p></li>
 </ul>
 </section>
@@ -1154,13 +1189,13 @@ Rules
 <ul>
 <li><p>To test a bit, use AND with a mask that has 1 in the position which is to be tested. All other positions in the mask contain 0.</p></li>
 <li><p>Example, suppose we have the bit string <span class="math inline">\(1110\,0110\)</span> and we want to test bit 5 (check its value). We can use mask <span class="math inline">\(0010\;0000_2\)</span> and the AND:</p>
-<div class="sourceCode" id="cb44" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">1110_0110b</span>    <span class="co">; our bit string</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">0010_0000b</span>    <span class="co">; The result = 0010 0000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb46" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">1110_0110b</span>    <span class="co">; our bit string</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">0010_0000b</span>    <span class="co">; The result = 0010 0000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Since bit 5 was set, the result is a nonzero value. However, suppose we want to test bit 4. We use mask <span class="math inline">\(0001\;0000\)</span> and the AND operation:</p>
-<div class="sourceCode" id="cb45" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">1110_0110b</span>    <span class="co">; our bit string</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">0001_0000b</span>    <span class="co">; The result = 0000 0000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb47" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">1110_0110b</span>    <span class="co">; our bit string</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span>     <span class="kw">AL</span><span class="op">,</span> <span class="bn">0001_0000b</span>    <span class="co">; The result = 0000 0000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Since bit 4 was not set, the result is a zero value.</p></li>
-<li><p>So after the AND, we need to test the result; if the result is nonzero, the bit is set, otherwise it is not.</p></li>
+<li><p>So after the AND, we need to test the result; if the result is nonzero, the bit is set; otherwise, it is not.</p></li>
 </ul>
 </section>
 </section>
@@ -1168,7 +1203,7 @@ Rules
 <section id="indirect-addressing-modes" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="indirect-addressing-modes"><span class="header-section-number">5</span> Indirect Addressing Modes</h2>
 <ul>
-<li><p>Memory locations (where the objects are located) can be specified:</p>
+<li><p>Memory locations (where the objects are stored) can be specified:</p>
 <ul>
 <li><p><strong>Directly</strong> as static value (also known as displacement)</p></li>
 <li><p><strong>Indirectly</strong> through an address computation made up of one or more of the following components:</p>
@@ -1182,13 +1217,13 @@ Rules
 <li><p>The offset address which results from adding these components is called an <strong>effective address</strong>.</p></li>
 </ul>
 <p>In the following section, we consider the following data definition</p>
-<div class="sourceCode" id="cb46" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.data</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>v1      <span class="dt">db</span>      <span class="dv">50</span><span class="op">,</span> <span class="dv">62</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>arrX    <span class="dt">dw</span>      <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>matr    <span class="dt">dd</span>      <span class="dv">10</span><span class="op">,</span> <span class="dv">11</span><span class="op">,</span> <span class="dv">12</span><span class="op">,</span> <span class="dv">13</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">dd</span>      <span class="dv">20</span><span class="op">,</span> <span class="dv">21</span><span class="op">,</span> <span class="dv">22</span><span class="op">,</span> <span class="dv">23</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="displacement-addressing-mode" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="displacement-addressing-mode"><span class="header-section-number">5.1</span> Displacement Addressing Mode</h3>
+<div class="sourceCode" id="cb48" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">section</span> <span class="fu">.data</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>v1      <span class="dt">db</span>      <span class="dv">50</span><span class="op">,</span> <span class="dv">62</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>arrX    <span class="dt">dw</span>      <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>matr    <span class="dt">dd</span>      <span class="dv">10</span><span class="op">,</span> <span class="dv">11</span><span class="op">,</span> <span class="dv">12</span><span class="op">,</span> <span class="dv">13</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">dd</span>      <span class="dv">20</span><span class="op">,</span> <span class="dv">21</span><span class="op">,</span> <span class="dv">22</span><span class="op">,</span> <span class="dv">23</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="displacement-direct-memory-addressing-mode" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="displacement-direct-memory-addressing-mode"><span class="header-section-number">5.1</span> Displacement (Direct Memory) Addressing Mode</h3>
 <ul>
 <li><p>A displacement is 8-, 16-, or 32-bit constant value or expression</p></li>
 <li><p>Displacement alone represents a direct offset to the operand.</p></li>
@@ -1205,8 +1240,8 @@ Rules
 </div>
 </div></li>
 <li><p>Example</p>
-<div class="sourceCode" id="cb48" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">al</span><span class="op">,</span> <span class="op">[</span>v1<span class="op">]</span>        <span class="co">; AL = 50</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>   <span class="kw">al</span><span class="op">,</span> <span class="op">[</span>v1 <span class="op">+</span> <span class="dv">1</span><span class="op">]</span>    <span class="co">; AL = 50 + 62 = 112</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb50" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">al</span><span class="op">,</span> <span class="op">[</span>v1<span class="op">]</span>        <span class="co">; AL = 50</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>   <span class="kw">al</span><span class="op">,</span> <span class="op">[</span>v1 <span class="op">+</span> <span class="dv">1</span><span class="op">]</span>    <span class="co">; AL = 50 + 62 = 112</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 </section>
 <section id="base-addressing-mode" class="level3" data-number="5.2">
@@ -1226,20 +1261,21 @@ Rules
 </div>
 </div></li>
 <li><p>Example:</p>
-<div class="sourceCode" id="cb50" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">esi</span><span class="op">,</span> arrX     <span class="co">; ESI points to the 1st element in arrX</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ax</span><span class="op">,</span> <span class="dv">0</span>         <span class="co">; set sum to zero</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span><span class="op">]</span>     <span class="co">; add arrX[0] to sum, AX = 1</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">esi</span><span class="op">,</span> <span class="dv">2</span>        <span class="co">; move pointer to next element</span></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span><span class="op">]</span>     <span class="co">; add arrX[1] to sum, AX = 1+2 = 3</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">esi</span><span class="op">,</span> <span class="dv">2</span>        <span class="co">; move pointer to next element</span></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span><span class="op">]</span>     <span class="co">; add arrX[2] to sum, AX = 3+3 = 6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb52" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">esi</span><span class="op">,</span> arrX     <span class="co">; ESI points to the 1st element in arrX</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ax</span><span class="op">,</span> <span class="dv">0</span>         <span class="co">; set sum to zero</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span><span class="op">]</span>     <span class="co">; add arrX[0] to sum, AX = 1</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">esi</span><span class="op">,</span> <span class="dv">2</span>        <span class="co">; move pointer to next element</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span><span class="op">]</span>     <span class="co">; add arrX[1] to sum, AX = 1+2 = 3</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">esi</span><span class="op">,</span> <span class="dv">2</span>        <span class="co">; move pointer to next element</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span><span class="op">]</span>     <span class="co">; add arrX[2] to sum, AX = 3+3 = 6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
+<p><strong>Practical use:</strong> This mode is commonly used for traversing arrays and linked data structures.</p>
 </section>
 <section id="base-displacement-addressing-mode" class="level3" data-number="5.3">
 <h3 data-number="5.3" class="anchored" data-anchor-id="base-displacement-addressing-mode"><span class="header-section-number">5.3</span> Base + Displacement Addressing Mode</h3>
 <ul>
 <li><p>A base register and a displacement can be used together to access a field of a record. The base register holds the address of the beginning of the record, while the displacement holds a static offset to the field</p></li>
-<li><p>This mode is specially useful when we need to access parameters in a procedure activation record. We will elaborate this mode when we discuss procedures.</p></li>
+<li><p>This mode is especially useful when we need to access parameters in a procedure activation record. We will elaborate this mode when we discuss procedures.</p></li>
 <li><p>The syntax is</p>
 <div class="callout callout-style-simple callout-important no-icon">
 <div class="callout-body d-flex">
@@ -1254,9 +1290,9 @@ Rules
 </div>
 </div></li>
 <li><p>Example:</p>
-<div class="sourceCode" id="cb52" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">esi</span><span class="op">,</span> v1       <span class="co">; esi points to v1</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">al</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span> <span class="op">+</span> <span class="dv">0</span><span class="op">]</span> <span class="co">; AL = 50</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">bl</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span> <span class="op">+</span> <span class="dv">1</span><span class="op">]</span> <span class="co">; BL = 62 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb54" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">esi</span><span class="op">,</span> v1       <span class="co">; esi points to v1</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">al</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span> <span class="op">+</span> <span class="dv">0</span><span class="op">]</span> <span class="co">; AL = 50</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>   <span class="kw">bl</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span> <span class="op">+</span> <span class="dv">1</span><span class="op">]</span> <span class="co">; BL = 62 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 </section>
 <section id="index-addressing-mode" class="level3" data-number="5.4">
@@ -1284,13 +1320,13 @@ Rules
 <li><p>In index mode, the displacement locates the beginning of an array, the index register holds the subscript of the desired array element, and scale represents the data type.</p></li>
 <li><p>For example, <code>arrX[3]</code> can be translated to assembly as <code>[ecx*2 + arrX]</code> where the register <code>ECX</code> holds the value <code>3</code>.</p></li>
 <li><p>Example</p>
-<div class="sourceCode" id="cb55" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ax</span><span class="op">,</span> <span class="dv">0</span>               <span class="co">; set sum to zero</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">esi</span><span class="op">,</span> <span class="dv">0</span>              <span class="co">; set array index to 0</span></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span><span class="op">*</span><span class="dv">2</span> <span class="op">+</span> arrX<span class="op">]</span>  <span class="co">; add arrX[0] to sum, AX = 1</span></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     <span class="kw">esi</span>                 <span class="co">; increment the index by 1</span></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span><span class="op">*</span><span class="dv">2</span> <span class="op">+</span> arrX<span class="op">]</span>  <span class="co">; add arrX[1] to sum, AX = 1+2 = 3</span></span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     <span class="kw">esi</span>                 <span class="co">; increment the index by 1 </span></span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span><span class="op">*</span><span class="dv">2</span> <span class="op">+</span> arrX<span class="op">]</span>  <span class="co">; add arrX[2] to sum, AX = 3+3 = 6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb57" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ax</span><span class="op">,</span> <span class="dv">0</span>               <span class="co">; set sum to zero</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">esi</span><span class="op">,</span> <span class="dv">0</span>              <span class="co">; set array index to 0</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span><span class="op">*</span><span class="dv">2</span> <span class="op">+</span> arrX<span class="op">]</span>  <span class="co">; add arrX[0] to sum, AX = 1</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     <span class="kw">esi</span>                 <span class="co">; increment the index by 1</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span><span class="op">*</span><span class="dv">2</span> <span class="op">+</span> arrX<span class="op">]</span>  <span class="co">; add arrX[1] to sum, AX = 1+2 = 3</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     <span class="kw">esi</span>                 <span class="co">; increment the index by 1 </span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span><span class="kw">esi</span><span class="op">*</span><span class="dv">2</span> <span class="op">+</span> arrX<span class="op">]</span>  <span class="co">; add arrX[2] to sum, AX = 3+3 = 6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 </section>
 <section id="base-index-addressing-mode" class="level3" data-number="5.5">
