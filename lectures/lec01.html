@@ -178,6 +178,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../lectures/lec03.html">
  <span class="dropdown-text">Lecture 3: Binary Arithmetic, Logic and Addressing</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lec04.html">
+ <span class="dropdown-text">Lecture 4: Branching and Looping</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -221,7 +225,10 @@ window.Quarto = {
   <li><a href="#floating-point-representations" id="toc-floating-point-representations" class="nav-link" data-scroll-target="#floating-point-representations"><span class="header-section-number">1.3</span> Floating-Point Representations</a></li>
   <li><a href="#fixed-point-representations" id="toc-fixed-point-representations" class="nav-link" data-scroll-target="#fixed-point-representations"><span class="header-section-number">1.4</span> Fixed-point Representations</a></li>
   </ul></li>
-  <li><a href="#intel-microprocessors" id="toc-intel-microprocessors" class="nav-link" data-scroll-target="#intel-microprocessors"><span class="header-section-number">2</span> Intel Microprocessors</a></li>
+  <li><a href="#intel-microprocessors" id="toc-intel-microprocessors" class="nav-link" data-scroll-target="#intel-microprocessors"><span class="header-section-number">2</span> Intel Microprocessors</a>
+  <ul class="collapse">
+  <li><a href="#historical-evolution" id="toc-historical-evolution" class="nav-link" data-scroll-target="#historical-evolution"><span class="header-section-number">2.1</span> Historical Evolution:</a></li>
+  </ul></li>
   <li><a href="#ia-32-basic-execution-environment" id="toc-ia-32-basic-execution-environment" class="nav-link" data-scroll-target="#ia-32-basic-execution-environment"><span class="header-section-number">3</span> IA-32 Basic Execution Environment</a>
   <ul class="collapse">
   <li><a href="#modes-of-operation-in-ia-32" id="toc-modes-of-operation-in-ia-32" class="nav-link" data-scroll-target="#modes-of-operation-in-ia-32"><span class="header-section-number">3.1</span> Modes of Operation in IA-32</a></li>
@@ -269,7 +276,7 @@ window.Quarto = {
 <section id="integer-representations" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="integer-representations"><span class="header-section-number">1.1</span> Integer Representations</h3>
 <ul>
-<li>Revise the following representations:
+<li>Review the following representations:
 <ul>
 <li>Binary integers
 <ul>
@@ -323,7 +330,7 @@ Example
 <p><span class="math inline">\(\therefore -14_{10} = 1111\;1111\;1111\;0010_2\)</span></p></li>
 <li><p><strong>Convert the following number</strong> <span class="math inline">\(-14_{10}\)</span> <strong>to one-word hexadecimal</strong></p>
 <p><span class="math inline">\(-14_{10} = 1111\;1111\;1111\;0010_2\)</span></p>
-<p>Since <span class="math inline">\(1111_2\)</span> = <span class="math inline">\(\text{F}_{16}\)</span> and <span class="math inline">\(0010_2\)</span> = <span class="math inline">\(2_{16}\)</span>, then:</p>
+<p>Since <span class="math inline">\(1111_2\)</span> = <span class="math inline">\(\text{F}_{16}\)</span> and <span class="math inline">\(0010_2\)</span> = <span class="math inline">\(2_{16}\)</span>, then we have:</p>
 <p><span class="math inline">\(-14_{10}\)</span> = FFF2<sub>16</sub></p></li>
 </ol>
 </div>
@@ -355,14 +362,27 @@ Example
 <td><code>20 25</code></td>
 </tr>
 </tbody>
-</table></li>
-<li><p>Integer storage sizes</p>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+BCD Usage Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>BCD is commonly used in financial applications and digital clocks where exact decimal representation is crucial. For instance, a calculator displaying “0.1” uses BCD to avoid floating-point precision issues.</p>
+</div>
+</div></li>
+<li><p><strong>Integer storage sizes</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Storage Name</th>
 <th style="text-align: center;">Size in BYTE</th>
-<th style="text-align: center;">size in BITS</th>
+<th style="text-align: center;">Size in BITS</th>
 </tr>
 </thead>
 <tbody>
@@ -393,7 +413,7 @@ Example
 <section id="character-representations" class="level3" data-number="1.2">
 <h3 data-number="1.2" class="anchored" data-anchor-id="character-representations"><span class="header-section-number">1.2</span> Character Representations</h3>
 <ul>
-<li><p>Characters are represented by using <strong>character set</strong>, which is one-to-one mapping of characters to integers.</p>
+<li><p>Characters are represented using <strong>character sets</strong>, which provide a one-to-one mapping of characters to integers.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -507,8 +527,30 @@ Example
 <section id="fixed-point-representations" class="level3" data-number="1.4">
 <h3 data-number="1.4" class="anchored" data-anchor-id="fixed-point-representations"><span class="header-section-number">1.4</span> Fixed-point Representations</h3>
 <ul>
-<li>Floating-point representation is NOT recommended to store money amount. In languages such as Java or C++, floating point values have certain rounding characteristics that make it difficult to compare them for equality. The common example to illustrate the problem is <code>0.1 + 0.2 != 0.3</code>.</li>
-<li>Some applications use BCD (such as <code>BigDecimal</code> class in the Java class library).</li>
+<li>Floating-point representation is NOT recommended for storing monetary amounts. In languages such as Java or C++, floating point values have certain rounding characteristics that make them difficult to compare them for equality. A common example illustrating this problem is <code>0.1 + 0.2 != 0.3</code>.</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Floating-point Precision Issues
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try to run the following code:</p>
+<div class="sourceCode" id="cb1" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> a <span class="op">=</span> <span class="fl">0.1</span> <span class="op">+</span> <span class="fl">0.2</span><span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> b <span class="op">=</span> <span class="fl">0.3</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>a <span class="op">==</span> b<span class="op">)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"Equal</span><span class="sc">\n</span><span class="st">"</span><span class="op">):</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"Not equal</span><span class="sc">\n</span><span class="st">"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<ul>
+<li>Some applications use BCD (such as <code>BigDecimal</code> class in the Java class library) to avoid these precision issues.</li>
 </ul>
 </section>
 </section>
@@ -518,14 +560,18 @@ Example
 <li><p>Conventionally, Intel microprocessors are known as <strong>x86 processors</strong>.</p></li>
 <li><p>x86 microprocessors are divided into three families: x86-16, x86-32 and x86-64.</p></li>
 <li><p>All Intel microprocessors are byte addressable.</p></li>
+</ul>
+<section id="historical-evolution" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="historical-evolution"><span class="header-section-number">2.1</span> Historical Evolution:</h3>
+<ul>
 <li><p>In 1974, Intel has announced 8080 CPU: 8-bit CPU (2Mhz) and 16-bit address bus (64KB).</p></li>
 <li><p>In 1978, 8086 CPU has been introduced with 16-bit CPU (16-bit registers and 16-bit external data bus) and 20-bit address bus with CPU speed ranging from 5MHz to 10MHz.</p>
 <ul>
-<li>Memory addresses start from 00000H to FFFFFH (1MB)</li>
+<li>Memory addresses range from 00000H to FFFFFH (1MB)</li>
 <li>The address space is divided into segments. A <strong><em>segment</em></strong> is a region of memory that begins on a paragraph boundary and extends for some number of bytes (&lt;= 64K).</li>
-<li>A <strong><em>paragraph</em></strong> is a measure of memory equal to 16 bytes, and its starting address is aligned to a 16-byte boundary.</li>
+<li>A <strong><em>paragraph</em></strong> is a measure of memory equal to 16 bytes, and its starting address aligned to a 16-byte boundary.</li>
 <li>8086 CPUs have four 16-bit segment registers: CS, DS, SS, and ES.</li>
-<li>The physical address is constructed by two registers: <code>segment address:offset address</code>.</li>
+<li>The physical address is constructed using two registers: <code>segment address:offset address</code>.</li>
 </ul></li>
 <li><p>In 1982, Intel 286 introduced protected mode operation with four privilege levels. The address bus was 24-bit providing 16MB physical memory.</p></li>
 <li><p>The Intel 386 (1985) was the first 32-bit CPU (80386 CPUs) with 32-bit address bus (addressable up to 4G).</p>
@@ -563,9 +609,10 @@ Example
 <li><p>Since 2023, Intel has adopted a new naming convention for its laptops and desktop processors, transitioning from the old Core iX (e.g., i5, i5) naming style to the new <strong>Core/Core Ultra + X + series</strong> format.</p></li>
 </ul>
 </section>
+</section>
 <section id="ia-32-basic-execution-environment" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="ia-32-basic-execution-environment"><span class="header-section-number">3</span> IA-32 Basic Execution Environment</h2>
-<p>As an assembly programmer, you should know the execution environment either for IA-32 or Intel 64 processors.</p>
+<p>As an assembly programmer, you should understand the execution environment for both IA-32 and Intel 64 processors.</p>
 <p>Any program running on an IA-32 processor is given a set of resources for executing instructions and for storing code, data and state information.</p>
 <p>The basic execution environment includes <strong><em>memory</em></strong> (the address space), <strong><em>general purpose data registers</em></strong>, <strong><em>segment registers</em></strong>, the <strong><em>flags register</em></strong>, and the <strong><em>instruction pointer register</em></strong>.</p>
 <section id="modes-of-operation-in-ia-32" class="level3" data-number="3.1">
@@ -738,7 +785,7 @@ Example
 <section id="what-is-assembly-language" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="what-is-assembly-language"><span class="header-section-number">4.1</span> What is Assembly Language</h3>
 <ul>
-<li><p>Assembly Language is the oldest programming language, bears the closest resemblance to native machine language. Hence, assembly language is a <strong>low-level</strong> programming language.</p></li>
+<li><p>Assembly Language is the oldest programming language and bears the closest resemblance to native machine language. Hence, assembly language is a <strong>low-level</strong> programming language.</p></li>
 <li><p>Assembly language for x86 (the focus of this course) means programming on microprocessors compatible with Intel and AMD processors running under Windows, Linux, Unix, etc.</p></li>
 </ul>
 </section>
@@ -769,21 +816,21 @@ Example
 </tbody>
 </table></li>
 <li><p>A more convenient language to use is <strong>assembly language</strong>. It uses symbolic names to represent operations, registers, and/or memory location. If memory location 0 is symbolized by <code>A</code>, the preceding program can be expressed like this in assembly language:</p>
-<div class="sourceCode" id="cb1" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span>A<span class="op">]</span>   <span class="co">; move content of A to AX</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">add</span>   <span class="kw">ax</span><span class="op">,</span> <span class="dv">4</span>     <span class="co">; add 4 to the content of AX</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="op">[</span>A<span class="op">],</span> <span class="kw">ax</span>   <span class="co">; move content of AX to A</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb2" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">ax</span><span class="op">,</span> <span class="op">[</span>A<span class="op">]</span>   <span class="co">; move content of A to AX</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">add</span>   <span class="kw">ax</span><span class="op">,</span> <span class="dv">4</span>     <span class="co">; add 4 to the content of AX</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="op">[</span>A<span class="op">],</span> <span class="kw">ax</span>   <span class="co">; move content of AX to A</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul>
 </section>
 <section id="assembly-language-compared-to-high-level-language" class="level3" data-number="4.3">
 <h3 data-number="4.3" class="anchored" data-anchor-id="assembly-language-compared-to-high-level-language"><span class="header-section-number">4.3</span> Assembly Language Compared to High-Level Language</h3>
 <p>The following assignment statement (C/C++):</p>
-<div class="sourceCode" id="cb2" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="op">(</span>x <span class="op">+</span> <span class="dv">10</span><span class="op">)</span> <span class="op">*</span> <span class="dv">3</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> <span class="op">(</span>x <span class="op">+</span> <span class="dv">10</span><span class="op">)</span> <span class="op">*</span> <span class="dv">3</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>can be translated to Assembly language as follows:</p>
-<div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span>    <span class="co">; move content of x to EAX register</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">add</span>   <span class="kw">eax</span><span class="op">,</span> <span class="dv">10</span>     <span class="co">; Add 10 to EAX</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="dv">3</span>      <span class="co">; Let EBX = 3</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">imul</span>  <span class="kw">ebx</span>         <span class="co">; perform EAX = EAX * EBX</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span>    <span class="co">; store the result into Y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span>    <span class="co">; move content of x to EAX register</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">add</span>   <span class="kw">eax</span><span class="op">,</span> <span class="dv">10</span>     <span class="co">; Add 10 to EAX</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="dv">3</span>      <span class="co">; Let EBX = 3</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">imul</span>  <span class="kw">ebx</span>         <span class="co">; perform EAX = EAX * EBX</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">mov</span>   <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span>    <span class="co">; store the result into Y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="is-assembly-language-portable" class="level3" data-number="4.4">
 <h3 data-number="4.4" class="anchored" data-anchor-id="is-assembly-language-portable"><span class="header-section-number">4.4</span> Is Assembly Language Portable?</h3>
@@ -842,15 +889,15 @@ Example
 <ul>
 <li><p>To develop an assembly program, you need</p>
 <ul>
-<li><p>an assembler, which we are going to use NASM</p></li>
-<li><p>an editor; there are several choices</p>
+<li><p>an assembler: We will use NASM</p></li>
+<li><p>an editor: there are several choices</p>
 <ul>
 <li><p>Visual Studio Code</p></li>
 <li><p>Notepad++</p></li>
 <li><p>VIM under Linux</p></li>
 </ul></li>
-<li><p><strong>A Linker</strong>: is a utility program that combines individual object files created by an assembler into a single executable program.</p></li>
-<li><p>(Optionally) a <strong>debugger</strong>, in case you need to debug your code.</p></li>
+<li><p><strong>A Linker</strong>: A utility program that combines individual object files created by an assembler into a single executable program.</p></li>
+<li><p>(Optional) A <strong>debugger</strong>: For debugging your code when needed.</p></li>
 </ul></li>
 </ul>
 <section id="building-process" class="level4" data-number="4.7.1">

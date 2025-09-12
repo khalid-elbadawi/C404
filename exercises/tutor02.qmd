@@ -1,0 +1,29 @@
+---
+title: "Exercise 2"
+output: exams2forms::webquiz
+---
+
+```{r setup, include = FALSE}
+## package and list of various exercises
+library("exams2forms")
+```
+
+## Multiple Choices:
+```{r quiz, echo = FALSE, message = FALSE, results = "asis"}
+setwd("qs2")
+exams2forms(file = "ex1.Rmd", n = 3)
+exams2forms(file = "ex2.Rmd", n = 3)
+exams2forms(file = "ex3.Rmd", n = 3)
+exams2forms(file = "ex4.Rmd", n = 3)
+exams2forms(file = "ex5.Rmd", n = 3)
+exams2forms(file = "ex6.Rmd", n = 3)
+exams2forms(file = "ex7.Rmd", n = 1)
+exams2forms(file = "ex8.Rmd", n = 1)
+exams2forms(file = "ex9.Rmd", n = 1)
+exams2forms(file = "ex10.Rmd", n = 1)
+exams2forms(file = "ex11.Rmd", n = 1)
+exams2forms(file = "ex12.Rmd", n = 1)
+exams2forms(file = "ex13.Rmd", n = 1)
+exams2forms(file = "ex14.Rmd", n = 1)
+exams2forms(file = "ex15.Rmd", n = 1)
+```

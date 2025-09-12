@@ -1,0 +1,21 @@
+---
+title: "Exercise 1"
+output: exams2forms::webquiz
+---
+
+```{r setup, include = FALSE}
+## package and list of various exercises
+library("exams2forms")
+exm <- list(
+  "ex1.Rmd",
+  "ex2.Rmd",
+  "ex3.Rmd",
+  "ex4.Rmd"
+)
+```
+
+```{r quiz, echo = FALSE, message = FALSE, results = "asis"}
+setwd("qs1")
+exams2forms(exm, n = 1, usecase = FALSE)
+exams2forms(file = "ex5.Rmd", n = 1)
+```

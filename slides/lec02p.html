@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-59898bd1c6b9d2bb783127feaa000c76.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.33">
+
+  <meta name="author" content="Khalid Elbadawi">
+  <title>C404: Assembly Language – Assembly Language Fundamentals</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #24292e;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #24292e; } /* Normal */
+    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
+    code span.an { color: #6a737d; } /* Annotation */
+    code span.at { color: #d73a49; } /* Attribute */
+    code span.bn { color: #005cc5; } /* BaseN */
+    code span.bu { color: #d73a49; } /* BuiltIn */
+    code span.cf { color: #d73a49; } /* ControlFlow */
+    code span.ch { color: #032f62; } /* Char */
+    code span.cn { color: #005cc5; } /* Constant */
+    code span.co { color: #6a737d; } /* Comment */
+    code span.cv { color: #6a737d; } /* CommentVar */
+    code span.do { color: #6a737d; } /* Documentation */
+    code span.dt { color: #d73a49; } /* DataType */
+    code span.dv { color: #005cc5; } /* DecVal */
+    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
+    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
+    code span.fl { color: #005cc5; } /* Float */
+    code span.fu { color: #6f42c1; } /* Function */
+    code span.im { color: #032f62; } /* Import */
+    code span.in { color: #6a737d; } /* Information */
+    code span.kw { color: #d73a49; } /* Keyword */
+    code span.op { color: #24292e; } /* Operator */
+    code span.ot { color: #6f42c1; } /* Other */
+    code span.pp { color: #d73a49; } /* Preprocessor */
+    code span.re { color: #6a737d; } /* RegionMarker */
+    code span.sc { color: #005cc5; } /* SpecialChar */
+    code span.ss { color: #032f62; } /* SpecialString */
+    code span.st { color: #032f62; } /* String */
+    code span.va { color: #e36209; } /* Variable */
+    code span.vs { color: #032f62; } /* VerbatimString */
+    code span.wa { color: #ff5555; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-340d960e8755bbda5148eb2f88c02f59.css">
+  <link rel="stylesheet" href="mystyle.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Assembly Language Fundamentals</h1>
+  <p class="subtitle">CS404: Assembly Language</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Khalid Elbadawi 
+</div>
+</div>
+</div>
+
+</section>
+<section id="an-assembly-program" class="slide level2 center">
+<h2>An Assembly Program</h2>
+<p>Let us consider the following program:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb1-1"><a></a><span class="co">;</span></span>
+<span id="cb1-2"><a></a><span class="co">;   Adding two numbers</span></span>
+<span id="cb1-3"><a></a><span class="co">;</span></span>
+<span id="cb1-4"><a></a>      <span class="kw">global</span> _main</span>
+<span id="cb1-5"><a></a>      </span>
+<span id="cb1-6"><a></a>      <span class="kw">section</span> <span class="fu">.data</span></span>
+<span id="cb1-7"><a></a>sum   <span class="dt">dd</span>      <span class="dv">0</span></span>
+<span id="cb1-8"><a></a></span>
+<span id="cb1-9"><a></a>      <span class="kw">section</span> <span class="fu">.code</span></span>
+<span id="cb1-10"><a></a><span class="fu">_main:</span></span>
+<span id="cb1-11"><a></a>      <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">5</span>      <span class="co">; let eax = 5</span></span>
+<span id="cb1-12"><a></a>      <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">6</span>      <span class="co">; add 6 to eax</span></span>
+<span id="cb1-13"><a></a>      <span class="kw">mov</span>     <span class="op">[</span>sum<span class="op">],</span> <span class="kw">eax</span>  <span class="co">; store result into sum</span></span>
+<span id="cb1-14"><a></a>      </span>
+<span id="cb1-15"><a></a>      <span class="cf">ret</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="assembly-statements" class="slide level2 center">
+<h2>Assembly Statements</h2>
+<ul>
+<li><p>An assembly program consists of statements:</p>
+<ul>
+<li><strong>Instructions</strong>: Translated to machine code</li>
+<li><strong>Directives</strong>: Tell assembler to perform special tasks</li>
+<li><strong>Macros</strong>: Shorthand for sequence of statements</li>
+</ul></li>
+<li><p>By default, assembly is not case-sensitive</p></li>
+<li><p>Statement format:</p>
+<pre><code>[label:]     instruction   [operand(s)]   [;comment]</code></pre></li>
+</ul>
+</section>
+<section id="statement-layout" class="slide level2 center">
+<h2>Statement Layout</h2>
+
+<img data-src="../images/statementlayout.png" width="500" class="r-stretch quarto-figure-center"><p class="caption">The layout of source lines</p></section>
+<section id="comments" class="slide level2 center">
+<h2>Comments</h2>
+<ul>
+<li>Always start with a semicolon <code>;</code> and end with newline</li>
+<li>Example comment structure:</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb3-1"><a></a><span class="co">; -----------------------------------------------------------------</span></span>
+<span id="cb3-2"><a></a><span class="co">; Source name   : addtwo.asm</span></span>
+<span id="cb3-3"><a></a><span class="co">; Version       : 1.0</span></span>
+<span id="cb3-4"><a></a><span class="co">; Created date  : 10/4/2020</span></span>
+<span id="cb3-5"><a></a><span class="co">; Last modified : 22/8/2024</span></span>
+<span id="cb3-6"><a></a><span class="co">; Author        : Khalid Elbadawi</span></span>
+<span id="cb3-7"><a></a><span class="co">; Compiling     : nasm -fwin32 addtwo.asm (NASM version 2.15)</span></span>
+<span id="cb3-8"><a></a><span class="co">; Description   : Store the result of 5 + 6 </span></span>
+<span id="cb3-9"><a></a><span class="co">; -----------------------------------------------------------------</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../images/comments.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Comment examples"><img data-src="../images/comments.png" width="100" alt="Comment examples"></a></p>
+<figcaption>Comment examples</figcaption>
+</figure>
+</div>
+</section>
+<section id="program-sections" class="slide level2 center">
+<h2>Program Sections</h2>
+<ul>
+<li>Programs divided into <strong>sections</strong> representing memory segments</li>
+<li>Created using <code>section</code> directive:
+<ul>
+<li><code>.data</code>: Initialized data items</li>
+<li><code>.bss</code>: Uninitialized data items</li>
+<li><code>.text</code>: Actual machine instructions</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="../images/sections.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Section examples"><img data-src="../images/sections.png" width="100" alt="Section examples"></a></p>
+<figcaption>Section examples</figcaption>
+</figure>
+</div>
+</section>
+<section id="label-field---user-identifier" class="slide level2 center">
+<h2>Label Field - User Identifier</h2>
+<ul>
+<li>Programmer-chosen identifier for variables, constants, procedures</li>
+<li>NASM rules:
+<ul>
+<li>Maximum 247 characters</li>
+<li>Start with letter, underscore or ?</li>
+<li>Subsequent characters: digits, @, #, $, or dot</li>
+<li>Cannot be reserved word</li>
+<li>Case sensitive</li>
+</ul></li>
+</ul>
+</section>
+<section id="reserved-words" class="slide level2 center">
+<h2>Reserved Words</h2>
+<ol type="1">
+<li>Instruction mnemonics (ADD, SUB, MOV)</li>
+<li>Register names (EAX, AX, AL, ch)</li>
+<li>Directives (DB, DD, SECTION)</li>
+<li>Operand attributes (FAR, NEAR, BYTE, DWORD)</li>
+<li>Operators used in constant expressions</li>
+</ol>
+<p><em>Reserved words are NOT case sensitive</em></p>
+</section>
+<section id="literals" class="slide level2 center">
+<h2>Literals</h2>
+<h3 id="integer-literals">Integer Literals</h3>
+<p><code>[{+|-}] digits [radix]</code></p>
+<p>Radix can be: - <code>h</code> (hexadecimal) - <code>o</code> or <code>q</code> (octal) - <code>d</code> (decimal) - <code>b</code> (binary)</p>
+</section>
+<section id="integer-examples" class="slide level2 center">
+<h2>Integer Examples</h2>
+<div class="table-wrap">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Integer constants</th>
+<th>Base</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>198</code></td>
+<td>decimal</td>
+</tr>
+<tr class="even">
+<td><code>0200</code></td>
+<td>decimal</td>
+</tr>
+<tr class="odd">
+<td><code>-2d</code></td>
+<td>decimal</td>
+</tr>
+<tr class="even">
+<td><code>+101b</code></td>
+<td>binary</td>
+</tr>
+<tr class="odd">
+<td><code>1100_0001b</code></td>
+<td>binary</td>
+</tr>
+<tr class="even">
+<td><code>107o</code></td>
+<td>octal</td>
+</tr>
+<tr class="odd">
+<td><code>107q</code></td>
+<td>still octal (more readable)</td>
+</tr>
+<tr class="even">
+<td><code>23bh</code></td>
+<td>hexadecimal</td>
+</tr>
+<tr class="odd">
+<td><code>23Bh</code></td>
+<td>hexadecimal</td>
+</tr>
+<tr class="even">
+<td><code>0ah</code></td>
+<td>hexadecimal</td>
+</tr>
+<tr class="odd">
+<td><code>0xC8</code></td>
+<td>hexadecimal (C syntax)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="characterstring-literals" class="slide level2 center">
+<h2>Character/String Literals</h2>
+<ul>
+<li>Enclosed in single quotes, double quotes or back quotes</li>
+<li>Translated to ASCII codes by assemblers</li>
+</ul>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Character/String Literal</th>
+<th>Value in Hex</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>'m'</code></td>
+<td>6Dh</td>
+</tr>
+<tr class="even">
+<td><code>"School"</code></td>
+<td>53h, 63h, 68h, 6Fh, 6Fh, 5Ch</td>
+</tr>
+<tr class="odd">
+<td><code>"Joe"</code></td>
+<td>4Ah, 6Fh, 65h</td>
+</tr>
+<tr class="even">
+<td><code>"A Bank."</code></td>
+<td>41h, 30h, 42h, 61h, 6Eh, 6Bh, 2Eh</td>
+</tr>
+<tr class="odd">
+<td><code>"Joe's"</code></td>
+<td>4Ah, 6Fh, 65h, 27h, 73h</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="instructions" class="slide level2 center">
+<h2>Instructions</h2>
+<ul>
+<li>Consist of instruction mnemonic followed by operands</li>
+<li>Operands can be:
+<ul>
+<li>Explicit: Appear in the statement</li>
+<li>Implicit: Don’t appear (e.g., EAX in multiplication)</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb4-1"><a></a><span class="kw">add</span>   <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span>    <span class="co">; x is a label for memory location (variable) </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>First operand: <strong>destination operand</strong></li>
+<li>Second operand: <strong>source operand</strong></li>
+</ul>
+</section>
+<section id="instruction-categories" class="slide level2 center">
+<h2>Instruction Categories</h2>
+<ol type="1">
+<li>Data movement/transfer instructions</li>
+<li>Arithmetic and Logic instructions</li>
+<li>Control transfer instructions</li>
+<li>Flag control instructions</li>
+</ol>
+</section>
+<section id="defining-data" class="slide level2 center">
+<h2>Defining Data</h2>
+<h3 id="intrinsic-data-types">Intrinsic Data Types</h3>
+<div class="table-wrap">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Size</th>
+<th>Type</th>
+<th>Bits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Byte</td>
+<td><strong>B</strong>YTE or HWORD</td>
+<td>8 bits</td>
+</tr>
+<tr class="even">
+<td>Word</td>
+<td><strong>W</strong>ORD</td>
+<td>16 bits</td>
+</tr>
+<tr class="odd">
+<td>Double word</td>
+<td><strong>D</strong>WORD</td>
+<td>32 bits</td>
+</tr>
+<tr class="even">
+<td>Quad word</td>
+<td><strong>Q</strong>WORD</td>
+<td>64 bits</td>
+</tr>
+<tr class="odd">
+<td>Ten-Byte</td>
+<td><strong>T</strong>BYTE or TWORD</td>
+<td>80 bits</td>
+</tr>
+<tr class="even">
+<td>Double-quad word</td>
+<td><strong>O</strong>WORD or DQWORD</td>
+<td>128 bits</td>
+</tr>
+<tr class="odd">
+<td>Quad-quad word</td>
+<td><strong>Y</strong>WORD</td>
+<td>256 bits</td>
+</tr>
+<tr class="even">
+<td>32-Word</td>
+<td><strong>Z</strong>WORD</td>
+<td>512 bits</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="defining-initialized-data" class="slide level2 center">
+<h2>Defining Initialized Data</h2>
+<p>Syntax:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb5-1"><a></a>[name<span class="op">:]</span>      directive       initializer <span class="op">[,</span> initializer<span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="fragment quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p>Directives:</p>
+<ul>
+<li><code>DB</code>: Define BYTE</li>
+<li><code>DW</code>: Define WORD</li>
+<li><code>DD</code>: Define DWORD</li>
+<li><code>DQ</code>: Define QWORD</li>
+<li><code>DT</code>: Define TBYTE</li>
+<li>etc.</li>
+</ul>
+</div>
+<div class="fragment quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p>Examples:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb6-1"><a></a><span class="fu">letter:</span>   <span class="dt">db</span>    <span class="st">'A'</span>   <span class="co">; value is 41h</span></span>
+<span id="cb6-2"><a></a>resp      <span class="dt">db</span>    <span class="st">'Y'</span>   <span class="co">; default user response</span></span>
+<span id="cb6-3"><a></a><span class="fu">num1:</span>     <span class="dt">db</span>    <span class="op">-</span><span class="dv">91</span>   <span class="co">; value is A5h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="little-endian-vs.-big-endian" class="slide level2 center">
+<h2>Little Endian vs.&nbsp;Big Endian</h2>
+
+<img data-src="../images/endianess.png" width="400" class="r-stretch quarto-figure-center"><p class="caption">Endianness comparison</p><p><em>x86 microprocessors follow Little Endianness</em></p>
+</section>
+<section id="multiple-initializers" class="slide level2 center">
+<h2>Multiple Initializers</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb7-1"><a></a>    <span class="dt">db</span>    <span class="bn">55h</span><span class="op">,</span> <span class="bn">56h</span><span class="op">,</span> <span class="bn">57h</span>   <span class="co">; 0x55 0x56 0x57</span></span>
+<span id="cb7-2"><a></a>    <span class="dt">db</span>    <span class="st">'a'</span><span class="op">,</span> <span class="bn">55h</span>        <span class="co">; 0x61 0x55</span></span>
+<span id="cb7-3"><a></a>    <span class="dt">db</span>    <span class="st">'ab'</span><span class="op">,</span> <span class="dv">13</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">0</span> <span class="co">; 0x61 0x62 0x0D 0x0A 0x00</span></span>
+<span id="cb7-4"><a></a>    <span class="dt">dw</span>    <span class="bn">1234h</span><span class="op">,</span> <span class="bn">5678h</span>    <span class="co">; 0x34 0x12 0x78 0x56</span></span>
+<span id="cb7-5"><a></a>    <span class="dt">dw</span>    <span class="bn">12h</span><span class="op">,</span> <span class="bn">34h</span>        <span class="co">; 0x12 0x00 0x34 0x00</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="dup-operator" class="slide level2 center">
+<h2>DUP Operator</h2>
+<p>Syntax:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb8-1"><a></a>[name<span class="op">:]</span>    <span class="kw">Dx</span>   <span class="op">&lt;</span>counter<span class="op">&gt;</span> DUP <span class="op">(</span>initializer<span class="op">-</span>list<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Examples:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb9-1"><a></a>    <span class="dt">db</span>  <span class="dv">3</span> dup<span class="op">(</span><span class="dv">0</span><span class="op">)</span>      <span class="co">; db  0, 0, 0</span></span>
+<span id="cb9-2"><a></a>    <span class="dt">dw</span>  <span class="dv">8</span> dup<span class="op">(</span><span class="dv">1</span><span class="op">)</span>      <span class="co">; dw  1, 1, 1, 1, 1, 1, 1, 1</span></span>
+<span id="cb9-3"><a></a>    <span class="dt">db</span>  <span class="dv">4</span> dup<span class="op">(</span><span class="st">'ABC'</span><span class="op">)</span>  <span class="co">; db  'ABC', 'ABC', 'ABC', 'ABC' </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="defining-uninitialized-data" class="slide level2 center">
+<h2>Defining Uninitialized Data</h2>
+<p>Syntax:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb10-1"><a></a>[name<span class="op">:]</span>      RESx       <span class="op">&lt;</span>counter<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Examples:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb11-1"><a></a><span class="fu">buffer:</span>   <span class="dt">resb</span>    <span class="dv">64</span>    <span class="co">; reserve 64 bytes</span></span>
+<span id="cb11-2"><a></a><span class="fu">list:</span>     <span class="dt">resd</span>    <span class="dv">100</span>   <span class="co">; reserve 100 32-bit integers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="defining-constants" class="slide level2 center">
+<h2>Defining Constants</h2>
+<p>Syntax:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb12-1"><a></a>name    <span class="dt">EQU</span>   <span class="op">&lt;</span>expression<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Examples:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb13-1"><a></a>ESC_KEY   <span class="dt">equ</span>   <span class="dv">27</span></span>
+<span id="cb13-2"><a></a>COUNT     <span class="dt">equ</span>   <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Usage:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb14-1"><a></a>        <span class="kw">mov</span>   <span class="kw">eax</span><span class="op">,</span> COUNT    <span class="co">; good style</span></span>
+<span id="cb14-2"><a></a>        <span class="kw">mov</span>   <span class="kw">al</span><span class="op">,</span> ESC_KEY   <span class="co">; good style</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="constant-integer-expression" class="slide level2 center">
+<h2>Constant Integer Expression</h2>
+<p>Supported operators:</p>
+<div class="table-wrap">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Name</th>
+<th>Precedence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>()</code></td>
+<td>Parentheses</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><code>+</code>, <code>-</code>, <code>~</code>, <code>!</code></td>
+<td>Unary operators</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><code>*</code>, <code>/</code>, <code>//</code>, <code>%</code>, <code>%%</code></td>
+<td>Multiplicative</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td><code>+</code>, <code>-</code></td>
+<td>Addition and subtraction</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;&lt;</code>, <code>&gt;&gt;</code></td>
+<td>Shift operators</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td><code>&amp;</code></td>
+<td>Bitwise AND</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td><code>^</code></td>
+<td>Bitwise XOR</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td><code>\|</code></td>
+<td>Bitwise OR</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="current-location-and-section-location" class="slide level2 center">
+<h2>Current Location ($) and Section Location ($$)</h2>
+<ul>
+<li><code>$</code>: Current location counter</li>
+<li><code>$$</code>: Section location</li>
+</ul>
+<p>Example:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb15-1"><a></a><span class="fu">myStr:</span>    <span class="dt">db</span>    <span class="st">"This is a long string, containing "</span></span>
+<span id="cb15-2"><a></a>          <span class="dt">db</span>    <span class="st">"any number of characters."</span></span>
+<span id="cb15-3"><a></a>STRLEN    <span class="dt">equ</span>   <span class="op">($</span> <span class="op">-</span> myStr<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="addressing-modes" class="slide level2 center">
+<h2>Addressing Modes</h2>
+<ol type="1">
+<li><strong>Immediate addressing mode</strong>: Operand is a constant expression</li>
+<li><strong>Register addressing mode</strong>: Operand is a CPU register</li>
+<li><strong>Memory addressing modes</strong>:
+<ul>
+<li><strong>Direct memory addressing mode</strong>: Constant reference to memory</li>
+<li><strong>Indirect memory addressing modes</strong>: Runtime-determined memory reference</li>
+</ul></li>
+</ol>
+</section>
+<section id="instruction-operand-notation" class="slide level2 center">
+<h2>Instruction Operand Notation</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>reg</td>
+<td>Any general-purpose register</td>
+</tr>
+<tr class="even">
+<td>reg8</td>
+<td>8-bit general-purpose register</td>
+</tr>
+<tr class="odd">
+<td>reg16</td>
+<td>16-bit general-purpose register</td>
+</tr>
+<tr class="even">
+<td>reg32</td>
+<td>32-bit general-purpose register</td>
+</tr>
+<tr class="odd">
+<td>sreg</td>
+<td>16-bit segment register</td>
+</tr>
+<tr class="even">
+<td>imm</td>
+<td>8-, 16-, or 32-bit immediate value</td>
+</tr>
+<tr class="odd">
+<td>mem</td>
+<td>8-, 16-, or 32-bit memory operand</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="direct-memory-addressing-mode" class="slide level2 center">
+<h2>Direct Memory Addressing Mode</h2>
+<p>Operand refers to specific offset within data segment</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb16-1"><a></a>        <span class="kw">section</span> <span class="fu">.bss</span></span>
+<span id="cb16-2"><a></a><span class="fu">sum:</span>    <span class="dt">resd</span>      <span class="dv">1</span></span>
+<span id="cb16-3"><a></a></span>
+<span id="cb16-4"><a></a>        <span class="kw">section</span> <span class="fu">.text</span></span>
+<span id="cb16-5"><a></a><span class="fu">_main:</span></span>
+<span id="cb16-6"><a></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">5</span></span>
+<span id="cb16-7"><a></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">6</span></span>
+<span id="cb16-8"><a></a>        <span class="kw">mov</span>     <span class="op">[</span>sum<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="data-transfer-instructions" class="slide level2 center">
+<h2>Data Transfer Instructions</h2>
+<ul>
+<li><code>MOV</code>, <code>XCHG</code>, <code>MOVSX</code>, <code>MOVZX</code></li>
+<li><code>PUSH</code>, <code>POP</code>, <code>PUSHA</code>, <code>POPA</code>, <code>PUSHAD</code>, <code>POPAD</code></li>
+<li><code>CBW</code>, <code>CWD</code>, <code>CDQ</code>, <code>CWDE</code></li>
+</ul>
+</section>
+<section id="mov-instruction" class="slide level2 center">
+<h2>MOV Instruction</h2>
+<p>Syntax:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb17-1"><a></a>        <span class="kw">mov</span>   <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Rules:</p>
+<ul>
+<li>Destination can be register or memory</li>
+<li>Source can be immediate, register, or memory</li>
+<li>Both operands must be same size</li>
+<li>Both operands cannot be memory</li>
+<li>Instruction pointer cannot be destination</li>
+</ul>
+</section>
+<section id="valid-mov-formats" class="slide level2 center">
+<h2>Valid MOV Formats</h2>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb18-1"><a></a>    <span class="kw">mov</span>   reg<span class="op">,</span> reg</span>
+<span id="cb18-2"><a></a>    <span class="kw">mov</span>   reg<span class="op">,</span> mem</span>
+<span id="cb18-3"><a></a>    <span class="kw">mov</span>   reg<span class="op">,</span> imm</span>
+<span id="cb18-4"><a></a>    <span class="kw">mov</span>   mem<span class="op">,</span> reg</span>
+<span id="cb18-5"><a></a>    <span class="kw">mov</span>   mem<span class="op">,</span> imm    <span class="co">; must specify size</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Example:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb19-1"><a></a>    <span class="kw">mov</span>   <span class="dt">DWORD</span> <span class="op">[</span>x<span class="op">],</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="memory-to-memory-transfer" class="slide level2 center">
+<h2>Memory to Memory Transfer</h2>
+<p>Single MOV cannot move directly between memory locations</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb20-1"><a></a><span class="co">; assign x to y (y = x)</span></span>
+<span id="cb20-2"><a></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>x<span class="op">]</span></span>
+<span id="cb20-3"><a></a>        <span class="kw">mov</span>     <span class="op">[</span>y<span class="op">],</span> <span class="kw">eax</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<img data-src="../images/mem2mem.png" class="r-stretch quarto-figure-center"><p class="caption">Memory to memory transfer</p></section>
+<section id="movsx-instruction" class="slide level2 center">
+<h2>MOVSX Instruction</h2>
+<p>Move with sign-extension for signed integers</p>
+<p>Variants:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb21-1"><a></a>    <span class="kw">movsx</span>     reg32<span class="op">,</span> reg<span class="op">/</span>mem8</span>
+<span id="cb21-2"><a></a>    <span class="kw">movsx</span>     reg32<span class="op">,</span> reg<span class="op">/</span>mem16</span>
+<span id="cb21-3"><a></a>    <span class="kw">movsx</span>     reg16<span class="op">,</span> reg<span class="op">/</span>mem8</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Example:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb22-1"><a></a>    <span class="kw">movsx</span>     <span class="kw">ecx</span><span class="op">,</span> <span class="dt">WORD</span> <span class="op">[</span>v1<span class="op">]</span>  <span class="co">; ecx = FFFF FFF0h = -16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="movzx-instruction" class="slide level2 center">
+<h2>MOVZX Instruction</h2>
+<p>Move with zero-extension for unsigned integers</p>
+</section>
+<section id="xchg-instruction" class="slide level2 center">
+<h2>XCHG Instruction</h2>
+<p>Syntax:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb23-1"><a></a>        <span class="kw">XCHG</span>    <span class="op">&lt;</span>operand1<span class="op">&gt;</span> <span class="op">,</span> <span class="op">&lt;</span>operand2<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Rules:</p>
+<ul>
+<li>Both operands must be same size</li>
+<li>Both operands cannot be memory</li>
+<li>No immediate operands</li>
+</ul>
+<p>Formats:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb24-1"><a></a>    <span class="kw">XCHG</span>    reg<span class="op">,</span> reg</span>
+<span id="cb24-2"><a></a>    <span class="kw">XCHG</span>    reg<span class="op">,</span> mem</span>
+<span id="cb24-3"><a></a>    <span class="kw">XCHG</span>    mem<span class="op">,</span> reg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="xchg-example" class="slide level2 center">
+<h2>XCHG Example</h2>
+<p>What is the value of <code>AX</code> and <code>BX</code> after executing:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource nasm number-lines code-with-copy"><code class="sourceCode nasm"><span id="cb25-1"><a></a>        <span class="kw">mov</span>     <span class="kw">ax</span><span class="op">,</span> <span class="dv">0</span><span class="er">A100h</span></span>
+<span id="cb25-2"><a></a>        <span class="kw">mov</span>     <span class="kw">bx</span><span class="op">,</span> <span class="bn">0005h</span></span>
+<span id="cb25-3"><a></a>        <span class="kw">xchg</span>    <span class="kw">ah</span><span class="op">,</span> <span class="kw">bl</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<img data-src="../images/xchg.png" style="width:55.0%" class="r-stretch quarto-figure-center"><p class="caption">XCHG operation</p></section>
+<section class="slide level2 center">
+
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/fmsi.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p>CS Assembly Language | Lecture 2</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease-in-out",
+'autoAnimateDuration': 0.8,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'h.v',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'fast',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/khalid-elbadawi\.github\.io\/C404\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+    (function() {
+      let previousOnload = window.onload;
+      window.onload = () => {
+        if (previousOnload) {
+          previousOnload();
+        }
+        lightboxQuarto.on('slide_before_load', (data) => {
+          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+          const href = trigger.getAttribute('href');
+          if (href !== null) {
+            const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+            if (imgEl !== null) {
+              const srcAttr = imgEl.getAttribute("src");
+              if (srcAttr && srcAttr.startsWith("data:")) {
+                slideConfig.href = srcAttr;
+              }
+            }
+          } 
+        });
+      
+        lightboxQuarto.on('slide_after_load', (data) => {
+          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(slideNode);
+          }
+        });
+      
+      };
+      
+    })();
+              </script>
+    
+
+</body></html>
