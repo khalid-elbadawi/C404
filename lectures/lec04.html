@@ -237,8 +237,9 @@ window.Quarto = {
   <li><a href="#practical-notes-and-common-pitfalls" id="toc-practical-notes-and-common-pitfalls" class="nav-link" data-scroll-target="#practical-notes-and-common-pitfalls"><span class="header-section-number">4</span> Practical notes and common pitfalls</a></li>
   <li><a href="#extra-instructions-not-included-in-your-final-exam" id="toc-extra-instructions-not-included-in-your-final-exam" class="nav-link" data-scroll-target="#extra-instructions-not-included-in-your-final-exam"><span class="header-section-number">5</span> *Extra instructions: (not included in your final exam)</a>
   <ul class="collapse">
-  <li><a href="#cmovcc-conditional-move" id="toc-cmovcc-conditional-move" class="nav-link" data-scroll-target="#cmovcc-conditional-move"><span class="header-section-number">5.1</span> CMOVcc (Conditional Move)</a></li>
-  <li><a href="#setcc-set-byte-on-condition" id="toc-setcc-set-byte-on-condition" class="nav-link" data-scroll-target="#setcc-set-byte-on-condition"><span class="header-section-number">5.2</span> SETcc (Set Byte on Condition)</a></li>
+  <li><a href="#loopcc-loop-on-condition" id="toc-loopcc-loop-on-condition" class="nav-link" data-scroll-target="#loopcc-loop-on-condition"><span class="header-section-number">5.1</span> LOOPcc (Loop on Condition)</a></li>
+  <li><a href="#cmovcc-conditional-move" id="toc-cmovcc-conditional-move" class="nav-link" data-scroll-target="#cmovcc-conditional-move"><span class="header-section-number">5.2</span> CMOVcc (Conditional Move)</a></li>
+  <li><a href="#setcc-set-byte-on-condition" id="toc-setcc-set-byte-on-condition" class="nav-link" data-scroll-target="#setcc-set-byte-on-condition"><span class="header-section-number">5.3</span> SETcc (Set Byte on Condition)</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lec04.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="lec04.epub"><i class="bi bi-file"></i>ePub</a></li></ul></div></nav>
@@ -1352,15 +1353,23 @@ Syntax
 <ul>
 <li>Intel x86/x86-64 has a rich set of conditional instructions beyond just Jcc (jump on condition). The ISA leverages the FLAGS register (especially ZF, SF, CF, OF, PF) to make decisions, and Intel designed multiple instruction families that act based on conditions. Two examples of those families are <code>CMOVcc</code> and <code>SETcc</code>.</li>
 </ul>
-<section id="cmovcc-conditional-move" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="cmovcc-conditional-move"><span class="header-section-number">5.1</span> CMOVcc (Conditional Move)</h3>
+<section id="loopcc-loop-on-condition" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="loopcc-loop-on-condition"><span class="header-section-number">5.1</span> LOOPcc (Loop on Condition)</h3>
+<ul>
+<li><p>Loop instruction can be <em>extended</em> with two conditional forms: <code>LOOPE</code>/<code>LOOPZ</code> and <code>LOOPNE</code>/<code>LOOPNZ</code>.</p></li>
+<li><p><code>LOOPE</code> / <code>LOOPZ</code> jumps to the target address if <code>ecx != 0</code> and <code>ZF = 1</code>.</p></li>
+<li><p><code>LOOPNE</code> / <code>LOOPNZ</code> jumps to the target address if <code>ecx != 0</code> and <code>ZF = 0</code>.</p></li>
+</ul>
+</section>
+<section id="cmovcc-conditional-move" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="cmovcc-conditional-move"><span class="header-section-number">5.2</span> CMOVcc (Conditional Move)</h3>
 <ul>
 <li>This family performs a move operation if the status flags in the EFLAGS are in specified state (or condition).</li>
-<li>The condition codes (cc) are similar to the condition codes of <code>Jcc</code>.</li>
+<li>The condition codes (cc) are quite similar to the condition codes of <code>Jcc</code>.</li>
 <li>This implies you can move data without branching. Hence, improve the performance of your program.</li>
 </ul>
-<section id="example-2" class="level4" data-number="5.1.1">
-<h4 data-number="5.1.1" class="anchored" data-anchor-id="example-2"><span class="header-section-number">5.1.1</span> Example</h4>
+<section id="example-2" class="level4" data-number="5.2.1">
+<h4 data-number="5.2.1" class="anchored" data-anchor-id="example-2"><span class="header-section-number">5.2.1</span> Example</h4>
 <ul>
 <li><div class="sourceCode" id="cb45" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> max<span class="op">(</span>a<span class="op">,</span> b<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb46" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span>    <span class="co">; eax &lt;-- a</span></span>
@@ -1378,8 +1387,8 @@ Syntax
 </ul>
 </section>
 </section>
-<section id="setcc-set-byte-on-condition" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="setcc-set-byte-on-condition"><span class="header-section-number">5.2</span> SETcc (Set Byte on Condition)</h3>
+<section id="setcc-set-byte-on-condition" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="setcc-set-byte-on-condition"><span class="header-section-number">5.3</span> SETcc (Set Byte on Condition)</h3>
 <div class="callout callout-style-simple callout-important no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1397,8 +1406,8 @@ Syntax
 <li>Set the destination to 1 if the condition is true. Otherwise, set to 0.</li>
 <li>The destination must be <code>reg/mem8</code></li>
 </ul>
-<section id="examples-1" class="level4" data-number="5.2.1">
-<h4 data-number="5.2.1" class="anchored" data-anchor-id="examples-1"><span class="header-section-number">5.2.1</span> Examples</h4>
+<section id="examples-1" class="level4" data-number="5.3.1">
+<h4 data-number="5.3.1" class="anchored" data-anchor-id="examples-1"><span class="header-section-number">5.3.1</span> Examples</h4>
 <div class="sourceCode" id="cb50" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> <span class="op">(</span>a <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb51" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span>a<span class="op">]</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">test</span>    <span class="kw">eax</span><span class="op">,</span> <span class="kw">eax</span> </span>
