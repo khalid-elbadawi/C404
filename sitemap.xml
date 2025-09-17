@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://khalid-elbadawi.github.io/C404/slides/lec03p.html</loc>
-    <lastmod>2025-09-13T07:43:23.762Z</lastmod>
+    <loc>https://khalid-elbadawi.github.io/C404/slides/lec04p.html</loc>
+    <lastmod>2025-09-13T14:22:31.765Z</lastmod>
   </url>
   <url>
-    <loc>https://khalid-elbadawi.github.io/C404/slides/lec01p.html</loc>
-    <lastmod>2025-09-13T11:28:29.032Z</lastmod>
+    <loc>https://khalid-elbadawi.github.io/C404/slides/lec02p.html</loc>
+    <lastmod>2025-09-09T08:24:21.628Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/exercises/tutor03.html</loc>
+    <lastmod>2025-09-17T09:12:53.932Z</lastmod>
   </url>
   <url>
     <loc>https://khalid-elbadawi.github.io/C404/exercises/tutor01.html</loc>
@@ -37,7 +41,11 @@
     <lastmod>2025-09-03T09:01:21.999Z</lastmod>
   </url>
   <url>
-    <loc>https://khalid-elbadawi.github.io/C404/slides/lec02p.html</loc>
-    <lastmod>2025-09-09T08:24:21.628Z</lastmod>
+    <loc>https://khalid-elbadawi.github.io/C404/slides/lec01p.html</loc>
+    <lastmod>2025-09-13T11:28:29.032Z</lastmod>
+  </url>
+  <url>
+    <loc>https://khalid-elbadawi.github.io/C404/slides/lec03p.html</loc>
+    <lastmod>2025-09-13T07:43:23.762Z</lastmod>
   </url>
 </urlset>
