@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lecture 6: Advanced Procedures – C404: Assembly Language</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-425560e6e27c88e19529b7c03591d40d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-746b1fb19e9f6d0938c4eab324ef7c59.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../images/fmsi.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">C404: Assembly Language</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lectures" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Lectures</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-lectures">    
+        <li>
+    <a class="dropdown-item" href="../lectures/lec01.html">
+ <span class="dropdown-text">Lecture 1: Basic Concepts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lec02.html">
+ <span class="dropdown-text">Lecture 2: Assembly Language Fundamentals</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lec03.html">
+ <span class="dropdown-text">Lecture 3: Binary Arithmetic, Logic and Addressing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lec04.html">
+ <span class="dropdown-text">Lecture 4: Branching and Looping</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lec05.html">
+ <span class="dropdown-text">Lecture 5: Procedures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lec06.html">
+ <span class="dropdown-text">Lecture 6: Advanced Procedures</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-exercises" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Exercises</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-exercises">    
+        <li>
+    <a class="dropdown-item" href="../exercises/tutor01.html">
+ <span class="dropdown-text">Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../exercises/tutor02.html">
+ <span class="dropdown-text">Exercise 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../exercises/tutor03.html">
+ <span class="dropdown-text">Exercise 3</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="790554ddb48b62a5d451a8ebd17b6d06" class="alert alert-primary hidden"><i class="bi bi-telegram quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p>Please join the course group at <a href="https://t.me/+PGUKDWxdWk8yNDM0">FMSI-CS404-ASSEMBLY</a>; Telegram Group</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives"><span class="header-section-number">1</span> Objectives</a></li>
+  <li><a href="#advanced-procedures" id="toc-advanced-procedures" class="nav-link" data-scroll-target="#advanced-procedures"><span class="header-section-number">2</span> Advanced Procedures</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">2.1</span> Introduction</a></li>
+  <li><a href="#stack-frame" id="toc-stack-frame" class="nav-link" data-scroll-target="#stack-frame"><span class="header-section-number">2.2</span> Stack Frame</a></li>
+  <li><a href="#bit-calling-conventions" id="toc-bit-calling-conventions" class="nav-link" data-scroll-target="#bit-calling-conventions"><span class="header-section-number">2.3</span> 32-bit Calling Conventions</a></li>
+  <li><a href="#lea-instruction" id="toc-lea-instruction" class="nav-link" data-scroll-target="#lea-instruction"><span class="header-section-number">2.4</span> <code>LEA</code> Instruction</a></li>
+  <li><a href="#enter-and-leave-instructions" id="toc-enter-and-leave-instructions" class="nav-link" data-scroll-target="#enter-and-leave-instructions"><span class="header-section-number">2.5</span> <code>ENTER</code> and <code>LEAVE</code> Instructions</a></li>
+  </ul></li>
+  <li><a href="#recursion" id="toc-recursion" class="nav-link" data-scroll-target="#recursion"><span class="header-section-number">3</span> Recursion</a>
+  <ul class="collapse">
+  <li><a href="#introduction-1" id="toc-introduction-1" class="nav-link" data-scroll-target="#introduction-1"><span class="header-section-number">3.1</span> Introduction</a></li>
+  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts"><span class="header-section-number">3.2</span> Key Concepts</a></li>
+  <li><a href="#recursive-factorial-example" id="toc-recursive-factorial-example" class="nav-link" data-scroll-target="#recursive-factorial-example"><span class="header-section-number">3.3</span> Recursive Factorial Example</a></li>
+  <li><a href="#visualizing-recursion-the-stack-for-3" id="toc-visualizing-recursion-the-stack-for-3" class="nav-link" data-scroll-target="#visualizing-recursion-the-stack-for-3"><span class="header-section-number">3.4</span> Visualizing Recursion: The Stack for 3!</a></li>
+  <li><a href="#recursive-sum-example" id="toc-recursive-sum-example" class="nav-link" data-scroll-target="#recursive-sum-example"><span class="header-section-number">3.5</span> Recursive Sum Example</a></li>
+  <li><a href="#integer-to-binary-string-example" id="toc-integer-to-binary-string-example" class="nav-link" data-scroll-target="#integer-to-binary-string-example"><span class="header-section-number">3.6</span> Integer to Binary String Example</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lec06.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="lec06.epub"><i class="bi bi-file"></i>ePub</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lecture 6: Advanced Procedures</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="objectives" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="objectives"><span class="header-section-number">1</span> Objectives</h2>
+<p>In this lecture, you will learn:</p>
+<ol type="1">
+<li>How to pass arguments to procedures using the run-time stack.</li>
+<li>How to define, create, and release a stack frame.</li>
+<li>The rules and purpose of 32-bit calling conventions (<code>cdecl</code> and <code>stdcall</code>).</li>
+<li>How to implement recursive procedures in assembly language.</li>
+</ol>
+</section>
+<section id="advanced-procedures" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="advanced-procedures"><span class="header-section-number">2</span> Advanced Procedures</h2>
+<section id="introduction" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2.1</span> Introduction</h3>
+<p>In previous lecture, we passed arguments to procedures using registers. While fast, this method is limited by the small number of available registers. A more robust and scalable method is to use the run-time stack.</p>
+<p>Consider this simple C program:</p>
+<div class="sourceCode" id="cb1" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> getMin <span class="op">(</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">);</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> num1 <span class="op">=</span> <span class="dv">10</span><span class="op">;</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> num2 <span class="op">=</span> <span class="dv">8</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> min<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  min <span class="op">=</span> getMin<span class="op">(</span>num1<span class="op">,</span> num2<span class="op">);</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"The minimum of </span><span class="sc">%d</span><span class="st"> and </span><span class="sc">%d</span><span class="st"> is </span><span class="sc">%d</span><span class="st">"</span><span class="op">,</span> num1<span class="op">,</span> num2<span class="op">,</span> min<span class="op">);</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> getMin <span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>a<span class="op">&lt;</span>b<span class="op">)</span> </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a<span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> b<span class="op">;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>The program consists of two functions <code>main()</code> and <code>getMin()</code>.</p></li>
+<li><p>The <code>main()</code> function invokes <code>getMin()</code> and <strong>passes</strong> two <strong>arguments</strong>: <code>num1</code> and <code>num2</code>. Precisely, the main function passes the <strong>values</strong> of <code>num1</code> and <code>num2</code>.</p></li>
+<li><p>How does this happen at the assembly level? This lecture will explain the mechanics of passing arguments using the run-time stack.</p></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Terminology
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>The procedure that initiates the call is the <strong>caller</strong> ( <code>main()</code> in this case ).</p></li>
+<li><p>The procedure that is being called is the <strong>callee</strong> ( <code>getMin()</code>)</p></li>
+<li><p>The values passed by the caller are <strong>arguments</strong> (<code>num1</code>, <code>num2</code>).</p></li>
+<li><p>The variables in the callee that receive these values are <strong>formal</strong> <strong>parameters</strong> or simply <strong>parameters</strong> (<code>a</code>, <code>b</code>).</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="stack-frame" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="stack-frame"><span class="header-section-number">2.2</span> Stack Frame</h3>
+<p>Most modern languages <u><em>pushes arguments on the stack</em></u> before calling a procedure. The callee then uses the stack to store its own local variables.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>stack frame</strong>, also known as an <strong>activation record</strong>, is a designated block of memory on the stack segment created for a single procedure call. It holds the passed arguments, the return address, and any local variables for that procedure.</p>
+</div>
+</div>
+<p>In 32-bit mode, C/C++ functions and the Windows API rely heavily on the stack frame. A typical <em>stack frame</em> is built in the following order:</p>
+<ol type="1">
+<li><p><strong>Argument(s)</strong>: The caller pushes arguments onto the stack.</p></li>
+<li><p><strong>Return Address</strong>: The <code>CALL</code> instruction automatically pushes the return address.</p></li>
+<li><p><strong>The old <code>EBP</code> register</strong>: The callee pushes the caller’s <strong>stack frame pointer</strong> (<code>EBP</code>) so it can be restored later.</p></li>
+<li><p><strong>Local Variables</strong>: The callee allocates space on the stack for its local variables by subtracting the required number of bytes from the stack pointer (<code>ESP</code>). For example, <code>sub  esp, 16</code> reserves 16 bytes of stack space for local variables.</p></li>
+<li><p><strong>Registers</strong>: The callee pushes any other registers it will modify.</p></li>
+</ol>
+<p><a href="#fig-stackframe" class="quarto-xref">Figure&nbsp;1</a> shows the main components of a typical stack frame that should be established when calling a procedure.</p>
+<div id="fig-stackframe" class="quarto-float quarto-figure quarto-figure-center anchored" width="362">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-stackframe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="..\images/stack_frame.png" id="fig-stackframe" class="img-fluid figure-img" width="362">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-stackframe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-stackframeexample" class="quarto-xref">Figure&nbsp;2</a> shows a stack frame for a procedure that receives three arguments and has two local variables. For simplicity, all variables are doubleword (4 bytes).</p>
+<div id="fig-stackframeexample" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-stackframeexample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="..\images/stack_frame_example.png" id="fig-stackframeexample" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-stackframeexample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2
+</figcaption>
+</figure>
+</div>
+<section id="accessing-arguments-and-local-variables" class="level4" data-number="2.2.1">
+<h4 data-number="2.2.1" class="anchored" data-anchor-id="accessing-arguments-and-local-variables"><span class="header-section-number">2.2.1</span> Accessing Arguments and Local Variables</h4>
+<ul>
+<li><p>The standard way to access passed arguments and local variables inside assembly program is by using <strong>base+displacement addressing mode</strong>.</p></li>
+<li><p>The base address is <code>EBP</code> register and the displacement is the offset from the base register.</p></li>
+<li><p>Arguments are located at <em>positive offsets</em> from <code>EBP</code>. For example, the address of the first argument is <code>EBP+8</code>. The second argument is located at address <code>EBP+12</code>.</p></li>
+<li><p>Local Variables are located at <em>negative offsets</em> from <code>EBP</code>. For example, the first local variable is located at address <code>EBP-4</code>.</p></li>
+<li><p>Please refer to <a href="#fig-stackframeexample" class="quarto-xref">Figure&nbsp;2</a> for the details of memory addresses of the other variables.</p></li>
+</ul>
+</section>
+<section id="creating-and-destroying-a-stack-frame" class="level4" data-number="2.2.2">
+<h4 data-number="2.2.2" class="anchored" data-anchor-id="creating-and-destroying-a-stack-frame"><span class="header-section-number">2.2.2</span> Creating and Destroying a Stack Frame</h4>
+<ul>
+<li><p>Creating a complete stack frame is a collaborative process between the caller and the callee.</p></li>
+<li><p>The caller begins the process by pushing the procedure’s arguments onto the stack.</p></li>
+<li><p>The <code>CALL</code> instruction continues the process by pushing the return address</p></li>
+<li><p>The callee then finalizes the frame creation by saving the old <code>EBP</code>, setting the new <code>EBP</code> as the frame pointer, and allocate space for local variables. These steps are known as <strong>Prologue</strong>.</p></li>
+<li><p>The callee, at the end, destroys its stack frame by deleting the local variables and restoring the old value of <code>EBP</code>. These steps are known as <strong>Epilogue</strong>.</p></li>
+<li><p>Here is a typical procedure skeleton that uses a stack frame:</p>
+<div class="sourceCode" id="cb2" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">; --- Procedure skeleton ---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">procedure_name:</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">; --- Prologue ---</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">push</span>    <span class="kw">ebp</span>       <span class="co">; save EBP in stack</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebp</span><span class="op">,</span> <span class="kw">esp</span>  <span class="co">; set EBP points to its old value</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>     <span class="kw">esp</span><span class="op">,</span> <span class="op">&lt;</span>n<span class="op">&gt;</span>  <span class="co">; allocate n bytes for local </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                          <span class="co">; variables</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        .</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        .</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        .   &lt;procedure body<span class="op">&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        .   </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        .</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">; --- Epilogue ----</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">esp</span><span class="op">,</span> <span class="kw">ebp</span>  <span class="co">; delete local variables</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">pop</span>     <span class="kw">ebp</span>       <span class="co">; restore old EBP value</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">ret</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<div id="exm-10" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1 (AddTwo Procedure)</strong></span> Here is a C function and its assembly equivalent which uses a stack frame. The procedure has two parameters but no local variables.</p>
+<div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> AddTwo <span class="op">(</span><span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> y<span class="op">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">(</span>x<span class="op">+</span>y<span class="op">);</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AddTwo:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="co">; Prologue</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">push</span>    <span class="kw">ebp</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebp</span><span class="op">,</span> <span class="kw">esp</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">; Body</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">12</span><span class="op">]</span> <span class="co">; second parameter</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">8</span><span class="op">]</span>  <span class="co">; first parameter</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">; Epilogue</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">pop</span>     <span class="kw">ebp</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">ret</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To make our code more readable, we can define symbolic constants to represent the formal parameters.</p>
+<div class="sourceCode" id="cb5" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AddTwo:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span> x_param <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">8</span><span class="op">]</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span> y_param <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">12</span><span class="op">]</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">; Prologue </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">push</span>    <span class="kw">ebp</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebp</span><span class="op">,</span> <span class="kw">esp</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">; Body</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> y_param</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> x_param</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">; Epilogue</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">pop</span>     <span class="kw">ebp</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">ret</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>main</code> procedure would call <code>AddTwo</code> procedure like this:</p>
+<div class="sourceCode" id="cb6" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">push</span>    <span class="dv">6</span>       <span class="co">; push second argument</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">push</span>    <span class="dv">5</span>       <span class="co">; push first argument</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">call</span>    AddTwo</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">esp</span><span class="op">,</span> <span class="dv">8</span>  <span class="co">; clean up 2 arguments</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="exm-11" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2 (MinThree Procedure)</strong></span> Here is another example where the callee function has three parameters and one local variable.</p>
+<div class="sourceCode" id="cb7" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> MinThree <span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">,</span> <span class="dt">int</span> c<span class="op">)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> min <span class="op">=</span> a<span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>b <span class="op">&lt;</span> min<span class="op">)</span> min <span class="op">=</span> b<span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>c <span class="op">&lt;</span> min<span class="op">)</span> min <span class="op">=</span> c<span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> min<span class="op">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Minimum number is </span><span class="sc">%d\n</span><span class="st">"</span><span class="op">,</span> MinThree<span class="op">(</span><span class="dv">15</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">13</span><span class="op">));</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The equivalent program in assembly language is</p>
+<div class="sourceCode" id="cb8" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>            <span class="kw">global</span> _main</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>            <span class="kw">extern</span> _printf</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="kw">section</span> <span class="fu">.data</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>prnt_fmt    <span class="dt">db</span>      <span class="st">"Minimum number is %d."</span><span class="op">,</span> <span class="dv">13</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">0</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>            <span class="kw">section</span> <span class="fu">.code</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">;-----------------------------------</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">; MINTHREE Procedure</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">;-----------------------------------</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">MinThree:</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span>     a_param <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">8</span><span class="op">]</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span>     b_param <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">12</span><span class="op">]</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span>     c_param <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">16</span><span class="op">]</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span>     min_loc <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">-</span> <span class="dv">4</span><span class="op">]</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>            <span class="co">; prologue</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>            <span class="kw">push</span>    <span class="kw">ebp</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     <span class="kw">ebp</span><span class="op">,</span> <span class="kw">esp</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>            <span class="kw">sub</span>     <span class="kw">esp</span><span class="op">,</span> <span class="dv">4</span>          <span class="co">; allocate memory for local variable</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            <span class="co">; set a as the min value</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> a_param</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     min_loc<span class="op">,</span> <span class="kw">eax</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>            <span class="co">; if b&lt;min =&gt; min = b</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> b_param</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>            <span class="kw">cmp</span>     <span class="kw">eax</span><span class="op">,</span> min_loc</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">jnl</span>     next1</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     min_loc<span class="op">,</span> <span class="kw">eax</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="fu">next1:</span>      <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> c_param</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>            <span class="kw">cmp</span>     <span class="kw">eax</span><span class="op">,</span> min_loc</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">jnl</span>     next2</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     min_loc<span class="op">,</span> <span class="kw">eax</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="fu">next2:</span>      <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> min_loc</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>            <span class="co">; epilogue</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     <span class="kw">esp</span><span class="op">,</span> <span class="kw">ebp</span>        <span class="co">; destroy local variable</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>            <span class="kw">pop</span>     <span class="kw">ebp</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">ret</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="co">;-----------------------------------</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="co">; MAIN Procedure</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="co">;-----------------------------------</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="fu">_main:</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>            <span class="kw">push</span>    <span class="dv">15</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>            <span class="kw">push</span>    <span class="dv">10</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>            <span class="kw">push</span>    <span class="dv">13</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>            <span class="cf">call</span>    MinThree</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>            <span class="kw">add</span>     <span class="kw">esp</span><span class="op">,</span> <span class="dv">12</span></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>            <span class="kw">push</span>    <span class="kw">eax</span></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>            <span class="kw">push</span>    prnt_fmt</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>            <span class="cf">call</span>    _printf</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>            <span class="kw">add</span>     <span class="kw">esp</span><span class="op">,</span> <span class="dv">8</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>            <span class="kw">xor</span>     <span class="kw">eax</span><span class="op">,</span> <span class="kw">eax</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>            <span class="cf">ret</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="bit-calling-conventions" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="bit-calling-conventions"><span class="header-section-number">2.3</span> 32-bit Calling Conventions</h3>
+<ul>
+<li><p>Calling conventions can be described as a <strong>standardized set of rules that act as an interface</strong> between a caller and a callee. It defines:</p>
+<ul>
+<li><p>The order in which arguments are passed.</p></li>
+<li><p>How parameters are passed (pushed on the stack, placed in registers, or a mix of both)</p></li>
+<li><p>Which registers the callee function must preserve for the caller.</p></li>
+<li><p>Who is responsible for cleaning up the stack (the caller or the callee).</p></li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Application Binary Interface (ABI)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An application binary interface (ABI) is an interface between two binary program modules. Basically, the interface consists of calling conventions, type representations and name mangling.</p>
+</div>
+</div>
+<ul>
+<li>In this course, we present the two most commonly used calling conventions for 32-bit programming in a Windows environment: <strong>cdecl</strong> and <strong>stdcall</strong>.</li>
+</ul>
+<section id="c-calling-conventions-cdecl" class="level4" data-number="2.3.1">
+<h4 data-number="2.3.1" class="anchored" data-anchor-id="c-calling-conventions-cdecl"><span class="header-section-number">2.3.1</span> C Calling Conventions (cdecl)</h4>
+<p>The <strong>cdecl</strong> (C declaration) was established by the C programming language, and used by C and C++ programming languages.</p>
+<ul>
+<li><p><strong>Argument Order</strong>: The caller pushes arguments onto the stack in reverse order (i.e., from right to left).</p></li>
+<li><p><strong>Return Value</strong>: If the return values are integer values or memory addresses, they are put into the <code>EAX</code> register by the callee.</p></li>
+<li><p><strong>Stack Cleanup</strong>: The caller cleans the stack after the function call returns.</p></li>
+</ul>
+<p>The procedures in <a href="#exm-10" class="quarto-xref">Example&nbsp;1</a> and <a href="#exm-11" class="quarto-xref">Example&nbsp;2</a> are following cdecl convention.</p>
+<div id="exm-12" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3 (cdecl convention)</strong></span> The following program consists of two files: <code>main.c</code> and <code>minthree.asm</code> files. The <code>main.c</code> file has the <code>main()</code> function written in C language. The <code>minthree.asm</code> file has the <code>MinThree</code> function written in assembly language. Since the later function uses cdecl convention, the main() function can invoke MinThree function without any problem.</p>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FILE: main.c
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb9" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> MinThree <span class="op">(</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">);</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> m <span class="op">=</span> MinThree<span class="op">(</span><span class="dv">3</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"Minimum number is </span><span class="sc">%d\n</span><span class="st">"</span><span class="op">,</span> m<span class="op">);</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+FILE: minthree.asm
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb10" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>            <span class="kw">global</span> _MinThree</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            <span class="kw">section</span> <span class="fu">.code</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">_MinThree:</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span>     a_param <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">8</span><span class="op">]</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span>     b_param <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">12</span><span class="op">]</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span>     c_param <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">16</span><span class="op">]</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span>     min_loc <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">-</span> <span class="dv">4</span><span class="op">]</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>            <span class="co">; prologue</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>            <span class="kw">push</span>    <span class="kw">ebp</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     <span class="kw">ebp</span><span class="op">,</span> <span class="kw">esp</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>            <span class="kw">sub</span>     <span class="kw">esp</span><span class="op">,</span> <span class="dv">4</span>          <span class="co">; allocate memory for local variable</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>            <span class="co">; set a as the min value</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> a_param</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     min_loc<span class="op">,</span> <span class="kw">eax</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>            <span class="co">; if b&lt;min =&gt; min = b</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> b_param</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>            <span class="kw">cmp</span>     <span class="kw">eax</span><span class="op">,</span> min_loc</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">jnl</span>     next1</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     min_loc<span class="op">,</span> <span class="kw">eax</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="fu">next1:</span>      <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> c_param</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>            <span class="kw">cmp</span>     <span class="kw">eax</span><span class="op">,</span> min_loc</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>            <span class="cf">jnl</span>     next2</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     min_loc<span class="op">,</span> <span class="kw">eax</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="fu">next2:</span>      <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> min_loc</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>            <span class="co">; epilogue</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     <span class="kw">esp</span><span class="op">,</span> <span class="kw">ebp</span>        <span class="co">; destroy local variable</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>            <span class="kw">pop</span>     <span class="kw">ebp</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">ret</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<ul>
+<li><p>To compile the above files using 32-bit GCC, type:</p>
+<pre data-code-line-numbers=""><code>nasm -fwin32 minthree.asm
+gcc -c main.c
+gcc main.o minthree.obj -o main</code></pre>
+<ul>
+<li><p>The first command, if success, generates <code>minthree.obj</code> object file</p></li>
+<li><p>The second command, if success, generates <code>main.o</code> object file</p></li>
+<li><p>The third command, if success, links two object files and generates an executable file named <code>main.exe</code>.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="stdcall-calling-convention" class="level4" data-number="2.3.2">
+<h4 data-number="2.3.2" class="anchored" data-anchor-id="stdcall-calling-convention"><span class="header-section-number">2.3.2</span> STDCALL Calling Convention</h4>
+<p>The stdcall is the standard calling convention for the Microsoft Win32 API.</p>
+<ul>
+<li><p><strong>Argument Order</strong>: Same as <code>cdecl</code> (right to left)</p></li>
+<li><p><strong>Return Value</strong>: Same as <code>cdecl</code> (<code>EAX</code>)</p></li>
+<li><p><strong>Stack Cleanup</strong>: The callee cleans the stack before the function call returns. The callee does this by using a special form of the <code>ret</code> instruction. See the example below.</p></li>
+</ul>
+<p>The only difference (between <code>cdecl</code> and <code>stdcall</code>) is who cleans the stack.</p>
+<div id="exm-13" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4 (AddTwo Procedure)</strong></span> &nbsp;</p>
+<div class="sourceCode" id="cb12" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AddTwo:</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span> x_param <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">8</span><span class="op">]</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span> y_param <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">12</span><span class="op">]</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">push</span>    <span class="kw">ebp</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebp</span><span class="op">,</span> <span class="kw">esp</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> y_param</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> x_param</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">pop</span>     <span class="kw">ebp</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">ret</span>     <span class="dv">8</span>             <span class="co">; clean up the stack</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The caller’s code would now be simpler, as it no longer needs to clean the stack:</p>
+<div class="sourceCode" id="cb13" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>          <span class="kw">push</span>    <span class="dv">6</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>          <span class="kw">push</span>    <span class="dv">5</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>          <span class="cf">call</span>    AddTwo</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>          <span class="co">; No "add esp, 8" needed!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="lea-instruction" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="lea-instruction"><span class="header-section-number">2.4</span> <code>LEA</code> Instruction</h3>
+<div class="callout callout-style-simple callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Syntax
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb14" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>        <span class="kw">LEA</span>   <span class="op">&lt;</span>destination<span class="op">&gt;,</span> <span class="op">&lt;</span>source<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<ul>
+<li>This instruction computes the effective address of the source operand and stores it in the destination operand.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rules
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>The source operand must be a memory address specified with one of the processors addressing modes</p></li>
+<li><p>The destination operand is general-purpose register.</p></li>
+</ul>
+</div>
+</div>
+<ul>
+<li><p>The valid forms are:</p>
+<pre data-code-line-numbers=""><code>  LEA   reg16, mem
+  LEA   reg32, mem</code></pre></li>
+<li><p>The source operand can be in:</p>
+<ul>
+<li><p>base addressing mode</p></li>
+<li><p>base+displacement addressing mode</p></li>
+<li><p>index addressing mode</p></li>
+<li><p>base+index addressing mode</p></li>
+<li><p>base+index+displacement addressing mode</p></li>
+</ul></li>
+<li><p>This instruction is quite useful to get the address of a stack parameter.</p></li>
+</ul>
+<div id="exm-20" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5 (Initialize an array)</strong></span> The following code segment, which is inside a function, declares a local array of characters named <code>myString</code> and set each element in the array to character ’<code>*'</code>, as listed below:</p>
+<div class="sourceCode" id="cb16" data-code-line-numbers=""><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> formatArray <span class="op">()</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> myString<span class="op">[</span><span class="dv">30</span><span class="op">];</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> i<span class="op">;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span>i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span><span class="dv">30</span><span class="op">;</span> i<span class="op">++)</span> </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    myString<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="ch">'*'</span><span class="op">;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The equivalent code in assembly language is listed below:</p>
+<div class="sourceCode" id="cb17" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">formatArray:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">push</span>    <span class="kw">ebp</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebp</span><span class="op">,</span> <span class="kw">esp</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">sub</span>     <span class="kw">esp</span><span class="op">,</span> <span class="dv">32</span>     <span class="co">; allocate 32 bytes</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">lea</span>     <span class="kw">esi</span><span class="op">,</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">-</span> <span class="dv">32</span><span class="op">]</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ecx</span><span class="op">,</span> <span class="dv">30</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">top:</span>    <span class="kw">mov</span>     <span class="dt">BYTE</span> <span class="op">[</span><span class="kw">esi</span><span class="op">],</span> <span class="st">'*'</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">inc</span>     <span class="kw">esi</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">loop</span>    top</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        .</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        .</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>        .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remarks
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Although the array size is only 30 bytes, the <code>ESP</code> register is decremented by 32 to keep it <strong>aligned</strong> on a doubleword boundary.</p></li>
+<li><p>Notice how <code>LEA</code> instruction is used to assign array’s address to <code>ESI</code>, which is equivalent to assign <code>ESI</code> to the value of <code>EBP - 32</code>.</p></li>
+<li><p>Without LEA, we can let <code>ESI</code> points to the array using the following code:</p>
+<div class="sourceCode" id="cb18" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">mov</span>     <span class="kw">esi</span><span class="op">,</span> <span class="kw">ebp</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">sub</span>     <span class="kw">esi</span><span class="op">,</span> <span class="dv">32</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><code>LEA</code> is more efficient than the above code, since these two instructions can be executed by <code>LEA</code> in one CPU cycle or less.</p></li>
+</ol>
+</div>
+</div>
+<section id="flags-affected" class="level4" data-number="2.4.1">
+<h4 data-number="2.4.1" class="anchored" data-anchor-id="flags-affected"><span class="header-section-number">2.4.1</span> Flags Affected</h4>
+<ul>
+<li>None.</li>
+</ul>
+</section>
+</section>
+<section id="enter-and-leave-instructions" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="enter-and-leave-instructions"><span class="header-section-number">2.5</span> <code>ENTER</code> and <code>LEAVE</code> Instructions</h3>
+<p>The CPU provides two instructions, <code>ENTER</code> and <code>LEAVE</code>, to automate the creation and destruction of stack frames. They are hardware-optimized shortcuts for the standard prologue and epilogue.</p>
+<div class="callout callout-style-simple callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Syntax
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb19" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>      <span class="kw">ENTER</span>   <span class="op">&lt;</span>numbytes<span class="op">&gt;,</span> <span class="op">&lt;</span>nestinglevel<span class="op">&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>      <span class="kw">LEAVE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<ul>
+<li>The ENTER instruction automatically creates a stack frame for a called procedure.</li>
+<li>It performs three actions:
+<ol type="1">
+<li><p>Pushes <code>EBP</code> onto the stack (<code>push ebp</code>)</p></li>
+<li><p>Set <code>EBP</code> to the base of the stack frame (<code>mov ebp, esp</code>)</p></li>
+<li><p>Reserve space for local variables (<code>sub esp, numbytes</code>)</p></li>
+</ol></li>
+<li>Both operands must be immediate values. <strong>Numbytes</strong> specifies the number of bytes of stack space to reserve for local variables. <strong>Nestinglevel</strong> specifies the lexical nesting level of the procedure (read Intel document).</li>
+<li><strong>Numbytes</strong> is always roundup to a multiple of 4 to keep ESP on adoubleword bounday.</li>
+<li>The <code>LEAVE</code> instruction terminates the stack frame for a procedure.
+<ul>
+<li><p>It reverse the action of a previous <code>ENTER</code> instruction by:</p>
+<ol type="1">
+<li><p>restoring <code>ESP</code> (<code>mov esp, ebp</code>), and</p></li>
+<li><p>restoring <code>EBP</code> to the value they were assigned when the procedure was called (<code>pop ebp</code>).</p></li>
+</ol></li>
+</ul></li>
+</ul>
+<div id="exm-30" class="theorem example">
+<p><span class="theorem-title"><strong>Example 6 (Revisit AddTwo Procedure)</strong></span> &nbsp;</p>
+<div class="sourceCode" id="cb20" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AddTwo:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span> x_param <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">8</span><span class="op">]</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ot">%define</span> y_param <span class="dt">DWORD</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">12</span><span class="op">]</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">enter</span>   <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> y_param</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> x_param</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">leave</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">ret</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="recursion" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="recursion"><span class="header-section-number">3</span> Recursion</h2>
+<section id="introduction-1" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="introduction-1"><span class="header-section-number">3.1</span> Introduction</h3>
+<p><strong>Recursion</strong> occurs when a procedure calls itself, either directly or indirectly. This powerful technique is essential for solving problems that can be broken down into smaller, similar subproblems.</p>
+</section>
+<section id="key-concepts" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="key-concepts"><span class="header-section-number">3.2</span> Key Concepts</h3>
+<ol type="1">
+<li><p><strong>Base Case</strong></p>
+<p>Every recursive procedure must have a <strong>base case</strong> - a condition that stops the recursion. Without a base case, the procedure would call itself indefinitely, leading to <strong>stack overflow</strong>.</p></li>
+<li><p><strong>Recursive Case</strong></p>
+<p>The <strong>recursive case</strong> is where the procedure calls itself with modified parameters, moving closer to the base case with each call.</p></li>
+</ol>
+</section>
+<section id="recursive-factorial-example" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="recursive-factorial-example"><span class="header-section-number">3.3</span> Recursive Factorial Example</h3>
+<p>Let’s implement the factorial function in NASM. The factorial algorithm is defined as:</p>
+<p><span class="math display">\[
+n! = \begin{cases}  1 &amp; \text{if } n = 0 \\ n \times (n-1)! &amp; \text{if } n &gt; 0  \end{cases}
+\]</span></p>
+<p>Here is the C implementation, which clearly shows the base case and the recursive step.</p>
+<div class="sourceCode" id="cb21" data-code-line-numbers=""><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> factorial<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span>       <span class="co">// Base case</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>            <span class="co">// Recursive step</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> n <span class="op">*</span> factorial<span class="op">(</span>n <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="nasm-implementation" class="level4" data-number="3.3.1">
+<h4 data-number="3.3.1" class="anchored" data-anchor-id="nasm-implementation"><span class="header-section-number">3.3.1</span> NASM Implementation</h4>
+<p>Now, let’s implement this in assembly using the <code>cdecl</code> calling convention, where the caller is responsible for cleaning up the stack.</p>
+<div class="sourceCode" id="cb22" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">; Computes the factorial of a number n.</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">; Receives: [ebp + 8] = n</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">; Returns: EAX = n!</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Factorial:</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">push</span>    <span class="kw">ebp</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebp</span><span class="op">,</span> <span class="kw">esp</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">8</span><span class="op">]</span>      <span class="co">; Get n</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">cmp</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">0</span>              <span class="co">; Is n == 0? (Base case)</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">jne</span>     recursive_step      <span class="co">; If not, jump to recursive step</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">; Base case: n is 0, so return 1</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">1</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">jmp</span>     epilogue</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="fu">recursive_step:</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>        <span class="kw">dec</span>     <span class="kw">eax</span>                 <span class="co">; eax = n - 1</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>        <span class="kw">push</span>    <span class="kw">eax</span>                 <span class="co">; Push (n - 1) as argument for  next call</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">call</span>    Factorial           <span class="co">; Call Factorial(n - 1)</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>     <span class="kw">esp</span><span class="op">,</span> <span class="dv">4</span>              <span class="co">; CALLER cleans stack (cdecl)</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>        <span class="co">; This part runs AFTER the recursive call returns.</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>        <span class="co">; EAX now holds the result of (n - 1)!</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mov</span>     <span class="kw">ebx</span><span class="op">,</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">8</span><span class="op">]</span>      <span class="co">; Get our original n back into EBX</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>        <span class="kw">mul</span>     <span class="kw">ebx</span>                 <span class="co">; EAX = EAX * EBX =&gt; (n-1)! * n</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a><span class="fu">epilogue:</span></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>        <span class="kw">pop</span>     <span class="kw">ebp</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">ret</span>                         <span class="co">; Return to caller</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="visualizing-recursion-the-stack-for-3" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="visualizing-recursion-the-stack-for-3"><span class="header-section-number">3.4</span> Visualizing Recursion: The Stack for 3!</h3>
+<p>The best way to understand recursion is to see how the stack grows and shrinks. Let’s trace the execution of <code>Factorial(3)</code>.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Diagram Legend:</p>
+<ul>
+<li><p><span style="background-color: #cffafe;">Light Blue</span>: Pushed by the <strong>Caller</strong> (arguments).</p></li>
+<li><p><span style="background-color: #fef9c3;">Light Yellow</span>: Pushed by the <strong><code>CALL</code> instruction</strong> (return address).</p></li>
+<li><p><span style="background-color: #dcfce7;">Light Green</span>: Pushed by the Callee (procedure prologue).</p></li>
+</ul>
+</div>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 43%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Step</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Stack Frame</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>The <code>main</code> procedure begins by pushing its argument (<code>n=3</code>) and calling <code>Factorial</code>. The <code>CALL</code> instruction then pushes the return address. Finally, the <code>Factorial</code> prologue saves <code>main</code>’s <code>EBP</code>.</td>
+<td><img src="..\images/recursion_step1.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Inside <code>Factorial</code>, <code>n=3</code> is not 0. The procedure pushes its argument for the next call (<code>n=2</code>), calls itself, and a new stack frame is created.</td>
+<td><img src="..\images/recursion_step2.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>The process repeats. <code>n=2</code> is not 0, so <code>Factorial</code> pushes <code>n=1</code> and calls itself again, creating a third stack frame.</td>
+<td><img src="..\images/recursion_step3.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Still not at the base case. <code>Factorial</code> pushes <code>n=0</code> and calls itself one last time. The stack is now at its deepest point.</td>
+<td><img src="..\images/recursion_step4.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Inside <code>Factorial(0)</code>, <code>n</code> is finally 0. The procedure hits its base case, sets <code>EAX = 1</code>, and returns. <strong>The stack now begins to unwind.</strong></td>
+<td><img src="..\images/recursion_step5.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Execution returns to <code>Factorial(1)</code>. <code>EAX</code> holds <code>1</code> (the result of 0!). The procedure now multiplies this by its own <code>n</code> (which is 1). The result in <code>EAX</code> is <code>1 * 1 = 1</code>. <code>Factorial(1)</code> then returns.</td>
+<td><img src="..\images/recursion_step6.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Execution returns to <code>Factorial(2)</code>. <code>EAX</code> now holds <code>1</code> (the result of 1!). It multiplies this by its own <code>n</code> (which is 2). The result in <code>EAX</code> is <code>1 * 2 = 2</code>. <code>Factorial(2)</code> then returns.</td>
+<td><img src="..\images/recursion_step7.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Execution returns to <code>Factorial(3)</code>. <code>EAX</code> holds <code>2</code> (the result of 2!). It multiplies this by its own <code>n</code> (which is 3). The result in <code>EAX</code> is <code>2 * 3 = 6</code>. <code>Factorial(3)</code> returns to <code>main</code>, which cleans up the stack. The final result is in <code>EAX</code>.</td>
+<td><img src="..\images/recursion_step8.png" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="recursive-sum-example" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="recursive-sum-example"><span class="header-section-number">3.5</span> Recursive Sum Example</h3>
+<p>This example sums integers from 1 to <code>n</code>. It is structurally identical to <code>Factorial</code>, but uses <code>ADD</code> and follows the <code>stdcall</code> convention, where the <strong>callee</strong> is responsible for cleaning up the stack.</p>
+<div class="sourceCode" id="cb23" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">; Calculates the sum of integers from 1 to n. (stdcall convention)</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">; Receives: [ebp + 8] = n</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">; Returns: EAX = sum</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">CalcSum:</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>          <span class="kw">push</span>    <span class="kw">ebp</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>     <span class="kw">ebp</span><span class="op">,</span> <span class="kw">esp</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">8</span><span class="op">]</span>      <span class="co">; Get n</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>          <span class="kw">cmp</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">0</span>              <span class="co">; Base case: is n == 0?</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>          <span class="cf">je</span>      base_case</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>          <span class="co">; Recursive step: return n + CalcSum(n-1)</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>          <span class="kw">dec</span>     <span class="kw">eax</span>                 <span class="co">; eax = n - 1</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>          <span class="kw">push</span>    <span class="kw">eax</span>                 <span class="co">; Push argument for CalcSum(n-1)</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>          <span class="cf">call</span>    CalcSum             <span class="co">; EAX now holds sum for (n-1)</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>          <span class="co">; After call returns, add our n to the result</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>     <span class="kw">ebx</span><span class="op">,</span> <span class="op">[</span><span class="kw">ebp</span> <span class="op">+</span> <span class="dv">8</span><span class="op">]</span>      <span class="co">; Get our n back</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>          <span class="kw">add</span>     <span class="kw">eax</span><span class="op">,</span> <span class="kw">ebx</span>            <span class="co">; EAX = (sum of n-1) + n</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>          <span class="cf">jmp</span>     epilogue</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="fu">base_case:</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>     <span class="kw">eax</span><span class="op">,</span> <span class="dv">0</span>              <span class="co">; Sum of 0 is 0</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a><span class="fu">epilogue:</span></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>          <span class="kw">pop</span>     <span class="kw">ebp</span></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>          <span class="cf">ret</span>     <span class="dv">4</span>                   <span class="co">; CALLEE cleans stack (stdcall)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="integer-to-binary-string-example" class="level3" data-number="3.6">
+<h3 data-number="3.6" class="anchored" data-anchor-id="integer-to-binary-string-example"><span class="header-section-number">3.6</span> Integer to Binary String Example</h3>
+<p>A common task in programming is to display the binary representation of a number. For example, how can a program convert the integer <code>26</code> (stored in memory as <code>00011010b</code>) into the printable character string <code>"11010"</code>? The standard algorithm uses repeated division and remainders:</p>
+<ul>
+<li><p>26 / 2 = 13, remainder <strong>0</strong></p></li>
+<li><p>13 / 2 = 6, remainder <strong>1</strong></p></li>
+<li><p>6 / 2 = 3, remainder <strong>0</strong></p></li>
+<li><p>3 / 2 = 1, remainder <strong>1</strong></p></li>
+<li><p>1 / 2 = 0, remainder <strong>1</strong></p></li>
+</ul>
+<p>Reading the remainders from bottom-to-top gives us the correct binary string: <code>11010</code>. The challenge for a program is this reversal. The first digit we calculate (<code>0</code>) is the <em>last</em> digit we need to print.</p>
+<p>This is a perfect scenario for recursion! The stack’s LIFO (Last-In, First-Out) nature provides a natural way to reverse the order of the digits.</p>
+<section id="the-recursive-strategy" class="level4" data-number="3.6.1">
+<h4 data-number="3.6.1" class="anchored" data-anchor-id="the-recursive-strategy"><span class="header-section-number">3.6.1</span> The Recursive Strategy</h4>
+<p>Think of it like leaving a trail of breadcrumbs as you venture into a cave:</p>
+<ol type="1">
+<li><p><strong>The Recursive Step (Going Deeper):</strong> For any number <code>n</code> greater than 0, we first figure out the <em>next</em> part of the number (<code>n / 2</code>) and leave a breadcrumb behind for the <em>current</em> digit (<code>n % 2</code>). We then recursively call the function to venture deeper with <code>n / 2</code>. We don’t print anything yet.</p></li>
+<li><p><strong>The Base Case (The End of the Cave):</strong> When <code>n</code> is 0, we’ve gone as deep as we can. We simply turn around and go back.</p></li>
+<li><p><strong>The Unwinding (Following the Trail Back):</strong> As each recursive call returns, we “pick up” the breadcrumb we left behind (the remainder) and print it. Since we are returning from the deepest call first, we naturally print the digits in the correct, reversed order.</p></li>
+</ol>
+<div class="sourceCode" id="cb24" data-code-line-numbers=""><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> print_binary<span class="op">(</span><span class="dt">unsigned</span> <span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Base Case: If n is 0, we've gone as deep as we can. Stop.</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>n <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Recursive Step: Call the function for the rest of the number first.</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    print_binary<span class="op">(</span>n <span class="op">/</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Unwinding Step: This code runs AFTER the recursive call returns.</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// It prints the breadcrumb left behind by the current level.</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> remainder <span class="op">=</span> n <span class="op">%</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    putchar<span class="op">(</span>remainder <span class="op">+</span> <span class="ch">'0'</span><span class="op">);</span> <span class="co">// Convert 0 or 1 to '0' or '1'</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="tracing-print_binary26" class="level4" data-number="3.6.2">
+<h4 data-number="3.6.2" class="anchored" data-anchor-id="tracing-print_binary26"><span class="header-section-number">3.6.2</span> Tracing <code>print_binary(26)</code></h4>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Call Stack (Depth)</strong></th>
+<th><strong>Calculation (n / 2)</strong></th>
+<th><strong>Breadcrumbs</strong></th>
+<th><strong>Action</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>print_binary(26)</code></td>
+<td><code>26 / 2 = 13</code></td>
+<td><code>rem = 0</code></td>
+<td>Save <code>0</code>, call <code>print_binary(13)</code></td>
+</tr>
+<tr class="even">
+<td><code>print_binary(13)</code></td>
+<td><code>13 / 2 = 6</code></td>
+<td><code>rem = 1</code></td>
+<td>Save <code>1</code>, call <code>print_binary(6)</code></td>
+</tr>
+<tr class="odd">
+<td><code>print_binary(6)</code></td>
+<td><code>6 / 2 = 3</code></td>
+<td><code>rem = 0</code></td>
+<td>Save <code>0</code>, call <code>print_binary(3)</code></td>
+</tr>
+<tr class="even">
+<td><code>print_binary(3)</code></td>
+<td><code>3 / 2 = 1</code></td>
+<td><code>rem = 1</code></td>
+<td>Save <code>1</code>, call <code>print_binary(1)</code></td>
+</tr>
+<tr class="odd">
+<td><code>print_binary(1)</code></td>
+<td><code>1 / 2 = 0</code></td>
+<td><code>rem = 1</code></td>
+<td>Save <code>1</code>, call <code>print_binary(0)</code></td>
+</tr>
+<tr class="even">
+<td><code>print_binary(0)</code></td>
+<td>-</td>
+<td>-</td>
+<td><strong>Base case reached. Return.</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Now, the stack unwinds and the <code>putchar</code> calls execute:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 30%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Unwinding Step</strong></th>
+<th><strong>Pick up Breadcrumbs</strong></th>
+<th><strong>Action</strong></th>
+<th><strong>Output</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>print_binary(1)</code></td>
+<td><code>rem = 1</code></td>
+<td><code>Putchar (1 + '0')</code></td>
+<td><code>1</code></td>
+</tr>
+<tr class="even">
+<td><code>print_binary(3)</code></td>
+<td><code>rem = 1</code></td>
+<td><code>Putchar (1 + '0')</code></td>
+<td><code>11</code></td>
+</tr>
+<tr class="odd">
+<td><code>print_binary(6)</code></td>
+<td><code>rem = 0</code></td>
+<td><code>Putchar (0 + '0')</code></td>
+<td><code>110</code></td>
+</tr>
+<tr class="even">
+<td><code>print_binary(13)</code></td>
+<td><code>rem = 1</code></td>
+<td><code>Putchar (1 + '0')</code></td>
+<td><code>1101</code></td>
+</tr>
+<tr class="odd">
+<td><code>print_binary(26)</code></td>
+<td><code>rem = 0</code></td>
+<td><code>Putchar (0 + '0')</code></td>
+<td><code>11010</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-assembly-implementation" class="level4" data-number="3.6.3">
+<h4 data-number="3.6.3" class="anchored" data-anchor-id="the-assembly-implementation"><span class="header-section-number">3.6.3</span> The Assembly Implementation</h4>
+<p>Here is a complete, runnable program demonstrating the <code>print_binary</code> procedure.</p>
+<pre data-code-line-numbers=""><code>            global _main
+            extern _putchar
+
+            section .text
+;---------------------------------------------------------------------
+; print_binary(n)
+; Prints the binary representation of an unsigned integer.
+; Receives: [ebp + 8] = n (the number to print)
+; Clobbers: EAX, EDX
+;---------------------------------------------------------------------
+print_binary:
+            push    ebp
+            mov     ebp, esp
+
+            mov     eax, [ebp + 8]  ; Get our number, n
+            cmp     eax, 0          ; Base case: if n is 0, we're done
+            je      end_recursion
+
+            ; --- Recursive Step ---
+            mov     edx, 0          ; Clear EDX for division
+            mov     ebx, 2          ; Divisor is 2
+            div     ebx             ; EAX = n / 2, EDX = n % 2
+            push    edx             ; store remainder
+
+            push    eax             ; Push the result of n / 2
+            call    print_binary    ; Recurse with PrintBinary(n / 2)
+            add     esp, 4          ; Clean up stack (cdecl)
+
+            ; --- Unwinding Step ---
+            ; This code executes AFTER the recursive call returns.
+            ; The remainder (0 or 1) is still in EDX from our division.
+            pop     edx             ; restore remainder
+            add     edx, '0'        ; Convert 0 -&gt; '0', 1 -&gt; '1'
+            
+            push    edx             ; Push the character to print
+            call    _putchar
+            add     esp, 4
+
+end_recursion:
+            pop     ebp
+            ret
+
+;---------------------------------------------------------------------
+; Main program entry point
+;---------------------------------------------------------------------
+_main:
+            push    26              ; Test with the number 26
+            call    print_binary
+            add     esp, 4
+
+            ; print a newline character for clean output
+            push    10              ; ASCII code for newline
+            call    _putchar
+            add     esp, 4
+            
+            xor     eax, eax        ; Return 0
+            ret</code></pre>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/khalid-elbadawi\.github\.io\/C404\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
+</body></html>

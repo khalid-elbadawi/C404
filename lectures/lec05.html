@@ -186,6 +186,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../lectures/lec05.html">
  <span class="dropdown-text">Lecture 5: Procedures</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lec06.html">
+ <span class="dropdown-text">Lecture 6: Advanced Procedures</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -403,7 +407,7 @@ Syntax
 </section>
 <section id="is-popped-data-erased" class="level4" data-number="2.3.4">
 <h4 data-number="2.3.4" class="anchored" data-anchor-id="is-popped-data-erased"><span class="header-section-number">2.3.4</span> Is Popped Data Erased?</h4>
-<p>No! When you <code>POP</code> a value, the data remains in memory. However, it’s now in the “empty” part of the stack (at an address higher than <code>ESP</code>). It will be overwritten by the next <code>PUSH</code> operation. The stack is “blind” and only considers data at <code>ESP</code> and below to be valid.</p>
+<p>No! When you <code>POP</code> a value, the data remains in memory. However, it’s now in the “empty” part of the stack (at an address higher than <code>ESP</code>). It will be overwritten by the next <code>PUSH</code> operation. The stack is “blind” and only considers data at <code>ESP</code> and above to be valid.</p>
 </section>
 <section id="flags-affected" class="level4" data-number="2.3.5">
 <h4 data-number="2.3.5" class="anchored" data-anchor-id="flags-affected"><span class="header-section-number">2.3.5</span> Flags Affected</h4>
@@ -728,7 +732,7 @@ Stack Buffer Overflow
 <ul>
 <li><p>A called procedure can call another procedure before the first procedure returns. This is known as <em>nested procedure call</em>.</p></li>
 <li><p>Suppose the <code>main</code> procedure calls a procedure named <code>Sub1</code>. While <code>Sub1</code> is executing, it calls <code>Sub2</code> procedure. While <code>Sub2</code> is executing, it calls the <code>Sub3</code> procedure. The process is shown in <a href="#fig-nested" class="quarto-xref">Figure&nbsp;8</a>.</p>
-<div id="fig-nested" class="quarto-float quarto-figure quarto-figure-center anchored" width="461" height="250">
+<div id="fig-nested" class="quarto-float quarto-figure quarto-figure-center anchored" height="250" width="461">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nested-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="..\images/nestedcalls.png" id="fig-nested" width="461" height="250" class="figure-img">

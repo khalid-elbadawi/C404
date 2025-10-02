@@ -186,6 +186,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../lectures/lec05.html">
  <span class="dropdown-text">Lecture 5: Procedures</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lec06.html">
+ <span class="dropdown-text">Lecture 6: Advanced Procedures</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -930,7 +934,7 @@ Syntax
 <tr class="odd">
 <td><code>JB</code></td>
 <td>Jump if below</td>
-<td><code>CF = 1 &amp;&amp; ZF = 0</code></td>
+<td><code>CF = 1</code></td>
 </tr>
 <tr class="even">
 <td><code>JBE</code></td>
@@ -967,7 +971,7 @@ Syntax
 <tr class="even">
 <td><code>JNA</code></td>
 <td>Jump if not above</td>
-<td><code>JNB</code></td>
+<td><code>JBE</code></td>
 </tr>
 </tbody>
 </table>
@@ -986,12 +990,12 @@ Syntax
 <tr class="odd">
 <td><code>JG</code></td>
 <td>Jump if greater</td>
-<td><code>ZF=0 &amp;&amp; SF=OF</code></td>
+<td><code>ZF = 0 &amp;&amp; SF = OF</code></td>
 </tr>
 <tr class="even">
 <td><code>JGE</code></td>
 <td>Jump if greater or equal</td>
-<td><code>SF=OF</code></td>
+<td><code>SF = OF</code></td>
 </tr>
 <tr class="odd">
 <td><code>JL</code></td>
@@ -1001,7 +1005,7 @@ Syntax
 <tr class="even">
 <td><code>JLE</code></td>
 <td>Jump if less or equal</td>
-<td><code>ZF=1 || SF != OF</code></td>
+<td><code>ZF = 1 || SF != OF</code></td>
 </tr>
 </tbody>
 </table>
