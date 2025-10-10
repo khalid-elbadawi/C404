@@ -293,15 +293,6 @@ window.Quarto = {
 </header>
 
 
-<!-- 
-1. Shift and Rotate
-2. Extended addition and subtraction (section 7.4)
-3. Unpacked decimal
-4. Packed decimal
-5. String operations 9.1, 9.2, and 9.3
-6. Advanced Procedure 
-7. FPU
--->
 <section id="objectives" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="objectives"><span class="header-section-number">1</span> Objectives:</h2>
 <p>In this lecture, you will learn:</p>
@@ -1168,15 +1159,13 @@ Figure&nbsp;8
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">je</span>    FOUND       <span class="co">; exit loop</span></span>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>      <span class="kw">add</span>   <span class="kw">esi</span><span class="op">,</span> <span class="dv">4</span>      <span class="co">; move to next elm in x</span></span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">loop</span>  top         <span class="co">; repeat</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>      <span class="co">; not found -&gt; print "Target is not found"</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>      .</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>      .</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">jmp</span>   DONE</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="fu">FOUND:</span>                  <span class="co">; target is found</span></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>      <span class="co">; print "Target is found"</span></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>      .</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>      .</span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="fu">DONE:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>      <span class="co">; not found</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>      <span class="kw">mov</span>   <span class="dt">DWORD</span> <span class="op">[</span>found<span class="op">],</span> <span class="dv">0</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">jmp</span>   DONE</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="fu">FOUND:</span>                  <span class="co">; target is found</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>      <span class="kw">mov</span>   <span class="dt">DWORD</span> <span class="op">[</span>found<span class="op">],</span> <span class="dv">1</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="fu">DONE:</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>      <span class="co">; print out result</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now, let us write the whole code <u>using string primitive</u>:</p>
 <div class="sourceCode" id="cb32" data-code-line-numbers=""><pre class="sourceCode nasm code-with-copy"><code class="sourceCode nasm"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>            <span class="kw">section</span> <span class="fu">.data</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>arrX        <span class="dt">dd</span>      <span class="dv">10</span><span class="op">,</span> <span class="dv">13</span><span class="op">,</span> <span class="dv">18</span><span class="op">,</span> <span class="dv">14</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">11</span><span class="op">,</span> <span class="dv">17</span><span class="op">,</span> <span class="dv">18</span><span class="op">,</span> <span class="dv">14</span><span class="op">,</span> <span class="dv">12</span></span>
@@ -1189,19 +1178,17 @@ Figure&nbsp;8
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>            .</span>
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>            <span class="kw">cld</span>                     <span class="co">; clear DF flag</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     <span class="kw">EDI</span><span class="op">,</span> arrX       <span class="co">; source array</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     <span class="kw">edi</span><span class="op">,</span> arrX       <span class="co">; source array</span></span>
 <span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     <span class="kw">EAX</span><span class="op">,</span> <span class="dv">15</span>         <span class="co">; target</span></span>
 <span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>            <span class="kw">mov</span>     <span class="kw">ecx</span><span class="op">,</span> ARRSIZE    <span class="co">; counter</span></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>            <span class="kw">repne</span>   scasd</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>            <span class="kw">repne</span>   scasd           <span class="co">; scan array arrX while not equal</span></span>
 <span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">je</span>      FOUND </span>
 <span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>            <span class="co">; not found</span></span>
 <span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>            <span class="kw">push</span>    not_fnd_msg</span>
 <span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">jmp</span>     PRINT </span>
 <span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="fu">FOUND:</span>      <span class="kw">push</span>    fnd_msg</span>
 <span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a><span class="fu">PRINT:</span>      <span class="cf">call</span>    _printf</span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>            <span class="kw">add</span>     <span class="kw">esp</span><span class="op">,</span> <span class="dv">4</span></span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>            .</span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>            .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>            <span class="kw">add</span>     <span class="kw">esp</span><span class="op">,</span> <span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="exm-43" class="theorem example">
 <p><span class="theorem-title"><strong>Example 17 (Count Vowels in a String)</strong></span> This example demonstrates <code>LODSB</code> to count the number of vowels in <code>message</code> string.</p>
@@ -1215,31 +1202,32 @@ Figure&nbsp;8
 <span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>          <span class="kw">xor</span>     <span class="kw">cx</span><span class="op">,</span> <span class="kw">cx</span></span>
 <span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="fu">count_loop:</span></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>          <span class="kw">lodsb</span>                 <span class="co">; load byte from [ESI] into AL</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>          <span class="kw">test</span>    <span class="kw">al</span><span class="op">,</span> <span class="kw">al</span>        <span class="co">; check if we reach null terminator</span></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>          <span class="cf">jz</span>      done</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>          </span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>          <span class="co">; convert to uppercase by clearing bit 5</span></span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>          <span class="co">; Clear bit  5: 'a' (0110_0001) -&gt; 'A' (0100_0001)</span></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>          <span class="kw">and</span>     <span class="kw">al</span><span class="op">,</span> <span class="bn">1101_1111b</span></span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>          </span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>          <span class="kw">cmp</span>     <span class="kw">al</span><span class="op">,</span> <span class="st">'A'</span></span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>          <span class="cf">je</span>      is_vowel</span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>          <span class="kw">cmp</span>     <span class="kw">al</span><span class="op">,</span> <span class="st">'E'</span></span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>          <span class="cf">je</span>      is_vowel</span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>          <span class="kw">cmp</span>     <span class="kw">al</span><span class="op">,</span> <span class="st">'I'</span></span>
-<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>          <span class="cf">je</span>      is_vowel</span>
-<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>          <span class="kw">cmp</span>     <span class="kw">al</span><span class="op">,</span> <span class="st">'O'</span></span>
-<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>          <span class="cf">je</span>      is_vowel</span>
-<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>          <span class="kw">cmp</span>     <span class="kw">al</span><span class="op">,</span> <span class="st">'U'</span></span>
-<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>          <span class="cf">je</span>      is_vowel</span>
-<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>          </span>
-<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>          <span class="cf">jmp</span>     count_loop      <span class="co">; Not a vowel, continue</span></span>
-<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a><span class="fu">is_vowel:</span></span>
-<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>          <span class="kw">inc</span>     <span class="kw">cx</span>              <span class="co">; increment vowel counter</span></span>
-<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>          <span class="cf">jmp</span>     count_loop</span>
-<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a><span class="fu">done:</span></span>
-<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>     vcounter<span class="op">,</span> <span class="kw">cx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>          <span class="kw">lodsb</span>                 <span class="co">; load one byte from [ESI] into AL</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>                                <span class="co">; and increment ESI</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>          <span class="kw">test</span>    <span class="kw">al</span><span class="op">,</span> <span class="kw">al</span>        <span class="co">; check if we reach null terminator</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>          <span class="cf">jz</span>      done</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>          <span class="co">; convert loaded byte to uppercase by clearing bit 5</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>          <span class="co">; Clear bit  5: 'a' (0110_0001) -&gt; 'A' (0100_0001)</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>          <span class="kw">and</span>     <span class="kw">al</span><span class="op">,</span> <span class="bn">1101_1111b</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>          <span class="kw">cmp</span>     <span class="kw">al</span><span class="op">,</span> <span class="st">'A'</span></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>          <span class="cf">je</span>      is_vowel</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>          <span class="kw">cmp</span>     <span class="kw">al</span><span class="op">,</span> <span class="st">'E'</span></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>          <span class="cf">je</span>      is_vowel</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>          <span class="kw">cmp</span>     <span class="kw">al</span><span class="op">,</span> <span class="st">'I'</span></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>          <span class="cf">je</span>      is_vowel</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>          <span class="kw">cmp</span>     <span class="kw">al</span><span class="op">,</span> <span class="st">'O'</span></span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>          <span class="cf">je</span>      is_vowel</span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>          <span class="kw">cmp</span>     <span class="kw">al</span><span class="op">,</span> <span class="st">'U'</span></span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>          <span class="cf">je</span>      is_vowel</span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>          <span class="cf">jmp</span>     count_loop      <span class="co">; Not a vowel, continue</span></span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a><span class="fu">is_vowel:</span></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>          <span class="kw">inc</span>     <span class="kw">cx</span>              <span class="co">; increment vowel counter</span></span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>          <span class="cf">jmp</span>     count_loop</span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a><span class="fu">done:</span></span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>          <span class="kw">mov</span>     vcounter<span class="op">,</span> <span class="kw">cx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="exm-44" class="theorem example">
 <p><span class="theorem-title"><strong>Example 18 (Verify Password)</strong></span> This example demonstrates the use of the <code>CMPSB</code> (Compare String Byte) instruction to verify a user-input password against a stored password.</p>
