@@ -191,6 +191,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../lectures/lec06.html">
  <span class="dropdown-text">Lecture 6: Advanced Procedures</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/lec07.html">
+ <span class="dropdown-text">Lecture 7: More About Arrays and Integer Arithmetic</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -255,8 +259,8 @@ window.Quarto = {
 <div class="webex-check webex-box">
 <p>According to the lecture, a <strong>relative offset</strong> is a signed displacement added to the current value of the instruction pointer (<code>EIP</code>). Given the following scenarios, calculate the new value of the <code>EIP</code> after the jump. Express your answers in hexadecimal format (e.g., <code>0x1234ABCD</code>).</p>
 <ol type="1">
-<li>The <code>EIP</code> currently holds the address <code>0x00401050</code>, which is the address of the instruction <em>immediately following</em> a <code>JMP</code> instruction. The <code>JMP</code> instruction has a relative displacement of <code>0x7A</code>. The new value of <code>EIP</code> will be: <input class="webex-solveme" id="webex-0613bff284592a1ecf46295435cba787" size="20" data-answer="axQBS1JWUgIJBHZ4EDw="></li>
-<li>The <code>EIP</code> currently holds the address <code>0x004020A0</code>. The CPU executes a <code>JMP</code> instruction that jumps backward with a relative displacement of <code>-0x50</code> (or <code>0xFFFFFFB0</code> in 32-bit two’s complement). The new value of <code>EIP</code> will be: <input class="webex-solveme" id="webex-73f297135466021430ba65693682d925" size="20" data-answer="bBFWSgkHBQMHBAMGEm8="></li>
+<li>The <code>EIP</code> currently holds the address <code>0x00401050</code>, which is the address of the instruction <em>immediately following</em> a <code>JMP</code> instruction. The <code>JMP</code> instruction has a relative displacement of <code>0x7A</code>. The new value of <code>EIP</code> will be: <input class="webex-solveme" id="webex-934a6e6bfd8fec3b2e1879aff3a1b417" size="20" data-answer="YhEEGQZVAlJXVHsnRz4="></li>
+<li>The <code>EIP</code> currently holds the address <code>0x004020A0</code>. The CPU executes a <code>JMP</code> instruction that jumps backward with a relative displacement of <code>-0x50</code> (or <code>0xFFFFFFB0</code> in 32-bit two’s complement). The new value of <code>EIP</code> will be: <input class="webex-solveme" id="webex-44dfb9b7ebe9ee155984a8a75c1e8aeb" size="20" data-answer="bxZUHlIJVgdXUlAJRzg="></li>
 </ol>
 </div>
 <div class="webex-solution">
@@ -270,18 +274,18 @@ window.Quarto = {
 <div class="webex-question">
 <div class="webex-check webex-box">
 <p>For <strong>signed</strong> 32-bit integers, which <code>Jcc</code> instruction should be used to jump if the destination operand of a <code>CMP</code> instruction is <strong>strictly greater than</strong> the source operand?</p>
-<div id="webex-c46c8574658e0defbc0ad0a66b7fb0b3" class="webex-radiogroup" data-answer="OAQaUxQFGwQaBGU=">
-<label><input type="radio" autocomplete="off" name="c46c8574658e0defbc0ad0a66b7fb0b3"><span><code>JNE</code> (Jump if Not Equal)</span></label><label><input type="radio" autocomplete="off" name="c46c8574658e0defbc0ad0a66b7fb0b3"><span><code>JGE</code> (Jump if Greater or Equal)</span></label><label><input type="radio" autocomplete="off" name="c46c8574658e0defbc0ad0a66b7fb0b3"><span><code>JAE</code> (Jump if Above or Equal)</span></label><label><input type="radio" autocomplete="off" name="c46c8574658e0defbc0ad0a66b7fb0b3"><span><code>JA</code> (Jump if Above)</span></label><label><input type="radio" autocomplete="off" name="c46c8574658e0defbc0ad0a66b7fb0b3"><span><code>JG</code> (Jump if Greater)</span></label>
+<div id="webex-915cc1c33c5deafa58edb85bceea24ff" class="webex-radiogroup" data-answer="YgEZUk8BTwMfU2g=">
+<label><input type="radio" autocomplete="off" name="915cc1c33c5deafa58edb85bceea24ff"><span><code>JNE</code> (Jump if Not Equal)</span></label><label><input type="radio" autocomplete="off" name="915cc1c33c5deafa58edb85bceea24ff"><span><code>JG</code> (Jump if Greater)</span></label><label><input type="radio" autocomplete="off" name="915cc1c33c5deafa58edb85bceea24ff"><span><code>JAE</code> (Jump if Above or Equal)</span></label><label><input type="radio" autocomplete="off" name="915cc1c33c5deafa58edb85bceea24ff"><span><code>JGE</code> (Jump if Greater or Equal)</span></label><label><input type="radio" autocomplete="off" name="915cc1c33c5deafa58edb85bceea24ff"><span><code>JA</code> (Jump if Above)</span></label>
 </div>
 </div>
 <div class="webex-solution">
 <p>The question specifies <strong>signed</strong> integers and a <strong>strictly greater than</strong> condition (<code>&gt;</code>).</p>
 <ul>
 <li>False. <code>JNE</code> works for both but doesn’t distinguish between greater or less.</li>
-<li>False. <code>JGE</code> is for signed greater than or equal.</li>
-<li>False. <code>JAE</code> is for unsigned greater than or equal.</li>
-<li>False. <code>JA</code> is for unsigned greater than.</li>
 <li>True. <code>JG</code> is for signed greater than.</li>
+<li>False. <code>JAE</code> is for unsigned greater than or equal.</li>
+<li>False. <code>JGE</code> is for signed greater than or equal.</li>
+<li>False. <code>JA</code> is for unsigned greater than.</li>
 </ul>
 </div>
 </div>
@@ -301,8 +305,8 @@ window.Quarto = {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">dec</span>   <span class="kw">ecx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>What are the final decimal values of the <code>eax</code> and <code>ecx</code> registers after this code finishes executing?</p>
 <ol type="1">
-<li><code>eax</code> = <input class="webex-solveme nospaces" id="webex-0452c49223db72c3b4acf29e716eddd8" data-tol="0" size="20" data-answer="axYGAEFp"></li>
-<li><code>ecx</code> = <input class="webex-solveme nospaces" id="webex-92eb09fedfed47ab131b310005e3b27a" data-tol="0" size="20" data-answer="YhBIUxJk"></li>
+<li><code>eax</code> = <input class="webex-solveme nospaces" id="webex-d85701c4d38aaa3474b92026e8325a9e" data-tol="0" size="20" data-answer="PxoGBRJs"></li>
+<li><code>ecx</code> = <input class="webex-solveme nospaces" id="webex-b1921f2b7be76366d8a54733e69e0381" data-tol="0" size="20" data-answer="ORMUAxM7"></li>
 </ol>
 </div>
 <div class="webex-solution">
@@ -333,37 +337,37 @@ window.Quarto = {
 <div class="webex-question">
 <div class="webex-check webex-box">
 <p>In x86 assembly, a <code>JMP</code> instruction can use a <code>rel8</code> offset. What does this mean?</p>
-<div id="webex-73db15e37451f38ccadcd7fa13b8f8ea" class="webex-radiogroup" data-answer="bANIUh0FSQIbBGg=">
-<label><input type="radio" autocomplete="off" name="73db15e37451f38ccadcd7fa13b8f8ea"><span>The target address is stored in an 8-bit register.</span></label><label><input type="radio" autocomplete="off" name="73db15e37451f38ccadcd7fa13b8f8ea"><span>The target address is an absolute 8-bit address.</span></label><label><input type="radio" autocomplete="off" name="73db15e37451f38ccadcd7fa13b8f8ea"><span>The jump target is limited to the first 256 bytes of the code segment.</span></label><label><input type="radio" autocomplete="off" name="73db15e37451f38ccadcd7fa13b8f8ea"><span>The jump is an 8-byte signed displacement relative to the current instruction pointer.</span></label><label><input type="radio" autocomplete="off" name="73db15e37451f38ccadcd7fa13b8f8ea"><span>The instruction can only be used to jump to one of 8 predefined labels.</span></label>
+<div id="webex-a2343f04e429bcbe5644a0f1c384a803" class="webex-radiogroup" data-answer="OgIfBB9WHAVJBG8=">
+<label><input type="radio" autocomplete="off" name="a2343f04e429bcbe5644a0f1c384a803"><span>The instruction can only be used to jump to one of 8 predefined labels.</span></label><label><input type="radio" autocomplete="off" name="a2343f04e429bcbe5644a0f1c384a803"><span>The target address is an absolute 8-bit address.</span></label><label><input type="radio" autocomplete="off" name="a2343f04e429bcbe5644a0f1c384a803"><span>The target address is stored in an 8-bit register.</span></label><label><input type="radio" autocomplete="off" name="a2343f04e429bcbe5644a0f1c384a803"><span>The jump is an 8-byte signed displacement relative to the current instruction pointer.</span></label><label><input type="radio" autocomplete="off" name="a2343f04e429bcbe5644a0f1c384a803"><span>The jump target is limited to the first 256 bytes of the code segment.</span></label>
 </div>
 </div>
 <div class="webex-solution">
 <p>According to the lecture notes, a <strong>relative offset</strong> is a signed displacement added to the current value of the instruction pointer (EIP/RIP). The <code>rel8</code> address format specifies a constant displacement value within the range of -128 to +127 bytes. Therefore, it is a signed 8-bit value added to the current instruction pointer to determine the jump target.</p>
 <ul>
-<li>False. “The target address is stored in an 8-bit register” is incorrect. <code>rel8</code> is an immediate value encoded in the instruction, not a register.</li>
-<li>False. “The target address is an absolute 8-bit address” is incorrect. <code>rel8</code> is a <em>relative</em> offset, not an absolute address.</li>
-<li>False. “The jump target is limited to the first 256 bytes of the code segment” is incorrect. The range is relative to the <em>current</em> instruction pointer, not the beginning of the segment.</li>
-<li>True. The jump is an 8-byte signed displacement relative to the current instruction pointer.</li>
 <li>False. “The instruction can only be used to jump to one of 8 predefined labels” is incorrect. <code>rel8</code> refers to the size of the offset, not the number of possible targets.</li>
+<li>False. “The target address is an absolute 8-bit address” is incorrect. <code>rel8</code> is a <em>relative</em> offset, not an absolute address.</li>
+<li>False. “The target address is stored in an 8-bit register” is incorrect. <code>rel8</code> is an immediate value encoded in the instruction, not a register.</li>
+<li>True. The jump is an 8-byte signed displacement relative to the current instruction pointer.</li>
+<li>False. “The jump target is limited to the first 256 bytes of the code segment” is incorrect. The range is relative to the <em>current</em> instruction pointer, not the beginning of the segment.</li>
 </ul>
 </div>
 </div>
 <div class="webex-question">
 <div class="webex-check webex-box">
 <p>Which of the following statements about the <code>TEST</code> instruction are true? Choose all correct answers.</p>
-<div id="webex-b5b7b7aa6f0d537664b1bfb894da23df" class="webex-checkboxgroup" data-answer="OQVOBk4GTVEaVxxUaA==">
-<label><input type="checkbox" autocomplete="off" name="b5b7b7aa6f0d537664b1bfb894da23df"><span>It does not affect any of the CPU status flags.</span></label><label><input type="checkbox" autocomplete="off" name="b5b7b7aa6f0d537664b1bfb894da23df"><span>It sets the Zero Flag (ZF) if the result of the <code>AND</code> operation is zero.</span></label><label><input type="checkbox" autocomplete="off" name="b5b7b7aa6f0d537664b1bfb894da23df"><span>It is often used to check if a register’s value is zero.</span></label><label><input type="checkbox" autocomplete="off" name="b5b7b7aa6f0d537664b1bfb894da23df"><span>It can compare two memory operands directly, such as <code>test [var1], [var2]</code>.</span></label><label><input type="checkbox" autocomplete="off" name="b5b7b7aa6f0d537664b1bfb894da23df"><span>It performs an implied <code>AND</code> operation.</span></label><label><input type="checkbox" autocomplete="off" name="b5b7b7aa6f0d537664b1bfb894da23df"><span>It modifies the destination operand with the result of the operation.</span></label>
+<div id="webex-1b77baf861fd2a79be9ce511ac142e08" class="webex-checkboxgroup" data-answer="alMbBk5QSggaAUpUbw==">
+<label><input type="checkbox" autocomplete="off" name="1b77baf861fd2a79be9ce511ac142e08"><span>It is often used to check if a register’s value is zero.</span></label><label><input type="checkbox" autocomplete="off" name="1b77baf861fd2a79be9ce511ac142e08"><span>It performs an implied <code>AND</code> operation.</span></label><label><input type="checkbox" autocomplete="off" name="1b77baf861fd2a79be9ce511ac142e08"><span>It sets the Zero Flag (ZF) if the result of the <code>AND</code> operation is zero.</span></label><label><input type="checkbox" autocomplete="off" name="1b77baf861fd2a79be9ce511ac142e08"><span>It does not affect any of the CPU status flags.</span></label><label><input type="checkbox" autocomplete="off" name="1b77baf861fd2a79be9ce511ac142e08"><span>It modifies the destination operand with the result of the operation.</span></label><label><input type="checkbox" autocomplete="off" name="1b77baf861fd2a79be9ce511ac142e08"><span>It can compare two memory operands directly, such as <code>test [var1], [var2]</code>.</span></label>
 </div>
 </div>
 <div class="webex-solution">
 <p>Based on the lecture notes:</p>
 <ul>
-<li><strong>False</strong>: Its entire purpose is to set the status flags (<code>SF</code>, <code>ZF</code>, <code>PF</code>) according to the result.</li>
-<li><strong>True</strong>: The Zero Flag (ZF) is set if the result is zero, which is a key feature used for conditional jumps.</li>
 <li><strong>True</strong>: A common use is <code>test eax, eax</code>, which sets the ZF flag to 1 if <code>eax</code> is zero.</li>
-<li><strong>False</strong>: One of the rules is that both operands cannot be memory locations.</li>
 <li><strong>True</strong>: The <code>TEST</code> instruction performs an implied <code>AND</code> operation but does not store the result.</li>
+<li><strong>True</strong>: The Zero Flag (ZF) is set if the result is zero, which is a key feature used for conditional jumps.</li>
+<li><strong>False</strong>: Its entire purpose is to set the status flags (<code>SF</code>, <code>ZF</code>, <code>PF</code>) according to the result.</li>
 <li><strong>False</strong>: The <code>TEST</code> instruction <em>does not</em> alter either of the operands.</li>
+<li><strong>False</strong>: One of the rules is that both operands cannot be memory locations.</li>
 </ul>
 </div>
 </div>
@@ -372,8 +376,8 @@ window.Quarto = {
 <p>An 8-bit register <code>al</code> contains the value <code>1111 0000b</code> (-16 signed, 240 unsigned) and register <code>bl</code> contains <code>0000 1111b</code> (15 signed/unsigned). The instruction <code>cmp al, bl</code> is executed.</p>
 <p>What will be the state of the Carry Flag (CF) and the Overflow Flag (OF)?</p>
 <ol type="1">
-<li>Carry Flag (CF) = <input class="webex-solveme nospaces" id="webex-071000003be1b917b37974b5f98e67d0" data-tol="0" size="20" data-answer="axUBEm0="></li>
-<li>Overflow Flag (OF) = <input class="webex-solveme nospaces" id="webex-d78320cc5a76f3d8a5d5ae25fe11a7c3" data-tol="0" size="20" data-answer="PxUIEW8="></li>
+<li>Carry Flag (CF) = <input class="webex-solveme nospaces" id="webex-a818f756809976da96853921dd91b886" data-tol="0" size="20" data-answer="OhoBGjs="></li>
+<li>Overflow Flag (OF) = <input class="webex-solveme nospaces" id="webex-dc1de07a979eb66c805b0ee43e550374" data-tol="0" size="20" data-answer="P0EBRjg="></li>
 </ol>
 </div>
 <div class="webex-solution">
@@ -424,8 +428,8 @@ window.Quarto = {
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>      <span class="cf">ja</span>  ENDIF</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>      <span class="kw">mov</span> <span class="dt">DWORD</span> <span class="op">[</span>x<span class="op">],</span> <span class="dv">1</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ENDIF:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="webex-0cba9c1fb79e2df35c33c36f848b8bd3" class="webex-radiogroup" data-answer="a1NOURVSHVY/">
-<label><input type="radio" autocomplete="off" name="0cba9c1fb79e2df35c33c36f848b8bd3"><span>A.</span></label><label><input type="radio" autocomplete="off" name="0cba9c1fb79e2df35c33c36f848b8bd3"><span>B.</span></label><label><input type="radio" autocomplete="off" name="0cba9c1fb79e2df35c33c36f848b8bd3"><span>C.</span></label><label><input type="radio" autocomplete="off" name="0cba9c1fb79e2df35c33c36f848b8bd3"><span>D.</span></label>
+<div id="webex-7aae22a4fe30a9c460b85ae9c4e24a4a" class="webex-radiogroup" data-answer="bFFNVR4DTQQ7">
+<label><input type="radio" autocomplete="off" name="7aae22a4fe30a9c460b85ae9c4e24a4a"><span>A.</span></label><label><input type="radio" autocomplete="off" name="7aae22a4fe30a9c460b85ae9c4e24a4a"><span>B.</span></label><label><input type="radio" autocomplete="off" name="7aae22a4fe30a9c460b85ae9c4e24a4a"><span>C.</span></label><label><input type="radio" autocomplete="off" name="7aae22a4fe30a9c460b85ae9c4e24a4a"><span>D.</span></label>
 </div>
 </div>
 <div class="webex-solution">
@@ -499,8 +503,8 @@ window.Quarto = {
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ELSE:</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">mov</span>   <span class="dt">DWORD</span> <span class="op">[</span>val<span class="op">],</span> <span class="dv">0</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ENDIF:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="webex-5ca29e983b254328ee8de685b3d7c26d" class="webex-checkboxgroup" data-answer="blNNAxVUFQhu">
-<label><input type="checkbox" autocomplete="off" name="5ca29e983b254328ee8de685b3d7c26d"><span>A.</span></label><label><input type="checkbox" autocomplete="off" name="5ca29e983b254328ee8de685b3d7c26d"><span>B.</span></label><label><input type="checkbox" autocomplete="off" name="5ca29e983b254328ee8de685b3d7c26d"><span>C.</span></label><label><input type="checkbox" autocomplete="off" name="5ca29e983b254328ee8de685b3d7c26d"><span>D.</span></label>
+<div id="webex-0521c1e1cc4fe9e0884965748d151477" class="webex-checkboxgroup" data-answer="awUeAE8ASQE+">
+<label><input type="checkbox" autocomplete="off" name="0521c1e1cc4fe9e0884965748d151477"><span>A.</span></label><label><input type="checkbox" autocomplete="off" name="0521c1e1cc4fe9e0884965748d151477"><span>B.</span></label><label><input type="checkbox" autocomplete="off" name="0521c1e1cc4fe9e0884965748d151477"><span>C.</span></label><label><input type="checkbox" autocomplete="off" name="0521c1e1cc4fe9e0884965748d151477"><span>D.</span></label>
 </div>
 </div>
 <div class="webex-solution">
@@ -571,8 +575,8 @@ window.Quarto = {
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">jz</span>    ENDIF</span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">; Body</span></span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ENDIF:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="webex-82e162fdc22f4f16b0b795cb112a8ddd" class="webex-checkboxgroup" data-answer="YwNJABoDSlU+">
-<label><input type="checkbox" autocomplete="off" name="82e162fdc22f4f16b0b795cb112a8ddd"><span>A.</span></label><label><input type="checkbox" autocomplete="off" name="82e162fdc22f4f16b0b795cb112a8ddd"><span>B.</span></label><label><input type="checkbox" autocomplete="off" name="82e162fdc22f4f16b0b795cb112a8ddd"><span>C.</span></label><label><input type="checkbox" autocomplete="off" name="82e162fdc22f4f16b0b795cb112a8ddd"><span>D.</span></label>
+<div id="webex-ddc2a601e59eb8053a21c9731b94f213" class="webex-checkboxgroup" data-answer="P1VPA00HHAA4">
+<label><input type="checkbox" autocomplete="off" name="ddc2a601e59eb8053a21c9731b94f213"><span>A.</span></label><label><input type="checkbox" autocomplete="off" name="ddc2a601e59eb8053a21c9731b94f213"><span>B.</span></label><label><input type="checkbox" autocomplete="off" name="ddc2a601e59eb8053a21c9731b94f213"><span>C.</span></label><label><input type="checkbox" autocomplete="off" name="ddc2a601e59eb8053a21c9731b94f213"><span>D.</span></label>
 </div>
 </div>
 <div class="webex-solution">
@@ -600,8 +604,8 @@ window.Quarto = {
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">END:</span></span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>      <span class="kw">mov</span>   <span class="op">[</span>smallest<span class="op">],</span> <span class="kw">edx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>What is the bug?</p>
-<div id="webex-d3054a98a97cee2657f497af8085f2b3" class="webex-radiogroup" data-answer="PwMcBRhQFQg8">
-<label><input type="radio" autocomplete="off" name="d3054a98a97cee2657f497af8085f2b3"><span>There is no bug; the code is correct.</span></label><label><input type="radio" autocomplete="off" name="d3054a98a97cee2657f497af8085f2b3"><span>Unsigned jumps (<code>jbe</code>) should be used instead of signed jumps (<code>jle</code>).</span></label><label><input type="radio" autocomplete="off" name="d3054a98a97cee2657f497af8085f2b3"><span>The code fails if <code>c</code> is the smallest of the three numbers.</span></label><label><input type="radio" autocomplete="off" name="d3054a98a97cee2657f497af8085f2b3"><span>The <code>jle CHECK_C</code> instruction should be <code>jg CHECK_C</code>.</span></label>
+<div id="webex-db37c94075144d37538dcfc3a66a4ed3" class="webex-radiogroup" data-answer="P1IfB08JGAFq">
+<label><input type="radio" autocomplete="off" name="db37c94075144d37538dcfc3a66a4ed3"><span>Unsigned jumps (<code>jbe</code>) should be used instead of signed jumps (<code>jle</code>).</span></label><label><input type="radio" autocomplete="off" name="db37c94075144d37538dcfc3a66a4ed3"><span>The <code>jle CHECK_C</code> instruction should be <code>jg CHECK_C</code>.</span></label><label><input type="radio" autocomplete="off" name="db37c94075144d37538dcfc3a66a4ed3"><span>There is no bug; the code is correct.</span></label><label><input type="radio" autocomplete="off" name="db37c94075144d37538dcfc3a66a4ed3"><span>The code fails if <code>c</code> is the smallest of the three numbers.</span></label>
 </div>
 </div>
 <div class="webex-solution">
@@ -650,8 +654,8 @@ window.Quarto = {
 <ul>
 <li>False.</li>
 <li>False.</li>
-<li>True.</li>
 <li>False.</li>
+<li>True.</li>
 </ul>
 </div>
 </div>
@@ -665,7 +669,7 @@ window.Quarto = {
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>   <span class="kw">eax</span><span class="op">,</span> <span class="kw">ebx</span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">add</span>   <span class="kw">ebx</span><span class="op">,</span> <span class="dv">2</span></span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">loop</span>  L1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Final value of <code>eax</code> = <input class="webex-solveme nospaces" id="webex-749a46ed46720fab7465b77da1858f68" data-tol="0" size="20" data-answer="bBYLVBZr">.</p>
+<p>Final value of <code>eax</code> = <input class="webex-solveme nospaces" id="webex-8d8c123e43b6d994f0677e67cc15de99" data-tol="0" size="20" data-answer="Y0YKVhNv">.</p>
 </div>
 <div class="webex-solution">
 <p>This code calculates the sum of a series. Let’s trace the values of <code>eax</code> (the sum) and <code>ebx</code> (the number being added) through each iteration of the loop.</p>
@@ -727,8 +731,8 @@ window.Quarto = {
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">loop</span>  INNER</span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">loop</span>  OUTER</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>What is the primary issue with this code?</p>
-<div id="webex-da9b20ee50875bc3f2629088a96cce67" class="webex-radiogroup" data-answer="P1EVUh4ASVRo">
-<label><input type="radio" autocomplete="off" name="da9b20ee50875bc3f2629088a96cce67"><span>The inner loop modifies a register that the outer loop depends on, which is not allowed.</span></label><label><input type="radio" autocomplete="off" name="da9b20ee50875bc3f2629088a96cce67"><span>The <code>loop</code> instruction cannot be used for nested loops.</span></label><label><input type="radio" autocomplete="off" name="da9b20ee50875bc3f2629088a96cce67"><span>The labels are defined incorrectly, which will cause an assembly error.</span></label><label><input type="radio" autocomplete="off" name="da9b20ee50875bc3f2629088a96cce67"><span>The outer loop’s <code>ecx</code> value is not preserved, causing the outer loop to run incorrectly.</span></label>
+<div id="webex-ecb258ba6771a0edfaf0520b894dd2cb" class="webex-radiogroup" data-answer="PlNOAxkITlFr">
+<label><input type="radio" autocomplete="off" name="ecb258ba6771a0edfaf0520b894dd2cb"><span>The labels are defined incorrectly, which will cause an assembly error.</span></label><label><input type="radio" autocomplete="off" name="ecb258ba6771a0edfaf0520b894dd2cb"><span>The outer loop’s <code>ecx</code> value is not preserved, causing the outer loop to run incorrectly.</span></label><label><input type="radio" autocomplete="off" name="ecb258ba6771a0edfaf0520b894dd2cb"><span>The <code>loop</code> instruction cannot be used for nested loops.</span></label><label><input type="radio" autocomplete="off" name="ecb258ba6771a0edfaf0520b894dd2cb"><span>The inner loop modifies a register that the outer loop depends on, which is not allowed.</span></label>
 </div>
 </div>
 <div class="webex-solution">
@@ -764,8 +768,8 @@ window.Quarto = {
 <span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ENDWHILE:</span></span>
 <span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">ret</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol type="1">
-<li>Final value of <code>a</code> (<code>eax</code>) = <input class="webex-solveme nospaces" id="webex-63c4cda60ec51877a58ad11b9095147d" data-tol="0" size="20" data-answer="bRFbFj4="></li>
-<li>Final value of <code>b</code> (<code>ebx</code>) = <input class="webex-solveme nospaces" id="webex-1f85f0ed4e34b2f021780eabb88a90fb" data-tol="0" size="20" data-answer="akQBFzs="></li>
+<li>Final value of <code>a</code> (<code>eax</code>) = <input class="webex-solveme nospaces" id="webex-653a95ec214238141cce275bcd8bd10b" data-tol="0" size="20" data-answer="bRcLQ2Q="></li>
+<li>Final value of <code>b</code> (<code>ebx</code>) = <input class="webex-solveme nospaces" id="webex-fab2e57be007a9d9292c4656e28c81fe" data-tol="0" size="20" data-answer="PUNbEDg="></li>
 </ol>
 </div>
 <div class="webex-solution">
@@ -806,16 +810,16 @@ window.Quarto = {
 <div class="webex-question">
 <div class="webex-check webex-box">
 <p>What must you do before performing a 32-bit <strong>unsigned</strong> division with the <code>div ebx</code> instruction?</p>
-<div id="webex-784961cb3665860ddee23e848b6dac33" class="webex-radiogroup" data-answer="bAkYCRoBT1Ju">
-<label><input type="radio" autocomplete="off" name="784961cb3665860ddee23e848b6dac33"><span>Ensure the <code>edx</code> register is cleared to zero, for example with <code>xor edx, edx</code>.</span></label><label><input type="radio" autocomplete="off" name="784961cb3665860ddee23e848b6dac33"><span>Place the divisor in the <code>ecx</code> register instead of <code>ebx</code>.</span></label><label><input type="radio" autocomplete="off" name="784961cb3665860ddee23e848b6dac33"><span>Use the <code>cdq</code> instruction to sign-extend <code>eax</code> into <code>edx</code>.</span></label><label><input type="radio" autocomplete="off" name="784961cb3665860ddee23e848b6dac33"><span>Load the high 32 bits of the dividend into the <code>eax</code> register.</span></label>
+<div id="webex-9b36c36c78b66847c2f4864b0655901f" class="webex-radiogroup" data-answer="YlIfBk8CGlNq">
+<label><input type="radio" autocomplete="off" name="9b36c36c78b66847c2f4864b0655901f"><span>Place the divisor in the <code>ecx</code> register instead of <code>ebx</code>.</span></label><label><input type="radio" autocomplete="off" name="9b36c36c78b66847c2f4864b0655901f"><span>Use the <code>cdq</code> instruction to sign-extend <code>eax</code> into <code>edx</code>.</span></label><label><input type="radio" autocomplete="off" name="9b36c36c78b66847c2f4864b0655901f"><span>Ensure the <code>edx</code> register is cleared to zero, for example with <code>xor edx, edx</code>.</span></label><label><input type="radio" autocomplete="off" name="9b36c36c78b66847c2f4864b0655901f"><span>Load the high 32 bits of the dividend into the <code>eax</code> register.</span></label>
 </div>
 </div>
 <div class="webex-solution">
 <p>The <code>div</code> instruction for 32-bit operands uses the 64-bit pair <code>EDX:EAX</code> as the dividend. For a 32-bit unsigned division, the upper 32 bits of the dividend (in <code>edx</code>) must be zero. The most common and efficient way to do this is with <code>xor edx, edx</code>.</p>
 <ul>
-<li>True.</li>
 <li>False. The divisor can be <code>reg/mem32</code>.</li>
 <li>False. <code>cdq</code> is specifically for <code>idiv</code> (signed division).</li>
+<li>True.</li>
 <li>False. The high part of the dividend goes into <code>edx</code>, not <code>eax</code>. <code>eax</code> holds the low part.</li>
 </ul>
 </div>
@@ -830,8 +834,8 @@ window.Quarto = {
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">imul</span>  <span class="kw">eax</span><span class="op">,</span> <span class="kw">ebx</span></span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">loop</span>  L1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol type="1">
-<li>Final value of <code>eax</code> = <input class="webex-solveme nospaces" id="webex-d594c9138886bc8aa21bdddac55f08dc" data-tol="0" size="20" data-answer="PxcNDEFk"></li>
-<li>Final value of <code>ecx</code> = <input class="webex-solveme nospaces" id="webex-b9fb361eedf10753040cdb4b6e3f667a" data-tol="0" size="20" data-answer="ORtWQG4="></li>
+<li>Final value of <code>eax</code> = <input class="webex-solveme nospaces" id="webex-0be2ed156926f5bb3a6b51afc73f6537" data-tol="0" size="20" data-answer="a0BRCkc5"></li>
+<li>Final value of <code>ecx</code> = <input class="webex-solveme nospaces" id="webex-5ff671a4fcce31df0a37b516c7a9516e" data-tol="0" size="20" data-answer="bkRWFGo="></li>
 </ol>
 </div>
 <div class="webex-solution">
@@ -871,8 +875,8 @@ window.Quarto = {
 <div class="webex-question">
 <div class="webex-check webex-box">
 <p>What is the fundamental difference between <code>JMP rel32</code> and <code>JMP edx</code> (a form of <code>JMP reg/mem32</code>)?</p>
-<div id="webex-9d65669315078215f3dfbe035d1ee0ca" class="webex-radiogroup" data-answer="YlQaBRoHFQNs">
-<label><input type="radio" autocomplete="off" name="9d65669315078215f3dfbe035d1ee0ca"><span><code>JMP rel32</code> is used for far jumps (inter-segment), while <code>JMP edx</code> is for near jumps (intra-segment).</span></label><label><input type="radio" autocomplete="off" name="9d65669315078215f3dfbe035d1ee0ca"><span><code>JMP rel32</code> is a conditional jump, whereas <code>JMP edx</code> is unconditional.</span></label><label><input type="radio" autocomplete="off" name="9d65669315078215f3dfbe035d1ee0ca"><span><code>JMP rel32</code> uses a relative offset, while <code>JMP edx</code> uses an absolute address stored in the <code>edx</code> register.</span></label><label><input type="radio" autocomplete="off" name="9d65669315078215f3dfbe035d1ee0ca"><span><code>JMP rel32</code> can only jump forward, while <code>JMP edx</code> can jump backward.</span></label>
+<div id="webex-3018646bd3bca6d110aa9a01585434c7" class="webex-radiogroup" data-answer="aAAdCBoFGlI5">
+<label><input type="radio" autocomplete="off" name="3018646bd3bca6d110aa9a01585434c7"><span><code>JMP rel32</code> can only jump forward, while <code>JMP edx</code> can jump backward.</span></label><label><input type="radio" autocomplete="off" name="3018646bd3bca6d110aa9a01585434c7"><span><code>JMP rel32</code> is a conditional jump, whereas <code>JMP edx</code> is unconditional.</span></label><label><input type="radio" autocomplete="off" name="3018646bd3bca6d110aa9a01585434c7"><span><code>JMP rel32</code> uses a relative offset, while <code>JMP edx</code> uses an absolute address stored in the <code>edx</code> register.</span></label><label><input type="radio" autocomplete="off" name="3018646bd3bca6d110aa9a01585434c7"><span><code>JMP rel32</code> is used for far jumps (inter-segment), while <code>JMP edx</code> is for near jumps (intra-segment).</span></label>
 </div>
 </div>
 <div class="webex-solution">
